@@ -118,9 +118,16 @@ public class DialogueManager : MonoBehaviour
 
                 if (StateManager.PressedUse())
                 {
-                    isInHiring = false;
-                    backend.AddActiveDeveloper(developerReference.GetComponent<DeveloperInHell>().developer);
-                    ShowNextDialogue();
+                    if(developerReference != null)
+                    { 
+                        isInHiring = false;
+                        backend.AddActiveDeveloper(developerReference.GetComponent<DeveloperInHell>().developer);
+                        ShowNextDialogue();
+                    }
+                    else
+                    {
+                        HideDialogue();
+                    }
                 }
             }
             else

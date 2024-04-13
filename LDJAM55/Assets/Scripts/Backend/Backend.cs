@@ -37,6 +37,19 @@ public class Backend : MonoBehaviour
 
     ProductState productState = new();
 
+    public Developer[] ActiveDevelopers { get => activeDevelopers; }
+    public ProductState ProductState { get => productState; }
+
+    public int FoundBugs()
+    {
+        return foundBugs.Count;
+    }
+
+    public int Backlog()
+    {
+        return backlog.Count;
+    }
+
     // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
     // Producer boost currently affects the designer, programmer, artist and audio roles
     float currentProducerBoost = 0f;
