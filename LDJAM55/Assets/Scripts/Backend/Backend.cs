@@ -47,7 +47,7 @@ public class Backend : MonoBehaviour
         // Check for producers first so that their effects get applied correctly for this tick
         foreach (Developer developer in activeDevelopers)
         {
-            if (!developer.IsAlive) continue;
+            if (developer == null || !developer.IsAlive) continue;
             if (developer.Role.Equals(Developer.RoleType.Producer))
             {
                 currentProducerBoost = Math.Max(currentProducerBoost, developer.Power * deltaTime);
@@ -57,7 +57,7 @@ public class Backend : MonoBehaviour
         // Then handle the rest of the developers
         foreach (Developer developer in activeDevelopers)
         {
-            if (!developer.IsAlive) continue;
+            if (developer == null || !developer.IsAlive) continue;
 
             HandleDeveloperRoleEffects(developer.Role, developer.Power * deltaTime);
             HandleDeveloperTraitEffects(developer.Traits, developer.Power * deltaTime);
