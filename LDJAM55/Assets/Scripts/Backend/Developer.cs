@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace DataTypes
 {
+    [System.Serializable]
     public class Developer
     {
         public enum RoleType
@@ -28,23 +29,23 @@ namespace DataTypes
         }
 
         [SerializeField]
-        readonly string name = "DeveloperName";
+        string name = "DeveloperName";
         [SerializeField]
-        readonly string dialogue = "Hello World!";
+        List<DialogueManager.Dialogue> dialogue = new List<DialogueManager.Dialogue>();
         [SerializeField]
-        readonly RoleType role = RoleType.Designer;
+        RoleType role = RoleType.Designer;
         [SerializeField]
-        readonly List<Trait> traits;
+        List<Trait> traits;
         [SerializeField]
         [Range(0f, 1f)]
-        readonly float power = 0.5f;
+        float power = 0.5f;
         [SerializeField]
-        [Range(0f, 60f)]
+        [Range(0f, 300f)]
         // Seconds
         float durability = 5.0f;
 
-        public string Name { get => dialogue; }
-        public string Dialogue { get => dialogue; }
+        public string Name { get => name; }
+        public List<DialogueManager.Dialogue> Dialogue { get => dialogue; }
         public RoleType Role { get => role; }
         public List<Trait> Traits { get => traits; }
         public float Power { get => power; }

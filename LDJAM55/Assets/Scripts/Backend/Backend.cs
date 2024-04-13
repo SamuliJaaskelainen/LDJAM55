@@ -5,8 +5,7 @@ using System.Linq;
 using UnityEngine;
 public class Backend : MonoBehaviour
 {
-    [SerializeField]
-    List<Developer> developerPool;
+    public List<Developer> developerPool = new List<Developer>();
 
     // "Desks"
     Developer[] activeDevelopers = new Developer[4];

@@ -20,17 +20,6 @@ public class DialogueManager : MonoBehaviour
     int hiringOption = 0;
     bool isOpenedOnThisFrame = false;
 
-    public enum Traits
-    {
-        Fun,
-        Innovation,
-        Theme,
-        Graphics,
-        Audio,
-        Humor,
-        Mood
-    }
-
     [System.Serializable]
     public struct Dialogue
     {
@@ -49,7 +38,7 @@ public class DialogueManager : MonoBehaviour
         return dialogueBox.activeSelf;
     }
 
-    public void ShowConversation(GameObject developer, List<Dialogue> dialogueList, List<Traits> traits)
+    public void ShowConversation(GameObject developer, List<Dialogue> dialogueList, List<DataTypes.Developer.Trait> traits)
     {
         // TODO: Show trait icons
         isOpenedOnThisFrame = true;

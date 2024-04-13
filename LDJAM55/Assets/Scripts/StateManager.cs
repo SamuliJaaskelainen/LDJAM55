@@ -13,6 +13,7 @@ public class StateManager : MonoBehaviour
     }
     State currentState;
 
+    [SerializeField] Backend backend;
     [SerializeField] GameObject mainMenuParent;
     [SerializeField] GameObject gameplayParent;
     [SerializeField] GameObject resultsParent;
@@ -173,6 +174,8 @@ public class StateManager : MonoBehaviour
 
     void UpdateGameplay()
     {
+        backend.ProgressTick();
+
         if (PressedQuit())
         {
             ChangeState(State.MainMenu);
