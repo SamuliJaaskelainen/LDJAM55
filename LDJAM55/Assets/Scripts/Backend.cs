@@ -20,7 +20,7 @@ public class Backend : MonoBehaviour
         foreach (Developer developer in activeDevelopers)
         {
 
-            if (developer.d)
+            // if (developer.)
         }
     }
 }
