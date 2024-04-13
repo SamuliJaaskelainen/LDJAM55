@@ -62,7 +62,7 @@ public class Backend : MonoBehaviour
             Debug.LogError("Empty developer pool!");
         }
 
-        Developer selectedDeveloper = developerPool.ElementAt(UnityEngine.Random.Range(0, developerPool.Count));
+        Developer selectedDeveloper = developerPool.ElementAt(UnityEngine.Random.Range(0, developerPool.Count)).Clone();
 
         // Power is lower-bounded by current influencer boost level
         selectedDeveloper.Power = Math.Max(selectedDeveloper.Power, currentInfluencerBoost);

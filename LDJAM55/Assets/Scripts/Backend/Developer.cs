@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,6 +54,9 @@ namespace DataTypes
         public float Power { get => power; set => power = value; }
         public float Durability { get => durability; set => durability = value; }
         public bool IsAlive { get => durability > 0f; }
-
+        public Developer Clone()
+        {
+            return (Developer)MemberwiseClone();
+        }
     };
 }
