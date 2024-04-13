@@ -113,6 +113,9 @@ public class Backend : MonoBehaviour
     {
         float deltaTime = Time.deltaTime;
 
+        // Reduce time left to develop
+        productState.TimeLeft -= deltaTime;
+
         // Reset influencer and producer boosts
         currentInfluencerBoost = 0f;
         currentProducerBoost = 0f;

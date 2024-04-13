@@ -178,7 +178,12 @@ public class StateManager : MonoBehaviour
 
     void UpdateGameplay()
     {
-        if(Time.time > developerSpawnTimer)
+        if(backend.ProductState.TimeLeft <= 0.0f)
+        {
+            ChangeState(State.Results);
+        }
+
+        if (Time.time > developerSpawnTimer)
         {
             developerSpawnTimer = developerSpawnRate + Time.time;
             developerSpawner.TrySpawnDeveloper(backend.FetchDeveloperFromPool());

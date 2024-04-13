@@ -8,6 +8,7 @@ public class GameUI : MonoBehaviour
 {
     [SerializeField] Backend backend;
 
+    [SerializeField] TextMeshProUGUI timer;
 
     [SerializeField] TextMeshProUGUI features;
     [SerializeField] TextMeshProUGUI bugs;
@@ -21,6 +22,9 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
+        // TODO: Implement TimeSpan
+        timer.text = ((int)(backend.ProductState.TimeLeft)).ToString();
+
         features.text = " Features " + backend.Backlog();
         bugs.text = " Found bugs " + backend.FoundBugs();
 

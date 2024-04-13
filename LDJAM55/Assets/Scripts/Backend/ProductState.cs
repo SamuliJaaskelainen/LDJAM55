@@ -20,6 +20,8 @@ namespace DataTypes
         const float scoreLowerBound = 0f;
         const float scoreUpperBound = 1f;
 
+        float timeLeft = 900.0f;
+
         // Primary scores (features). Affected by power of certain roles.
         float mechanicsFeature = 0f;
         float audioFeature = 0f;
@@ -34,6 +36,8 @@ namespace DataTypes
         float audioScore = 0f;
         float humorScore = 0f;
         float moodScore = 0f;
+
+        public float TimeLeft { get => timeLeft; set => timeLeft = value; }
 
         public float MechanicsFeature { get => mechanicsFeature; set => mechanicsFeature = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
         public float AudioFeature { get => audioFeature; set => audioFeature = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
