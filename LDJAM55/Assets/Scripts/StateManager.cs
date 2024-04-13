@@ -65,7 +65,8 @@ public class StateManager : MonoBehaviour
     bool isMusicMuted = false; // Keith TODO: Implement mute to music
     float menuStateChangedTime;
 
-    float developerSpawnRate = 3.0f;
+    List<GameObject> spawnedDevelopers = new List<GameObject>();
+    float developerSpawnRate;
     float developerSpawnTimer;
 
     void Update()
@@ -99,8 +100,17 @@ public class StateManager : MonoBehaviour
         switch(currentState)
         {
             case State.MainMenu:
+                developerSpawnRate = 0.1f;
                 menuIndex = 0;
                 UpdateMainMenuGraphics();
+                for(int i = 0; i < spawnedDevelopers.Count; ++i)
+                {
+                    if(spawnedDevelopers[i] != null)
+                    {
+                        Destroy(spawnedDevelopers[i]);
+                    }
+                }
+                spawnedDevelopers.Clear();
                 break;
 
             case State.Gameplay:
@@ -209,8 +219,31 @@ public class StateManager : MonoBehaviour
 
         if (Time.time > developerSpawnTimer)
         {
+            spawnedDevelopers.RemoveAll(item => item == null);
+
+            if(spawnedDevelopers.Count < 5)
+            {
+                developerSpawnRate = 0.25f;
+            }
+            else if (spawnedDevelopers.Count < 10)
+            {
+                developerSpawnRate = 0.5f;
+            }
+            else if (spawnedDevelopers.Count < 15)
+            {
+                developerSpawnRate = 1.0f;
+            }
+            else
+            {
+                developerSpawnRate = 2.0f;
+            }
+
             developerSpawnTimer = developerSpawnRate + Time.time;
-            developerSpawner.TrySpawnDeveloper(backend.FetchDeveloperFromPool());
+            GameObject newDev = developerSpawner.TrySpawnDeveloper(backend.FetchDeveloperFromPool());
+            if(newDev != null)
+            {
+                spawnedDevelopers.Add(newDev);
+            }
         }    
 
         backend.ProgressTick();

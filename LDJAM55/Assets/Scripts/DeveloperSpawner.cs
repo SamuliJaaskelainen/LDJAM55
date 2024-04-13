@@ -9,7 +9,7 @@ public class DeveloperSpawner : MonoBehaviour
     [SerializeField] Transform spawnPointsParent;
     [SerializeField] GameObject developerInHell;
 
-    public void TrySpawnDeveloper(Developer developer)
+    public GameObject TrySpawnDeveloper(Developer developer)
     {
         int r = Random.Range(0, spawnPointsParent.childCount);
         Vector3 spawnPos = spawnPointsParent.GetChild(r).position;
@@ -21,6 +21,7 @@ public class DeveloperSpawner : MonoBehaviour
             Debug.Log("Developer spawned!");
             GameObject dev = Instantiate(developerInHell, spawnPos, Quaternion.identity);
             dev.GetComponent<DeveloperInHell>().developer = developer;
+            return dev;
         }
         else
         {
@@ -28,5 +29,7 @@ public class DeveloperSpawner : MonoBehaviour
             Debug.DrawLine(spawnPos, spawnPos + Vector3.down * 0.2f, Color.green, 10.0f);
             Debug.DrawLine(Vector3.zero, spawnPos, Color.white, 10.0f);
         }
+
+        return null;
     }
 }
