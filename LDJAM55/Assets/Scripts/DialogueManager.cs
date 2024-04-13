@@ -95,7 +95,7 @@ public class DialogueManager : MonoBehaviour
     {
         if(developerReference != null)
         { 
-            Destroy(developerReference);
+            DestroyImmediate(developerReference);
         }
         dialogueBox.SetActive(false);
         dimmer.SetActive(false);
