@@ -41,7 +41,7 @@ public class Backend : MonoBehaviour
         bool developerAdded = false;
         for (int i = 0; i < activeDevelopers.Length; ++i)
         {
-            if (activeDevelopers[i] == null)
+            if (activeDevelopers[i] == null || !activeDevelopers[i].IsAlive)
             {
                 // TODO: Signal to UI to add developer graphics
                 developerAdded = true;
