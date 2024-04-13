@@ -10,11 +10,11 @@ public class Backend : MonoBehaviour
     // "Desks"
     Developer[] activeDevelopers = new Developer[4];
 
-    List<Task> hiddenBugs;
-    List<Task> foundBugs;
-    List<Task> backlog;
+    List<Task> hiddenBugs = new();
+    List<Task> foundBugs = new();
+    List<Task> backlog = new();
 
-    ProductState productState;
+    ProductState productState = new();
 
     // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
     // Producer boost currently affects the designer, programmer, artist and audio roles
@@ -39,9 +39,9 @@ public class Backend : MonoBehaviour
     public void AddActiveDeveloper(Developer developer)
     {
         bool developerAdded = false;
-        for(int i = 0; i < activeDevelopers.Length; ++i)
+        for (int i = 0; i < activeDevelopers.Length; ++i)
         {
-            if(activeDevelopers[i] == null)
+            if (activeDevelopers[i] == null)
             {
                 // TODO: Signal to UI to add developer graphics
                 developerAdded = true;
@@ -51,7 +51,7 @@ public class Backend : MonoBehaviour
             }
         }
 
-        if(!developerAdded)
+        if (!developerAdded)
         {
             Debug.LogWarning("Cannot add more active developers! Active developers array full.");
         }
