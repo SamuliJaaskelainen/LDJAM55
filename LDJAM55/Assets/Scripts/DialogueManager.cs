@@ -103,6 +103,10 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
+        // Only update when we have dialogue
+        if(!IsConversationActive())
+            return;
+
         if(isInHiring)
         {
             if (StateManager.PressedUp()) hiringOption = 0;
