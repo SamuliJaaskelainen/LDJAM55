@@ -9,24 +9,24 @@ namespace DataTypes
     {
         public enum RoleType
         {
-            Designer,
-            Programmer,
-            QA,
-            Artist,
-            Audio,
-            Producer,
-            Influencer
+            Designer = 0,
+            Programmer = 1,
+            QA = 2,
+            Artist = 3,
+            Audio = 4,
+            Producer = 5,
+            Influencer = 6
         }
 
         public enum Trait
         {
-            Fun,
-            Innovation,
-            Theme,
-            Graphics,
-            Audio,
-            Humor,
-            Mood
+            Fun = 0,
+            Innovation = 1,
+            Theme = 2,
+            Graphics = 3,
+            Audio = 4,
+            Humor = 5,
+            Mood = 6
         }
 
         [SerializeField]

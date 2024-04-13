@@ -6,27 +6,27 @@ using UnityEngine;
 public class Backend : MonoBehaviour
 {
     public List<Developer> developerPool = new();
-    // Role->PowerLevel->ListOfDialogues
-    public Dictionary<string, List<List<DialogueManager.Dialogue>>> roleDialogueDict = new()
+
+    [System.Serializable]
+    public struct DialogueAtLevel
     {
-        { "Designer", new List<List<DialogueManager.Dialogue>>{}},
-        { "Programmer", new List<List<DialogueManager.Dialogue>>{}},
-        { "QA", new List<List<DialogueManager.Dialogue>>{}},
-        { "Artist", new List<List<DialogueManager.Dialogue>>{}},
-        { "Audio", new List<List<DialogueManager.Dialogue>>{}},
-        { "Producer", new List<List<DialogueManager.Dialogue>>{}},
-        { "Influencer", new List<List<DialogueManager.Dialogue>>{}}
-    };
-    public Dictionary<string, List<string>> traitDialogueDict = new()
+        [SerializeField]
+        public List<DialogueManager.Dialogue> dialogue;
+    }
+
+    [System.Serializable]
+    public struct DialoguesAtLevel
     {
-        { "Fun", new List<string>{}},
-        { "Innovation", new List<string>{}},
-        { "Theme", new List<string>{}},
-        { "Graphics", new List<string>{}},
-        { "Audio", new List<string>{}},
-        { "Humor", new List<string>{}},
-        { "Mood", new List<string>{}}
-    };
+        [SerializeField]
+        // 4 levels expected, index 0 corresponds to power <= 0.25, index 1 to power <= 0.5 etc
+        public List<DialogueAtLevel> dialoguesPerPowerLevel;
+    }
+
+    // Role indexes correspond to enum indexes in Developer.RoleType
+    public List<DialoguesAtLevel> roleDialogues = new();
+
+    // Trait indexes correspond to enum indexes in Developer.Trait
+    public List<DialogueAtLevel> traitDialogues = new();
 
     // "Desks"
     Developer[] activeDevelopers = new Developer[4];
@@ -67,22 +67,22 @@ public class Backend : MonoBehaviour
         // Power is lower-bounded by current influencer boost level
         selectedDeveloper.Power = Math.Max(selectedDeveloper.Power, currentInfluencerBoost);
 
-        string developerRoleAsString = selectedDeveloper.Role.ToString();
+        int developerRoleAsIndex = (int)selectedDeveloper.Role;
         const int dialogueLevelCount = 4;
-        if (!roleDialogueDict.ContainsKey(developerRoleAsString))
+        if (roleDialogues.Count >= developerRoleAsIndex)
         {
-            Debug.LogWarning("Role " + developerRoleAsString + " missing from dialogue dict!");
+            Debug.LogWarning("Role " + selectedDeveloper.Role.ToString() + " missing from backend dialogue list!");
             return selectedDeveloper;
         }
-        if (roleDialogueDict[developerRoleAsString].Count < dialogueLevelCount)
+        if (roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel.Count < dialogueLevelCount)
         {
-            Debug.LogWarning("Role " + developerRoleAsString + " missing dialogues from list, expected to find " + dialogueLevelCount.ToString() + " levels but only found " + roleDialogueDict[developerRoleAsString].Count + "!");
+            Debug.LogWarning("Role " + selectedDeveloper.Role.ToString() + " missing dialogues from backend list, expected to find " + dialogueLevelCount + " levels but only found " + roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel.Count + "!");
             return selectedDeveloper;
         }
 
         int powerLevelAsDialogueIndex = Math.Clamp((int)(selectedDeveloper.Power * dialogueLevelCount), 0, dialogueLevelCount - 1);
 
-        selectedDeveloper.Dialogue = roleDialogueDict[developerRoleAsString][powerLevelAsDialogueIndex];
+        selectedDeveloper.Dialogue = roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel[powerLevelAsDialogueIndex].dialogue;
         // TODO: add trait based dialog?
 
         return selectedDeveloper;
