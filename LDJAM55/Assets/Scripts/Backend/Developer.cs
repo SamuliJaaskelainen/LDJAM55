@@ -43,6 +43,8 @@ namespace DataTypes
         [Range(0f, 300f)]
         // Seconds
         float durability = 5.0f;
+        [SerializeField]
+        public Sprite portrait;
 
         public string Name { get => name; }
         public List<DialogueManager.Dialogue> Dialogue { get => dialogue; set => dialogue = value; }

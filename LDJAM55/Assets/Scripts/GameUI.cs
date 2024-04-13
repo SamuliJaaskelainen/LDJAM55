@@ -33,7 +33,7 @@ public class GameUI : MonoBehaviour
             if(backend.ActiveDevelopers[i] != null)
             {     
                 devImgs[i].gameObject.SetActive(backend.ActiveDevelopers[i].IsAlive);
-                devImgs[i].sprite = backend.ActiveDevelopers[i].Dialogue[0].portrait;
+                devImgs[i].sprite = backend.ActiveDevelopers[i].portrait;
                 devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
             }
             else

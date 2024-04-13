@@ -14,19 +14,21 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogueText;
     [SerializeField] Image portraitImage;
     [SerializeField] Sprite emptyPortrait;
+    [SerializeField] Sprite spiritPortrait1;
+    [SerializeField] Sprite spiritPortrait2;
 
     List<Dialogue> currentDilogueList = new List<Dialogue>();
     GameObject developerReference;
     bool isInHiring = false;
     int hiringOption = 0;
     bool isOpenedOnThisFrame = false;
+    bool isPortraitVisible = false;
 
     [System.Serializable]
     public struct Dialogue
     {
         [Multiline]
         public string text;
-        public Sprite portrait;
     }
 
     void Awake()
@@ -46,6 +48,7 @@ public class DialogueManager : MonoBehaviour
         isInHiring = false;
         hiringOption = 0;
         isOpenedOnThisFrame = true;
+        isPortraitVisible = false;
         developerReference = developerInHell;
         currentDilogueList = new List<Dialogue>(developerInHell.GetComponent<DeveloperInHell>().developer.Dialogue);
         Debug.Log("Dialogue loaded, size of " + currentDilogueList.Count);
@@ -78,15 +81,14 @@ public class DialogueManager : MonoBehaviour
         dimmer.SetActive(true);
         dialogueBox.SetActive(true);
         dialogueText.text = dialogue.text;
-        if(dialogue.portrait == null)
+        if(isPortraitVisible)
         {
-            portraitImage.sprite = emptyPortrait;
+            portraitImage.sprite = developerReference.GetComponent<DeveloperInHell>().developer.portrait;
         }
         else
         {
-            portraitImage.sprite = dialogue.portrait;
+            portraitImage.sprite = currentDilogueList.Count % 2 == 0 ? spiritPortrait1 : spiritPortrait2;
         }
-        
     }
 
     void HideDialogue()
@@ -121,6 +123,7 @@ public class DialogueManager : MonoBehaviour
                     if(developerReference != null)
                     { 
                         isInHiring = false;
+                        isPortraitVisible = true;
                         backend.AddActiveDeveloper(developerReference.GetComponent<DeveloperInHell>().developer);
                         ShowNextDialogue();
                     }
