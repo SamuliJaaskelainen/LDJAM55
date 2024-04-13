@@ -57,7 +57,9 @@ public class DialogueManager : MonoBehaviour
 
     void ShowNextDialogue()
     {
-        if(currentDilogueList.Count > 0)
+        // Keith TODO: Add show dialogue audio
+
+        if (currentDilogueList.Count > 0)
         { 
             if(currentDilogueList[0].text == "HIRE")
             {
@@ -121,7 +123,8 @@ public class DialogueManager : MonoBehaviour
                 if (StateManager.PressedUse())
                 {
                     if(developerReference != null)
-                    { 
+                    {
+                        // Keith TODO: Add menu confirm audio
                         isInHiring = false;
                         isPortraitVisible = true;
                         backend.AddActiveDeveloper(developerReference.GetComponent<DeveloperInHell>().developer);
@@ -139,6 +142,7 @@ public class DialogueManager : MonoBehaviour
 
                 if (StateManager.PressedUse())
                 {
+                    // Keith TODO: Add menu confirm audio
                     HideDialogue();
                 }
             }

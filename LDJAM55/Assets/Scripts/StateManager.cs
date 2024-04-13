@@ -104,34 +104,58 @@ public class StateManager : MonoBehaviour
                 break;
 
             case State.Gameplay:
-                // TODO: Init Gameplay
+                // Keith TODO: Add game start audio (check with Start game menu audio)
                 break;
 
             case State.Results:
-                // TODO: Show Ludum Dare stats
+                // Keith TODO: Add results shown audio
                 break;
         }
     }
 
     void UpdateMainMenu()
     {
-        if (PressedUp()) menuIndex--;
-        if (PressedDown()) menuIndex++;
+        if (PressedUp())
+        {
+            menuIndex--;
+            // Keith TODO: Add menu change audio
+        }
+        if (PressedDown())
+        {
+            menuIndex++;
+            // Keith TODO: Add menu change audio
+        }
         menuIndex = Mathf.Clamp(menuIndex, 0, 3);
 
         switch(menuIndex)
         {
             case 0: // Start game
-                if (PressedUse()) ChangeState(State.Gameplay);
+                if (PressedUse())
+                {
+                    ChangeState(State.Gameplay);
+                    // Keith TODO: Add menu confirm / game starts audio
+                }
                 break;
 
             case 1: // Set mute
-                if(PressedUse() || PressedRight() || PressedLeft()) isMusicMuted = !isMusicMuted;
+                if(PressedUse() || PressedRight() || PressedLeft()) 
+                {
+                    isMusicMuted = !isMusicMuted;
+                    // Keith TODO: Add menu confirm
+                }
                 break;
 
             case 2: // Set volume
-                if (PressedRight() || PressedUse()) audioVolume++;
-                if (PressedLeft()) audioVolume--;
+                if (PressedRight() || PressedUse()) 
+                {
+                    audioVolume++;
+                    // Keith TODO: Add menu change audio
+                }
+                if (PressedLeft())
+                {
+                    audioVolume--;
+                    // Keith TODO: Add menu change audio
+                }
                 audioVolume = Mathf.Clamp(audioVolume, 0, 10);
                 break;
 
@@ -194,6 +218,7 @@ public class StateManager : MonoBehaviour
         if (PressedQuit())
         {
             ChangeState(State.MainMenu);
+            // Keith TODO: Add menu confirm audio
         }
 
         // Debug key to show results
@@ -211,6 +236,7 @@ public class StateManager : MonoBehaviour
         if (PressedQuit())
         {
             ChangeState(State.MainMenu);
-        }   
+            // Keith TODO: Add menu confirm audio
+        }
     }
 }
