@@ -15,12 +15,12 @@ public class Backend : MonoBehaviour
     List<Task> foundBugs;
     List<Task> backlog;
 
-    ProductState state;
+    ProductState productState;
 
     // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
     // Producer boost currently affects the designer, programmer, artist and audio roles
-    float currentProducerBoost = 0;
-    float currentInfluencerBoost = 0;
+    float currentProducerBoost = 0f;
+    float currentInfluencerBoost = 0f;
 
     public void ProgressTick()
     {
@@ -33,29 +33,27 @@ public class Backend : MonoBehaviour
         // Check for producers first so that their effects get applied correctly for this tick
         foreach (Developer developer in activeDevelopers)
         {
-            if (!developer.isAlive) continue;
-            if (!developer.Role.Equals(Developer.RoleType.Producer)) continue;
-
-            currentProducerBoost = Math.Max(currentProducerBoost, developer.Power * deltaTime);
-
-            developer.Durability -= deltaTime;
-
+            if (!developer.IsAlive) continue;
+            if (developer.Role.Equals(Developer.RoleType.Producer))
+            {
+                currentProducerBoost = Math.Max(currentProducerBoost, developer.Power * deltaTime);
+            }
         }
 
         // Then handle the rest of the developers
         foreach (Developer developer in activeDevelopers)
         {
-            if (!developer.isAlive) continue;
-            if (developer.Role.Equals(Developer.RoleType.Producer)) continue;
+            if (!developer.IsAlive) continue;
 
-            HandleDeveloperEffects(developer.Role, developer.Power * deltaTime);
+            HandleDeveloperRoleEffects(developer.Role, developer.Power * deltaTime);
+            HandleDeveloperTraitEffects(developer.Traits, developer.Power * deltaTime);
 
             developer.Durability -= deltaTime;
         }
     }
 
     // Handles actions taken by developer depending on role, producers are skipped
-    private void HandleDeveloperEffects(Developer.RoleType role, float power)
+    private void HandleDeveloperRoleEffects(Developer.RoleType role, float power)
     {
         // Handle role-specific effect based on power
         switch (role)
@@ -76,11 +74,11 @@ public class Backend : MonoBehaviour
                         // Progress a bug if any exist, or a feature otherwise
                         if (foundBugs.Count != 0)
                         {
-                            state.Polish += ProgressTasks(ref foundBugs, ref powerToSpend);
+                            productState.PolishFeature += ProgressTasks(ref foundBugs, ref powerToSpend);
                         }
                         else if (backlog.Count != 0)
                         {
-                            state.Mechanics += ProgressTasks(ref backlog, ref powerToSpend);
+                            productState.MechanicsFeature += ProgressTasks(ref backlog, ref powerToSpend);
                         }
                         else
                         {
@@ -106,12 +104,12 @@ public class Backend : MonoBehaviour
                 }
             case Developer.RoleType.Artist:
                 {
-                    state.VisualsScore += power + currentProducerBoost;
+                    productState.VisualsFeature += power + currentProducerBoost;
                     break;
                 }
             case Developer.RoleType.Audio:
                 {
-                    state.AudioScore += power + currentProducerBoost;
+                    productState.AudioFeature += power + currentProducerBoost;
                     break;
                 }
             case Developer.RoleType.Producer:
@@ -121,6 +119,7 @@ public class Backend : MonoBehaviour
                 }
             case Developer.RoleType.Influencer:
                 {
+                    // Influencer currently not affected by producer boost
                     currentInfluencerBoost = Math.Max(currentInfluencerBoost, power);
                     break;
                 }
@@ -139,14 +138,14 @@ public class Backend : MonoBehaviour
             // TODO: Just using developer power to determine bug severity for now. Not affected by producer boost.
             float bugCost = power;
             hiddenBugs.Add(new Task(bugCost));
-            state.Polish -= bugCost;
+            productState.PolishFeature -= bugCost;
         }
     }
 
     // Progress the provided queue until it is empty or powerToSpend is 0. Return the sum of impacts of completed tasks.
     private float ProgressTasks(ref List<Task> taskList, ref float powerToSpend)
     {
-        float completedImpact = 0;
+        float completedImpact = 0f;
         while (powerToSpend > 0f && taskList.Count != 0)
         {
             float workLeft = taskList.First().WorkRemaining;
@@ -164,5 +163,40 @@ public class Backend : MonoBehaviour
             }
         }
         return completedImpact;
+    }
+
+    private void HandleDeveloperTraitEffects(List<Developer.Trait> traits, float power)
+    {
+        foreach (Developer.Trait trait in traits)
+        {
+            switch (trait)
+            {
+                case Developer.Trait.Fun:
+                    productState.FunScore += power;
+                    break;
+                case Developer.Trait.Innovation:
+                    productState.InnovationScore += power;
+                    break;
+                case Developer.Trait.Theme:
+                    productState.ThemeScore += power;
+                    break;
+                case Developer.Trait.Graphics:
+                    productState.GraphicsScore += power;
+                    break;
+                case Developer.Trait.Audio:
+                    productState.AudioScore += power;
+                    break;
+                case Developer.Trait.Humor:
+                    productState.HumorScore += power;
+                    break;
+                case Developer.Trait.Mood:
+                    productState.MoodScore += power;
+                    break;
+                default:
+                    Debug.LogError("Missing trait type!");
+                    break;
+            }
+        }
+
     }
 }
