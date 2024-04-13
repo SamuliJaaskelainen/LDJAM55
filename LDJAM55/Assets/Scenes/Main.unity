@@ -357,28 +357,36 @@ MonoBehaviour:
   - dialoguesPerPowerLevel:
     - dialogue:
       - text: DialogBox 1 for Designer below power 0.25
+      - text: HIRE
       - text: DialogBox 2 for Designer below power 0.25
     - dialogue:
       - text: DialogBox  for Designer below power 0.5
+      - text: HIRE
       - text: DialogBox 2 for Designer below power 0.5
     - dialogue:
       - text: DialogBox  1 for Designer below power 0.75
+      - text: HIRE
       - text: DialogBox 2 for Designer below power 0.75
     - dialogue:
       - text: DialogBox 1 for Designer below power 1
+      - text: HIRE
       - text: DialogBox 2 for Designer below power 1
   - dialoguesPerPowerLevel:
     - dialogue:
       - text: DialogBox 1 for Programmer below power 0.25
+      - text: HIRE
       - text: DialogBox 2 for Programmer below power 0.25
     - dialogue:
       - text: DialogBox 1 for Programmer below power 0.5
+      - text: HIRE
       - text: DialogBox 2 for Programmer below power 0.5
     - dialogue:
       - text: DialogBox 1 for Programmer below power 0.75
+      - text: HIRE
       - text: DialogBox 2 for Programmer below power 0.75
     - dialogue:
       - text: DialogBox 1 for Programmer below power 1
+      - text: HIRE
       - text: DialogBox 2 for Programmer below power 1
   traitDialogues:
   - dialogue:
