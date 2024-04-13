@@ -45,7 +45,7 @@ namespace DataTypes
         float durability = 5.0f;
 
         public string Name { get => name; }
-        public List<DialogueManager.Dialogue> Dialogue { get => dialogue; }
+        public List<DialogueManager.Dialogue> Dialogue { get => dialogue; set => dialogue = value; }
         public RoleType Role { get => role; }
         public List<Trait> Traits { get => traits; }
         public float Power { get => power; set => power = value; }

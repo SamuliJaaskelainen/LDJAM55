@@ -5,7 +5,28 @@ using System.Linq;
 using UnityEngine;
 public class Backend : MonoBehaviour
 {
-    public List<Developer> developerPool = new List<Developer>();
+    public List<Developer> developerPool = new();
+    // Role->PowerLevel->ListOfDialogues
+    public Dictionary<string, List<List<DialogueManager.Dialogue>>> roleDialogueDict = new()
+    {
+        { "Designer", new List<List<DialogueManager.Dialogue>>{}},
+        { "Programmer", new List<List<DialogueManager.Dialogue>>{}},
+        { "QA", new List<List<DialogueManager.Dialogue>>{}},
+        { "Artist", new List<List<DialogueManager.Dialogue>>{}},
+        { "Audio", new List<List<DialogueManager.Dialogue>>{}},
+        { "Producer", new List<List<DialogueManager.Dialogue>>{}},
+        { "Influencer", new List<List<DialogueManager.Dialogue>>{}}
+    };
+    public Dictionary<string, List<string>> traitDialogueDict = new()
+    {
+        { "Fun", new List<string>{}},
+        { "Innovation", new List<string>{}},
+        { "Theme", new List<string>{}},
+        { "Graphics", new List<string>{}},
+        { "Audio", new List<string>{}},
+        { "Humor", new List<string>{}},
+        { "Mood", new List<string>{}}
+    };
 
     // "Desks"
     Developer[] activeDevelopers = new Developer[4];
@@ -32,6 +53,24 @@ public class Backend : MonoBehaviour
 
         // Power is lower-bounded by current influencer boost level
         selectedDeveloper.Power = Math.Max(selectedDeveloper.Power, currentInfluencerBoost);
+
+        string developerRoleAsString = selectedDeveloper.Role.ToString();
+        const int dialogueLevelCount = 4;
+        if (!roleDialogueDict.ContainsKey(developerRoleAsString))
+        {
+            Debug.LogWarning("Role " + developerRoleAsString + " missing from dialogue dict!");
+            return selectedDeveloper;
+        }
+        if (roleDialogueDict[developerRoleAsString].Count < dialogueLevelCount)
+        {
+            Debug.LogWarning("Role " + developerRoleAsString + " missing dialogues from list, expected to find " + dialogueLevelCount.ToString() + " levels but only found " + roleDialogueDict[developerRoleAsString].Count + "!");
+            return selectedDeveloper;
+        }
+
+        int powerLevelAsDialogueIndex = Math.Clamp((int)(selectedDeveloper.Power * dialogueLevelCount), 0, dialogueLevelCount - 1);
+
+        selectedDeveloper.Dialogue = roleDialogueDict[developerRoleAsString][powerLevelAsDialogueIndex];
+        // TODO: add trait based dialog?
 
         return selectedDeveloper;
     }
