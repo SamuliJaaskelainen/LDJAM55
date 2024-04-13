@@ -14,6 +14,7 @@ public class StateManager : MonoBehaviour
     State currentState;
 
     [SerializeField] Backend backend;
+    [SerializeField] DeveloperSpawner developerSpawner;
     [SerializeField] GameObject mainMenuParent;
     [SerializeField] GameObject gameplayParent;
     [SerializeField] GameObject resultsParent;
@@ -63,6 +64,9 @@ public class StateManager : MonoBehaviour
     int audioVolume = 10; // Keith TODO: Implement volume to audio systems
     bool isMusicMuted = false; // Keith TODO: Implement mute to music
     float menuStateChangedTime;
+
+    float developerSpawnRate = 3.0f;
+    float developerSpawnTimer;
 
     void Update()
     {
@@ -174,6 +178,12 @@ public class StateManager : MonoBehaviour
 
     void UpdateGameplay()
     {
+        if(Time.time > developerSpawnTimer)
+        {
+            developerSpawnTimer = developerSpawnRate + Time.time;
+            developerSpawner.TrySpawnDeveloper(backend.FetchDeveloperFromPool());
+        }    
+
         backend.ProgressTick();
 
         if (PressedQuit())

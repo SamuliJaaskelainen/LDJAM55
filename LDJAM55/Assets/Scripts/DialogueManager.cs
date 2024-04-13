@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
     [System.Serializable]
     public struct Dialogue
     {
+        [Multiline]
         public string text;
         public Sprite portrait;
     }
@@ -38,12 +39,15 @@ public class DialogueManager : MonoBehaviour
         return dialogueBox.activeSelf;
     }
 
-    public void ShowConversation(GameObject developer, List<Dialogue> dialogueList, List<DataTypes.Developer.Trait> traits)
+    public void ShowConversation(GameObject developerInHell)
     {
         // TODO: Show trait icons
+        isInHiring = false;
+        hiringOption = 0;
         isOpenedOnThisFrame = true;
-        developerReference = developer;
-        currentDilogueList = dialogueList;
+        developerReference = developerInHell;
+        currentDilogueList = new List<Dialogue>(developerInHell.GetComponent<DeveloperInHell>().developer.Dialogue);
+        Debug.Log("Dialogue loaded, size of " + currentDilogueList.Count);
         ShowNextDialogue();
     }
 
@@ -53,7 +57,7 @@ public class DialogueManager : MonoBehaviour
         { 
             if(currentDilogueList[0].text == "HIRE")
             {
-                ShowHiring();
+                isInHiring = true;
             }
             else
             {
@@ -93,12 +97,7 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.SetActive(false);
         dimmer.SetActive(false);
         portraitImage.sprite = emptyPortrait;
-    }
-
-    void ShowHiring()
-    {
-        hiringOption = 0;
-        isInHiring = true;
+        currentDilogueList.Clear();
     }
 
     void Update()
@@ -125,7 +124,6 @@ public class DialogueManager : MonoBehaviour
 
                 if (StateManager.PressedUse())
                 {
-                    isInHiring = false;
                     HideDialogue();
                 }
             }

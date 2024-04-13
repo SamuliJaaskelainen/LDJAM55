@@ -49,7 +49,7 @@ public class MoveHell : MonoBehaviour
                 Debug.Log("Hit: " + hit.transform.gameObject.name);
                 if(hit.transform.gameObject.tag == "Developer")
                 {
-                    DialogueManager.Instance.ShowConversation(hit.transform.gameObject, hit.transform.GetComponent<DeveloperInHell>().dialogues, hit.transform.GetComponent<DeveloperInHell>().traits);
+                    DialogueManager.Instance.ShowConversation(hit.transform.gameObject);
                 }
             }
         }
