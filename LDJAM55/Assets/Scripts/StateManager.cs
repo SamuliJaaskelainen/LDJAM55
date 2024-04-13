@@ -208,7 +208,7 @@ public class StateManager : MonoBehaviour
         if (menuStateChangedTime > (Time.time + 3.0f))
             return;
         
-        if (PressedUse() || PressedQuit())
+        if (PressedQuit())
         {
             ChangeState(State.MainMenu);
         }   
