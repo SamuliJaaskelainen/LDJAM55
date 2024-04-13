@@ -114,6 +114,7 @@ public class StateManager : MonoBehaviour
                 break;
 
             case State.Gameplay:
+                // TODO: Dialogue popup for game start story
                 // Keith TODO: Add game start audio (check with Start game menu audio)
                 break;
 

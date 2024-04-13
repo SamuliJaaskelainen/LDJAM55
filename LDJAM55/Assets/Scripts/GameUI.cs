@@ -31,7 +31,15 @@ public class GameUI : MonoBehaviour
         bugs.text = " Found bugs " + backend.FoundBugs();
 
         mechanics.text = " Mechanics " + (int)(backend.ProductState.MechanicsFeature * 100.0f);
-        visuals.text = " Visuals " + (int)(backend.ProductState.VisualsFeature * 100.0f); // TODO: Change to audiovisual in late game
+        // TODO: Dialogue popup for forgotten audio
+        if (backend.ProductState.TimeLeft < 60.0f)
+        {
+            visuals.text = " Audiovisuals " + (int)(backend.ProductState.AudioVisualsFeature * 100.0f);
+        }
+        else
+        {
+            visuals.text = " Visuals " + (int)(backend.ProductState.VisualsFeature * 100.0f);
+        }
         polish.text = " Polish " + (int)(backend.ProductState.PolishFeature * 100.0f);
 
         int developersAlive = 0;
