@@ -8,6 +8,7 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
+    [SerializeField] Backend backend;
     [SerializeField] GameObject dimmer;
     [SerializeField] GameObject dialogueBox;
     [SerializeField] TextMeshProUGUI dialogueText;
@@ -114,7 +115,7 @@ public class DialogueManager : MonoBehaviour
                 if (StateManager.PressedUse())
                 {
                     isInHiring = false;
-                    // TOOD: Add character to party
+                    backend.AddActiveDeveloper(developerReference.GetComponent<DeveloperInHell>().developer);
                     ShowNextDialogue();
                 }
             }

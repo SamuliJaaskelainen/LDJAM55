@@ -36,6 +36,27 @@ public class Backend : MonoBehaviour
         return selectedDeveloper;
     }
 
+    public void AddActiveDeveloper(Developer developer)
+    {
+        bool developerAdded = false;
+        for(int i = 0; i < activeDevelopers.Length; ++i)
+        {
+            if(activeDevelopers[i] == null)
+            {
+                // TODO: Signal to UI to add developer graphics
+                developerAdded = true;
+                activeDevelopers[i] = developer;
+                Debug.Log("Added new active developer: " + developer.Role);
+                return;
+            }
+        }
+
+        if(!developerAdded)
+        {
+            Debug.LogWarning("Cannot add more active developers! Active developers array full.");
+        }
+    }
+
     public void ProgressTick()
     {
         float deltaTime = Time.deltaTime;
