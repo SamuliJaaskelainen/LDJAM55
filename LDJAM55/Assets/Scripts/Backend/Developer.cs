@@ -20,7 +20,7 @@ namespace DataTypes
         [SerializeField]
         readonly string dialogue = "Hello World!";
         [SerializeField]
-        const RoleType role = RoleType.Designer;
+        readonly RoleType role = RoleType.Designer;
         [SerializeField]
         [Range(1, 3)]
         readonly int power = 1;
