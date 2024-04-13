@@ -8,9 +8,11 @@ public class AnimateHellWall : MonoBehaviour
     [SerializeField] float speed = 1.0f;
     MeshRenderer hellWall;
     float time;
-    
+    MaterialPropertyBlock propertyBlock;
+
     void Start()
     {
+        propertyBlock = new MaterialPropertyBlock();
         hellWall = GetComponent<MeshRenderer>();
     }
 
@@ -20,7 +22,9 @@ public class AnimateHellWall : MonoBehaviour
         if(time > 1.0f)
         {
             time -= 1.0f;
-        }    
-        hellWall.sharedMaterial.SetFloat("_Parallax", parallaxAnim.Evaluate(time));
+        }
+        hellWall.GetPropertyBlock(propertyBlock);
+        propertyBlock.SetFloat("_Parallax", parallaxAnim.Evaluate(time));
+        hellWall.SetPropertyBlock(propertyBlock);
     }
 }
