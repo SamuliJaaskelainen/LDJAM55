@@ -13,8 +13,13 @@ public class MoveHell : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
     }
+
     void Update()
     {
+        // No movement if in conversation
+        if(DialogueManager.Instance.IsConversationActive())
+            return;
+
         Vector3 movement = Vector3.zero;
 
         if(HoldUp())
@@ -34,6 +39,19 @@ public class MoveHell : MonoBehaviour
         else if (HoldLeft())
         {
             transform.Rotate(Vector3.up * -turnSpeed * Time.deltaTime);
+        }
+
+        if(StateManager.PressedUse())
+        {
+            RaycastHit hit;
+            if(Physics.Raycast(transform.position, transform.forward, out hit, 1.0f))
+            {
+                Debug.Log("Hit: " + hit.transform.gameObject.name);
+                if(hit.transform.gameObject.tag == "Developer")
+                {
+                    DialogueManager.Instance.ShowConversation(hit.transform.gameObject, hit.transform.GetComponent<DeveloperInHell>().dialogues, hit.transform.GetComponent<DeveloperInHell>().traits);
+                }
+            }
         }
     }
 

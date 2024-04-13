@@ -148,7 +148,7 @@ public class StateManager : MonoBehaviour
 
     void UpdateMainMenuGraphics()
     {
-        muteText.text = isMusicMuted ? "Music muted [X}" : "Music muted [  ]";
+        muteText.text = isMusicMuted ? "Music muted [X]" : "Music muted [  ]";
         volumeText.text = "Audio volume " + audioVolume.ToString();
         switch (menuIndex)
         {
