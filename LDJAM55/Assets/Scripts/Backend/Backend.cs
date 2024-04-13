@@ -10,6 +10,7 @@ public class Backend : MonoBehaviour
     [System.Serializable]
     public struct DialogueAtLevel
     {
+        // Represents one dialogue as a list of strings
         [SerializeField]
         public List<DialogueManager.Dialogue> dialogue;
     }
@@ -17,8 +18,8 @@ public class Backend : MonoBehaviour
     [System.Serializable]
     public struct DialoguesAtLevel
     {
-        [SerializeField]
         // 4 levels expected, index 0 corresponds to power <= 0.25, index 1 to power <= 0.5 etc
+        [SerializeField]
         public List<DialogueAtLevel> dialoguesPerPowerLevel;
     }
 
