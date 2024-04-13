@@ -21,6 +21,21 @@ public class Backend : MonoBehaviour
     float currentProducerBoost = 0f;
     float currentInfluencerBoost = 0f;
 
+    public Developer FetchDeveloperFromPool()
+    {
+        if (developerPool.Count == 0)
+        {
+            Debug.LogError("Empty developer pool!");
+        }
+
+        Developer selectedDeveloper = developerPool.ElementAt(UnityEngine.Random.Range(0, developerPool.Count));
+
+        // Power is lower-bounded by current influencer boost level
+        selectedDeveloper.Power = Math.Max(selectedDeveloper.Power, currentInfluencerBoost);
+
+        return selectedDeveloper;
+    }
+
     public void ProgressTick()
     {
         float deltaTime = Time.deltaTime;

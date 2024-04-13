@@ -48,7 +48,7 @@ namespace DataTypes
         public List<DialogueManager.Dialogue> Dialogue { get => dialogue; }
         public RoleType Role { get => role; }
         public List<Trait> Traits { get => traits; }
-        public float Power { get => power; }
+        public float Power { get => power; set => power = value; }
         public float Durability { get => durability; set => durability = value; }
         public bool IsAlive { get => durability > 0f; }
 
