@@ -202,6 +202,11 @@ public class Backend : MonoBehaviour
 
     private void HandleDeveloperTraitEffects(List<Developer.Trait> traits, float power)
     {
+        if (traits == null)
+        {
+            Debug.LogError("Missing traits!");
+            return;
+        }
         foreach (Developer.Trait trait in traits)
         {
             switch (trait)

@@ -50,7 +50,7 @@ namespace DataTypes
         public float HumorScore { get => humorScore; set => humorScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
         public float MoodScore { get => moodScore; set => moodScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
 
-        public FinalResult computeFinalResult()
+        public FinalResult ComputeFinalResult()
         {
             FinalResult result = new();
 
