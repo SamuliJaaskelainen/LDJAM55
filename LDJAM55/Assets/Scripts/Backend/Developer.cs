@@ -8,8 +8,8 @@ namespace DataTypes
         {
             Designer,
             Programmer,
-            Artist,
             QA,
+            Artist,
             Audio,
             Producer,
             Influencer

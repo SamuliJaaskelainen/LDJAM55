@@ -17,11 +17,34 @@ public class Backend : MonoBehaviour
 
     ProductState state;
 
+    // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
+    // Producer boost currently affects the designer, programmer, artist and audio roles
+    int currentProducerBoost = 0;
+    int currentInfluencerBoost = 0;
+
     public void ProgressTick()
     {
+        // Reset influencer and producer boosts
+        currentInfluencerBoost = 0;
+        currentProducerBoost = 0;
+
+        // Check for producers first so that their effects get applied correctly for this tick
         foreach (Developer developer in activeDevelopers)
         {
             if (developer.Durability < 1) continue;
+            if (!developer.Role.Equals(Developer.RoleType.Producer)) continue;
+
+            currentProducerBoost = Math.Max(currentProducerBoost, developer.Power);
+
+            --developer.Durability;
+
+        }
+
+        // Then handle the rest of the developers
+        foreach (Developer developer in activeDevelopers)
+        {
+            if (developer.Durability < 1) continue;
+            if (developer.Role.Equals(Developer.RoleType.Producer)) continue;
 
             HandleDeveloperEffects(developer.Role, developer.Power);
 
@@ -29,40 +52,30 @@ public class Backend : MonoBehaviour
         }
     }
 
-    // Handles actions taken by developer depending on role
+    // Handles actions taken by developer depending on role, producers are skipped
     private void HandleDeveloperEffects(Developer.RoleType role, int power)
     {
+        // Handle role-specific effect based on power
         switch (role)
         {
             case Developer.RoleType.Designer:
                 // Create feature for the backlog based on power
-                backlog.Add(new Task(power));
+                backlog.Add(new Task(power + currentProducerBoost));
                 break;
             case Developer.RoleType.Programmer:
                 // N increments on bugs or tasks depending on developer power
-                for (int step = 0; step < power; ++step)
+                for (int step = 0; step < power + currentProducerBoost; ++step)
                 {
                     // Progress a bug if any exist, or a feature otherwise
                     if (foundBugs.Count != 0)
                     {
-                        int completedTaskImpact = ProgressTask(ref foundBugs);
-                        if (completedTaskImpact > 0)
-                        {
-                            // TODO: Increment polish because bug was fixed
-                        }
+                        state.Polish += ProgressTask(ref foundBugs);
                     }
                     else
                     {
-                        int completedTaskImpact = ProgressTask(ref foundBugs);
-                        if (completedTaskImpact > 0)
-                        {
-                            // TODO: Increment mechanics because feature was implemented
-                        }
+                        state.Mechanics += ProgressTask(ref backlog);
                     }
                 }
-                break;
-            case Developer.RoleType.Artist:
-                // TODO: Progress visuals
                 break;
             case Developer.RoleType.QA:
                 // N increments on finding existing bugs depending on tester power
@@ -77,14 +90,17 @@ public class Backend : MonoBehaviour
                     }
                 }
                 break;
+            case Developer.RoleType.Artist:
+                state.VisualsScore += power + currentProducerBoost;
+                break;
             case Developer.RoleType.Audio:
-                // TODO: Progress audio
+                state.AudioScore += power + currentProducerBoost;
                 break;
             case Developer.RoleType.Producer:
-                // TODO: Boost other roles
-                break;
+                // Nothing to do, producers handled separately
+                return;
             case Developer.RoleType.Influencer:
-                // ??
+                currentInfluencerBoost = Math.Max(currentInfluencerBoost, power);
                 break;
             default:
                 Debug.LogError("Missing role type!");
@@ -96,10 +112,10 @@ public class Backend : MonoBehaviour
         var bugCreatingRoles = Array.AsReadOnly(new Developer.RoleType[] { Developer.RoleType.Programmer, Developer.RoleType.Artist, Developer.RoleType.Audio });
         if (bugCreatingRoles.Contains(role) && UnityEngine.Random.Range(0f, 1f) < bugCreationChance)
         {
-            // Just using developer power to determine bug severity for now
+            // TODO: Just using developer power to determine bug severity for now. Not affected by producer boost.
             int bugCost = power;
             hiddenBugs.Add(new Task(bugCost));
-            // TODO: Need to regress polish
+            state.Polish -= bugCost;
         }
     }
 
