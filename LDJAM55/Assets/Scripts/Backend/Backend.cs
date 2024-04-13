@@ -70,14 +70,14 @@ public class Backend : MonoBehaviour
 
         int developerRoleAsIndex = (int)selectedDeveloper.Role;
         const int dialogueLevelCount = 4;
-        if (roleDialogues.Count >= developerRoleAsIndex)
+        if (developerRoleAsIndex >= roleDialogues.Count)
         {
-            Debug.LogWarning("Role " + selectedDeveloper.Role.ToString() + " missing from backend dialogue list!");
+            Debug.LogWarning("Role " + selectedDeveloper.Role.ToString() + " id " + developerRoleAsIndex + " missing from backend dialogue list (size " + roleDialogues.Count + ")!");
             return selectedDeveloper;
         }
         if (roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel.Count < dialogueLevelCount)
         {
-            Debug.LogWarning("Role " + selectedDeveloper.Role.ToString() + " missing dialogues from backend list, expected to find " + dialogueLevelCount + " levels but only found " + roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel.Count + "!");
+            Debug.LogWarning("Role " + selectedDeveloper.Role.ToString() + " id " + developerRoleAsIndex + " missing dialogues from backend list, expected to find " + dialogueLevelCount + " levels but only found " + roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel.Count + "!");
             return selectedDeveloper;
         }
 
