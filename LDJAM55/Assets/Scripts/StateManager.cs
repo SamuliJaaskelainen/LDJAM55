@@ -136,7 +136,7 @@ public class StateManager : MonoBehaviour
                 break;
 
             case 3: // Quit game
-                if (Input.GetKeyDown(KeyCode.Space)) Application.Quit();
+                if (PressedUse()) Application.Quit();
                 break;
         }
 
