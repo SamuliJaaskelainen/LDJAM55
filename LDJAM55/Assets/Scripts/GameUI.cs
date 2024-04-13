@@ -8,6 +8,8 @@ public class GameUI : MonoBehaviour
 {
     [SerializeField] Backend backend;
 
+    [SerializeField] GameObject portal;
+
     [SerializeField] TextMeshProUGUI timer;
 
     [SerializeField] TextMeshProUGUI features;
@@ -32,6 +34,7 @@ public class GameUI : MonoBehaviour
         visuals.text = " Visuals " + (int)(backend.ProductState.VisualsFeature * 100.0f); // TODO: Change to audiovisual in late game
         polish.text = " Polish " + (int)(backend.ProductState.PolishFeature * 100.0f);
 
+        int developersAlive = 0;
         for(int i = 0; i < backend.ActiveDevelopers.Length; ++i)
         {
             if(backend.ActiveDevelopers[i] != null)
@@ -39,11 +42,18 @@ public class GameUI : MonoBehaviour
                 devImgs[i].gameObject.SetActive(backend.ActiveDevelopers[i].IsAlive);
                 devImgs[i].sprite = backend.ActiveDevelopers[i].portrait;
                 devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
+
+                if(backend.ActiveDevelopers[i].IsAlive)
+                { 
+                    developersAlive++;
+                }
             }
             else
             {
                 devImgs[i].gameObject.SetActive(false);
             }
         }
+
+        portal.SetActive(developersAlive != backend.ActiveDevelopers.Length);
     }
 }

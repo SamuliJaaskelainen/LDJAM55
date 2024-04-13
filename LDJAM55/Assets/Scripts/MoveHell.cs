@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveHell : MonoBehaviour
 {
+    [SerializeField] GameObject portal;
     [SerializeField] float speed = 10.0f;
     [SerializeField] float turnSpeed = 100.0f;
 
@@ -16,8 +17,8 @@ public class MoveHell : MonoBehaviour
 
     void Update()
     {
-        // No movement if in conversation
-        if(DialogueManager.Instance.IsConversationActive())
+        // No movement if in conversation or portal is closed
+        if(DialogueManager.Instance.IsConversationActive() || !portal.activeSelf)
             return;
 
         Vector3 movement = Vector3.zero;

@@ -1743,6 +1743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backend: {fileID: 0}
+  portal: {fileID: 4703000670142223291}
   timer: {fileID: 3989368870153701472}
   features: {fileID: 1482037245651426820}
   bugs: {fileID: 1905112163190045478}
@@ -2135,7 +2136,7 @@ GameObject:
   - component: {fileID: 6133243582332593177}
   - component: {fileID: 2865874647290211307}
   m_Layer: 5
-  m_Name: Hell
+  m_Name: HellPortal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3480,6 +3481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e225684d4d0a19844bf25b5958b3e409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portal: {fileID: 4703000670142223291}
   speed: 2
   turnSpeed: 80
 --- !u!1 &7521886212585260861
