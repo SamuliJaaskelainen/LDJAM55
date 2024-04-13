@@ -23,8 +23,11 @@ namespace DataTypes
         [SerializeField]
         Role role;
         [SerializeField]
+        [Range(1, 3)]
         int power;
         [SerializeField]
+        [Range(1, 5)]
         int durability;
+        public int Durability { get => durability; set => durability = value; }
     }
 }

@@ -1,14 +1,14 @@
+using UnityEngine;
+
 namespace DataTypes
 {
     public class Task
     {
-        enum Type
-        {
-            Feature,
-            Bug
-        }
+        [SerializeField]
+        [Range(1, 10)]
+        const int cost = 5;
 
-        Type type;
-        int cost;
+        [Range(0, 10)]
+        int progress = 0;
     }
 }
