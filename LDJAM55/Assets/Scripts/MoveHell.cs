@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoveHell : MonoBehaviour
 {
     [SerializeField] GameObject portal;
+    [SerializeField] AnimateLocaPosition headAnim;
     [SerializeField] float speed = 10.0f;
     [SerializeField] float turnSpeed = 100.0f;
 
@@ -25,20 +26,30 @@ public class MoveHell : MonoBehaviour
 
         if(HoldUp())
         {
+            // Keith TODO: Add walk audio
             movement += transform.forward;
+            headAnim.Play();
         }
         else if (HoldDown())
         {
+            // Keith TODO: Add walk audio
             movement += -transform.forward;
+            headAnim.Play();
+        }
+        else
+        {
+            headAnim.Pause();
         }
         characterController.Move(movement * speed * Time.deltaTime);
 
         if (HoldRight())
         {
+            // Keith TODO: Add turn audio
             transform.Rotate(Vector3.up * turnSpeed * Time.deltaTime);
         }
         else if (HoldLeft())
         {
+            // Keith TODO: Add turn audio
             transform.Rotate(Vector3.up * -turnSpeed * Time.deltaTime);
         }
 
