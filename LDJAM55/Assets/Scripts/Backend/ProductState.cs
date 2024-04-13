@@ -4,38 +4,37 @@ namespace DataTypes
 {
     public class ProductState
     {
-        const int scoreLowerBound = 0;
-        const int scoreUpperBound = 100;
+        const float scoreLowerBound = 0f;
+        const float scoreUpperBound = 1f;
 
         // Primary scores
-        int mechanics = 0;
-        int audioScore = 0;
-        int visualsScore = 0;
-        int polish = 50;
+        float mechanics = 0f;
+        float audioScore = 0f;
+        float visualsScore = 0f;
+        float polish = 1f;
 
         // Auxiliary scores
-        int overallScore = 0;
-        int funScore = 0;
-        int innovationScore = 0;
-        int themeScore = 0;
-        int graphicsScore = 0;
-        int humorScore = 0;
-        int moodScore = 0;
+        float funScore = 0f;
+        float innovationScore = 0f;
+        float themeScore = 0f;
+        float graphicsScore = 0f;
+        float humorScore = 0f;
+        float moodScore = 0f;
 
-        public int Mechanics { get => mechanics; set => mechanics = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public int AudioScore { get => audioScore; set => audioScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public int VisualsScore { get => visualsScore; set => visualsScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        // Note: polish is not minimum limited to 0 currently
-        public int Polish { get => polish; set => polish = Math.Clamp(value, int.MinValue, scoreUpperBound); }
         // TODO: weighted avg of all?
-        public int OverallScore { get => overallScore; set => overallScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public int FunScore { get => funScore; set => funScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public int InnovationScore { get => innovationScore; set => innovationScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public int ThemeScore { get => themeScore; set => themeScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public int GraphicsScore { get => graphicsScore; set => graphicsScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public int HumorScore { get => humorScore; set => humorScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public int MoodScore { get => moodScore; set => moodScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public float OverallScore { get => 1.0f; }
 
-        public int AudioVisuals => (audioScore + visualsScore) / 2;
+        public float Mechanics { get => mechanics; set => mechanics = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public float AudioScore { get => audioScore; set => audioScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public float VisualsScore { get => visualsScore; set => visualsScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public float AudioVisuals => (audioScore + visualsScore) / 2;
+        // Note: polish is not minimum limited to 0 currently
+        public float Polish { get => polish; set => polish = Math.Clamp(value, float.MinValue, scoreUpperBound); }
+        public float FunScore { get => funScore; set => funScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public float InnovationScore { get => innovationScore; set => innovationScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public float ThemeScore { get => themeScore; set => themeScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public float GraphicsScore { get => graphicsScore; set => graphicsScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public float HumorScore { get => humorScore; set => humorScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public float MoodScore { get => moodScore; set => moodScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
     }
 }

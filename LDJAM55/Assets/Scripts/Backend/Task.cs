@@ -6,21 +6,23 @@ namespace DataTypes
     {
         // TODO: should we have separate values for the size (required work) and impact (effect on features/polish etc metrics) ?
         [SerializeField]
-        [Range(1, 10)]
-        readonly int size;
+        [Range(0f, 900f)]
+        // Required power to complete the task, seconds
+        readonly float size;
 
-        [Range(0, 10)]
-        int progress = 0;
+        [Range(0f, 900f)]
+        // Progressed power to complete the task, seconds
+        float progress = 0f;
 
-        public Task(int cost)
+        public Task(float cost)
         {
             this.size = cost;
         }
 
-        public int Size { get => size; }
+        public float Size { get => size; }
 
-        public int Progress { get => progress; set => progress = value; }
+        public float Progress { get => progress; set => progress = value; }
 
-        public bool IsCompleted { get => progress == size; }
+        public float WorkRemaining { get => size - progress; }
     }
 }

@@ -19,92 +19,116 @@ public class Backend : MonoBehaviour
 
     // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
     // Producer boost currently affects the designer, programmer, artist and audio roles
-    int currentProducerBoost = 0;
-    int currentInfluencerBoost = 0;
+    float currentProducerBoost = 0;
+    float currentInfluencerBoost = 0;
 
     public void ProgressTick()
     {
+        float deltaTime = Time.deltaTime;
+
         // Reset influencer and producer boosts
-        currentInfluencerBoost = 0;
-        currentProducerBoost = 0;
+        currentInfluencerBoost = 0f;
+        currentProducerBoost = 0f;
 
         // Check for producers first so that their effects get applied correctly for this tick
         foreach (Developer developer in activeDevelopers)
         {
-            if (developer.Durability < 1) continue;
+            if (!developer.isAlive) continue;
             if (!developer.Role.Equals(Developer.RoleType.Producer)) continue;
 
-            currentProducerBoost = Math.Max(currentProducerBoost, developer.Power);
+            currentProducerBoost = Math.Max(currentProducerBoost, developer.Power * deltaTime);
 
-            --developer.Durability;
+            developer.Durability -= deltaTime;
 
         }
 
         // Then handle the rest of the developers
         foreach (Developer developer in activeDevelopers)
         {
-            if (developer.Durability < 1) continue;
+            if (!developer.isAlive) continue;
             if (developer.Role.Equals(Developer.RoleType.Producer)) continue;
 
-            HandleDeveloperEffects(developer.Role, developer.Power);
+            HandleDeveloperEffects(developer.Role, developer.Power * deltaTime);
 
-            --developer.Durability;
+            developer.Durability -= deltaTime;
         }
     }
 
     // Handles actions taken by developer depending on role, producers are skipped
-    private void HandleDeveloperEffects(Developer.RoleType role, int power)
+    private void HandleDeveloperEffects(Developer.RoleType role, float power)
     {
         // Handle role-specific effect based on power
         switch (role)
         {
             case Developer.RoleType.Designer:
-                // Create feature for the backlog based on power
-                backlog.Add(new Task(power + currentProducerBoost));
-                break;
+                {
+                    // Create feature for the backlog based on power
+                    backlog.Add(new Task(power + currentProducerBoost));
+                    break;
+                }
             case Developer.RoleType.Programmer:
-                // N increments on bugs or tasks depending on developer power
-                for (int step = 0; step < power + currentProducerBoost; ++step)
                 {
-                    // Progress a bug if any exist, or a feature otherwise
-                    if (foundBugs.Count != 0)
+
+                    // N increments on bugs or tasks depending on developer power
+                    float powerToSpend = power + currentProducerBoost;
+                    while (powerToSpend > 0f)
                     {
-                        state.Polish += ProgressTask(ref foundBugs);
+                        // Progress a bug if any exist, or a feature otherwise
+                        if (foundBugs.Count != 0)
+                        {
+                            state.Polish += ProgressTasks(ref foundBugs, ref powerToSpend);
+                        }
+                        else if (backlog.Count != 0)
+                        {
+                            state.Mechanics += ProgressTasks(ref backlog, ref powerToSpend);
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
-                    else
-                    {
-                        state.Mechanics += ProgressTask(ref backlog);
-                    }
+                    break;
+
                 }
-                break;
             case Developer.RoleType.QA:
-                // N increments on finding existing bugs depending on tester power
-                for (int step = 0; step < power; ++step)
                 {
-                    int completedTaskImpact = ProgressTask(ref hiddenBugs);
-                    if (completedTaskImpact > 0)
+                    // QA currently not affected by producer boost
+                    float powerToSpend = power;
+                    float foundBugPower = ProgressTasks(ref hiddenBugs, ref powerToSpend);
+                    if (foundBugPower > 0f)
                     {
-                        // TODO: What should the workload of found bugs be? Using the unfound bugs size as a placeholder for now
-                        // If the hidden bug was "completed", ie. found, create a found bug based off it
-                        foundBugs.Add(new Task(completedTaskImpact));
+                        // Currently the found bugs get lumped together into one big "found" bug,
+                        // once we decide how how the found bug size is calculated we might also want to refactor
+                        // this so that individual unfound bugs become separate found bugs
+                        foundBugs.Add(new Task(foundBugPower));
                     }
+                    break;
                 }
-                break;
             case Developer.RoleType.Artist:
-                state.VisualsScore += power + currentProducerBoost;
-                break;
+                {
+                    state.VisualsScore += power + currentProducerBoost;
+                    break;
+                }
             case Developer.RoleType.Audio:
-                state.AudioScore += power + currentProducerBoost;
-                break;
+                {
+                    state.AudioScore += power + currentProducerBoost;
+                    break;
+                }
             case Developer.RoleType.Producer:
-                // Nothing to do, producers handled separately
-                return;
+                {
+                    // Nothing to do, producers handled separately
+                    return;
+                }
             case Developer.RoleType.Influencer:
-                currentInfluencerBoost = Math.Max(currentInfluencerBoost, power);
-                break;
+                {
+                    currentInfluencerBoost = Math.Max(currentInfluencerBoost, power);
+                    break;
+                }
             default:
-                Debug.LogError("Missing role type!");
-                break;
+                {
+                    Debug.LogError("Missing role type!");
+                    break;
+                }
         }
 
         // Probability that a bug will be created if this role is applicable
@@ -113,23 +137,30 @@ public class Backend : MonoBehaviour
         if (bugCreatingRoles.Contains(role) && UnityEngine.Random.Range(0f, 1f) < bugCreationChance)
         {
             // TODO: Just using developer power to determine bug severity for now. Not affected by producer boost.
-            int bugCost = power;
+            float bugCost = power;
             hiddenBugs.Add(new Task(bugCost));
             state.Polish -= bugCost;
         }
     }
 
-    // Increment the first task of the provided queue, and return its impact if it becomes completed. 0 otherwise.
-    private int ProgressTask(ref List<Task> taskList)
+    // Progress the provided queue until it is empty or powerToSpend is 0. Return the sum of impacts of completed tasks.
+    private float ProgressTasks(ref List<Task> taskList, ref float powerToSpend)
     {
-        int completedImpact = 0;
-        if (taskList.Count != 0)
+        float completedImpact = 0;
+        while (powerToSpend > 0f && taskList.Count != 0)
         {
-            ++taskList.First().Progress;
-            if (taskList.First().IsCompleted)
+            float workLeft = taskList.First().WorkRemaining;
+            if (workLeft > powerToSpend)
+            {
+                taskList.First().Progress += powerToSpend;
+                powerToSpend = 0f;
+            }
+            else
             {
                 // TODO: for now just using the tasks's size as the impact
-                completedImpact = taskList.First().Size;
+                completedImpact += taskList.First().Size;
+                taskList.RemoveAt(0);
+                powerToSpend -= workLeft;
             }
         }
         return completedImpact;
