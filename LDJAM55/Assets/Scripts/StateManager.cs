@@ -121,18 +121,22 @@ public class StateManager : MonoBehaviour
                 break;
 
             case State.Results:
-                // Delete developers from hell
-                for (int i = 0; i < spawnedDevelopers.Count; ++i)
-                {
-                    if (spawnedDevelopers[i] != null)
-                    {
-                        Destroy(spawnedDevelopers[i]);
-                    }
-                }
-                spawnedDevelopers.Clear();
+                ClearHell();
                 // Keith TODO: Add results shown audio
                 break;
         }
+    }
+
+    public void ClearHell()
+    {
+        for (int i = 0; i < spawnedDevelopers.Count; ++i)
+        {
+            if (spawnedDevelopers[i] != null)
+            {
+                Destroy(spawnedDevelopers[i]);
+            }
+        }
+        spawnedDevelopers.Clear();
     }
 
     void UpdateMainMenu()
@@ -232,9 +236,10 @@ public class StateManager : MonoBehaviour
         }
         else if (!audioStoryShown && backend.ProductState.RelativeTimeLeft < AUDIO_STORY_TIME)
         {
+            ClearHell();
             DialogueManager.Instance.ShowStoryConversation(storyAudio);
-            audioStoryShown = true;
             backend.AllowAudioSpawn = true;
+            audioStoryShown = true;
         }
 
         if (Time.time > developerSpawnTimer)
