@@ -252,7 +252,7 @@ public class Backend : MonoBehaviour
         }
 
         // Probability that a bug will be created if this role is applicable
-        const float bugCreationChance = 0.4f;
+        const float bugCreationChance = 0.33f;
         var bugCreatingRoles = Array.AsReadOnly(new Developer.RoleType[] { Developer.RoleType.Programmer, Developer.RoleType.Artist, Developer.RoleType.Audio });
         if (bugCreatingRoles.Contains(role) && UnityEngine.Random.Range(0f, 1f) < bugCreationChance)
         {
