@@ -35,6 +35,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] Sprite[] emptySprite;
     [SerializeField] Sprite[] devDeathSprites;
     [SerializeField] TextMeshProUGUI[] devDurabilities;
+    [SerializeField] TextMeshProUGUI[] devTitles;
 
     int portalFrame;
     float portalAnimSpeed = 0.16f;
@@ -105,6 +106,23 @@ public class GameUI : MonoBehaviour
                         {
                             devAnims[i].transform.localScale = Vector3.one;
                         }
+
+                        if(backend.ActiveDevelopers[i].Power < 0.25f)
+                        {
+                            devTitles[i].text = "Intern";
+                        }
+                        else if (backend.ActiveDevelopers[i].Power < 0.5f)
+                        {
+                            devTitles[i].text = "Junior";
+                        }
+                        else if (backend.ActiveDevelopers[i].Power < 0.74f)
+                        {
+                            devTitles[i].text = "Senior";
+                        }
+                        else
+                        {
+                            devTitles[i].text = "Lead";
+                        }
                     }
                     devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
                     developersAlive++;
@@ -114,6 +132,7 @@ public class GameUI : MonoBehaviour
                     if (devAlive[i])
                     {
                         devDurabilities[i].text = "";
+                        devTitles[i].text = "";
                         devAnims[i].SetNewFrames(devDeathSprites);
                         devAnims[i].Play();
                         devAlive[i] = false;
@@ -124,6 +143,7 @@ public class GameUI : MonoBehaviour
             else
             {
                 devDurabilities[i].text = "";
+                devTitles[i].text = "";
                 devAnims[i].SetNewFrames(emptySprite);
             }
         }
