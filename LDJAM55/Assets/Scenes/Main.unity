@@ -328,6 +328,9 @@ MonoBehaviour:
   muteText: {fileID: 774930039}
   volumeText: {fileID: 376274532}
   quitText: {fileID: 1491105859}
+  storyStart:
+  - text: I wanna do Ludum Dare but I have no friends. :(
+  - text: Let's summon some slaves!
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0

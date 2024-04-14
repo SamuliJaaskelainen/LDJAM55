@@ -113,6 +113,9 @@ public class Backend : MonoBehaviour
 
     public void ProgressTick()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))
+            return;
+
         float deltaTime = Time.deltaTime;
 
         // Reduce time left to develop

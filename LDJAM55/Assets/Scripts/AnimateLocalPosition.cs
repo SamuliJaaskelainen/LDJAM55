@@ -34,7 +34,7 @@ public class AnimateLocaPosition : MonoBehaviour
     {
         if(reverse)
         {
-            timer -= Time.deltaTime / duration;
+            timer -= Time.unscaledDeltaTime / duration;
             if (timer > 0.0f)
             {
                 transform.localPosition = new Vector3(startValue.x + X.Evaluate(timer) * curveMultiplier, startValue.y + Y.Evaluate(timer) * curveMultiplier, startValue.z + Z.Evaluate(timer) * curveMultiplier);

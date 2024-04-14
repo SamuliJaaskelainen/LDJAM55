@@ -17,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] Sprite emptyPortrait;
     [SerializeField] Sprite spiritPortrait1;
     [SerializeField] Sprite spiritPortrait2;
+    [SerializeField] Sprite bossPortrait;
 
     List<Dialogue> currentDilogueList = new List<Dialogue>();
     GameObject developerReference;
@@ -82,6 +83,27 @@ public class DialogueManager : MonoBehaviour
         ShowNextDialogue();
     }
 
+    public void ShowStoryConversation(List<Dialogue> storyDialogue)
+    {
+        // TODO: Show trait icons
+        dialogueBox.reverse = true;
+        dialogueBox.ResetToStart();
+        dialogueBox.Play();
+        portraitAnim.reverse = true;
+        portraitAnim.ResetToStart();
+        portraitAnim.Play();
+        isConversationActive = true;
+        isInHiring = false;
+        hiringOption = 0;
+        isOpenedOnThisFrame = true;
+        isPortraitVisible = false;
+        developerReference = null;
+        currentDilogueList = storyDialogue;
+        Time.timeScale = 0.0f;
+        Debug.Log("Dialogue loaded, size of " + currentDilogueList.Count);
+        ShowNextDialogue();
+    }
+
     void ShowNextDialogue()
     {
         // Keith TODO: Add show dialogue audio
@@ -114,14 +136,22 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            portraitImage.sprite = currentDilogueList.Count % 2 == 0 ? spiritPortrait1 : spiritPortrait2;
+            if(developerReference == null)
+            {
+                portraitImage.sprite = bossPortrait;
+            }
+            else
+            {
+                portraitImage.sprite = currentDilogueList.Count % 2 == 0 ? spiritPortrait1 : spiritPortrait2;
+            }
         }
     }
 
     void StopConversation()
     {
         if(developerReference != null)
-        { 
+        {
+            // Destory reference immediately to avoid bugs with MoveHell.cs
             DestroyImmediate(developerReference);
         }
         dialogueBox.reverse = false;
@@ -132,12 +162,13 @@ public class DialogueManager : MonoBehaviour
         portraitAnim.Play();
         currentDilogueList.Clear();
         isConversationActive = false;
+        Time.timeScale = 1.0f;
     }
 
     void Update()
     {
         // Darken scene if conversation is active
-        dimmer.color = Color.Lerp(dimmer.color, IsConversationActive() ? dimmerColor : Color.clear, Time.deltaTime * 3.0f);
+        dimmer.color = Color.Lerp(dimmer.color, IsConversationActive() ? dimmerColor : Color.clear, Time.unscaledDeltaTime * 3.0f);
 
         // Only update when we have dialogue
         if (!IsConversationActive())
@@ -181,9 +212,9 @@ public class DialogueManager : MonoBehaviour
         }
         else if(!isOpenedOnThisFrame)
         {
-            if(Time.time > textAnimTimer)
+            if(Time.unscaledTime > textAnimTimer)
             {
-                textAnimTimer = Time.time + textAnimRate;
+                textAnimTimer = Time.unscaledTime + textAnimRate;
                 wordsShown++;
                 wordsShown = Mathf.Clamp(wordsShown, 0, currentDialogueWords.Length);
                 dialogueText.text = "";

@@ -25,6 +25,8 @@ public class StateManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI volumeText;
     [SerializeField] TextMeshProUGUI quitText;
 
+    [SerializeField] List<DialogueManager.Dialogue> storyStart = new List<DialogueManager.Dialogue>();
+
     public static bool PressedUp()
     {
         return Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W);
@@ -114,7 +116,7 @@ public class StateManager : MonoBehaviour
                 break;
 
             case State.Gameplay:
-                // TODO: Dialogue popup for game start story
+                DialogueManager.Instance.ShowStoryConversation(storyStart);
                 // Keith TODO: Add game start audio (check with Start game menu audio)
                 break;
 
