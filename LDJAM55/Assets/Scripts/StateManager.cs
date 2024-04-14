@@ -26,6 +26,10 @@ public class StateManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI quitText;
 
     [SerializeField] List<DialogueManager.Dialogue> storyStart = new List<DialogueManager.Dialogue>();
+    [SerializeField] List<DialogueManager.Dialogue> storyAudio = new List<DialogueManager.Dialogue>();
+
+    public const float AUDIO_STORY_TIME = 60.0f;
+    bool audioStoryShown = false;
 
     public static bool PressedUp()
     {
@@ -104,6 +108,7 @@ public class StateManager : MonoBehaviour
             case State.MainMenu:
                 developerSpawnRate = 0.1f;
                 menuIndex = 0;
+                audioStoryShown = false;
                 UpdateMainMenuGraphics();
                 for(int i = 0; i < spawnedDevelopers.Count; ++i)
                 {
@@ -219,6 +224,11 @@ public class StateManager : MonoBehaviour
         {
             ChangeState(State.Results);
         }
+        else if (!audioStoryShown && backend.ProductState.TimeLeft < AUDIO_STORY_TIME)
+        {
+            DialogueManager.Instance.ShowStoryConversation(storyAudio);
+            audioStoryShown = true;
+        }
 
         if (Time.time > developerSpawnTimer)
         {
@@ -261,6 +271,16 @@ public class StateManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.End))
         {
             ChangeState(State.Results);
+        }
+
+        // Debug key to fast forward time
+        if (Input.GetKeyDown(KeyCode.PageUp))
+        {
+            Time.timeScale += 10.0f;
+        }
+        else if (Input.GetKeyDown(KeyCode.PageDown))
+        {
+            Time.timeScale = 1.0f;
         }
     }
 

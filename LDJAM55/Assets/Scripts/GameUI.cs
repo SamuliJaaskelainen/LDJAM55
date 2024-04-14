@@ -46,8 +46,8 @@ public class GameUI : MonoBehaviour
         bugs.text = " Found bugs " + backend.FoundBugs();
 
         mechanics.text = " Mechanics " + (int)(backend.ProductState.MechanicsFeature * 100.0f);
-        // TODO: Dialogue popup for forgotten audio
-        if (backend.ProductState.TimeLeft < 60.0f)
+
+        if (backend.ProductState.TimeLeft < StateManager.AUDIO_STORY_TIME)
         {
             visuals.text = " Audiovisuals " + (int)(backend.ProductState.AudioVisualsFeature * 100.0f);
         }
