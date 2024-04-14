@@ -224,7 +224,9 @@ public class Backend : MonoBehaviour
                     float powerToSpend = power + currentProducerBoost;
                     while (powerToSpend > 0f)
                     {
-                        if (foundBugs.Count != 0 && backlog.Count != 0)
+                        // Only work on mechanics if it's not full
+                        bool mechanicsWorkToDo = backlog.Count != 0 && productState.MechanicsFeature < 1f;
+                        if (foundBugs.Count != 0 && mechanicsWorkToDo)
                         {
                             // 50/50 split between bug fixing and backlog progress if both are not empty
                             float powerToSpendOnMechanics = powerToSpend / 2f;
@@ -237,7 +239,7 @@ public class Backend : MonoBehaviour
                         {
                             productState.AddPolishFeature(ProgressTasks(ref foundBugs, ref powerToSpend));
                         }
-                        else if (backlog.Count != 0)
+                        else if (mechanicsWorkToDo)
                         {
                             productState.AddMechanicsFeature(ProgressTasks(ref backlog, ref powerToSpend));
                         }
