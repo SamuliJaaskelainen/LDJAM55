@@ -1,5 +1,80 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &126066664964082145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8611694729377892283}
+  - component: {fileID: 3777031660360900069}
+  - component: {fileID: 8448940693517871687}
+  m_Layer: 5
+  m_Name: HellPortalEdge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8611694729377892283
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126066664964082145}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6114279715409314050}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 105, y: 229}
+  m_SizeDelta: {x: 511.99, y: 512}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3777031660360900069
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126066664964082145}
+  m_CullTransparentMesh: 1
+--- !u!114 &8448940693517871687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126066664964082145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 084b1f8f4ce083f45b4a33e172ed5172, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &327115920003662537
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,6 +1853,7 @@ RectTransform:
   - {fileID: 5996629956509914392}
   - {fileID: 8828205646394861451}
   - {fileID: 8851002938779916708}
+  - {fileID: 8611694729377892283}
   - {fileID: 8012148754239915311}
   - {fileID: 4302249532758625921}
   - {fileID: 186260179580404143}
@@ -1805,6 +1881,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backend: {fileID: 0}
   portal: {fileID: 4703000670142223291}
+  portalEdge: {fileID: 8448940693517871687}
+  portalFrames:
+  - {fileID: 21300000, guid: 92fdaa3fbf038aa46bf729ee51d2e2cb, type: 3}
+  - {fileID: 21300000, guid: 10c5977c8d0b10f40affba9425085ec0, type: 3}
+  - {fileID: 21300000, guid: 96eeab9cb88fcc140aff4d37b53853b1, type: 3}
+  - {fileID: 21300000, guid: 4080084d0fb3a364d81bdd3899f46154, type: 3}
+  - {fileID: 21300000, guid: 07b15a0441215a3428528d31c06bb937, type: 3}
+  - {fileID: 21300000, guid: c57cb10356085774aa85baab946af729, type: 3}
+  - {fileID: 21300000, guid: 084b1f8f4ce083f45b4a33e172ed5172, type: 3}
   timer: {fileID: 3989368870153701472}
   features: {fileID: 1482037245651426820}
   bugs: {fileID: 1905112163190045478}

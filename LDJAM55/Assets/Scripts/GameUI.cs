@@ -11,6 +11,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] Backend backend;
 
     [SerializeField] GameObject portal;
+    [SerializeField] Image portalEdge;
+    [SerializeField] Sprite[] portalFrames;
 
     [SerializeField] TextMeshProUGUI timer;
 
@@ -23,6 +25,10 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] Image[] devImgs;
     [SerializeField] TextMeshProUGUI[] devDurabilities;
+
+    int portalFrame;
+    float portalAnimSpeed = 0.2f;
+    float portalAnimTimer;
 
     void Update()
     {
@@ -64,6 +70,38 @@ public class GameUI : MonoBehaviour
             }
         }
 
-        portal.SetActive(developersAlive != backend.ActiveDevelopers.Length);
+        bool isPortalOpen = developersAlive != backend.ActiveDevelopers.Length;
+
+        if(isPortalOpen)
+        {
+            portal.SetActive(true);
+            if(Time.time > portalAnimTimer)
+            {
+                portalAnimTimer = Time.time + portalAnimSpeed;
+                portalFrame++;
+                if (portalFrame >= portalFrames.Length)
+                {
+                    // Keep looping last two frames
+                    portalFrame -= 2;
+                }
+                portalFrame = Mathf.Clamp(portalFrame, 0, portalFrames.Length - 1);
+                portalEdge.sprite = portalFrames[portalFrame];
+            }
+        }
+        else
+        {
+            if (Time.time > portalAnimTimer)
+            {
+                portalAnimTimer = Time.time + portalAnimSpeed;
+                portalFrame--;
+                portalFrame = Mathf.Clamp(portalFrame, 0, portalFrames.Length);
+                portalEdge.sprite = portalFrames[portalFrame];
+                if(portalFrame == 0)
+                {
+                    portal.SetActive(true);
+                }
+            }
+        }
+        
     }
 }

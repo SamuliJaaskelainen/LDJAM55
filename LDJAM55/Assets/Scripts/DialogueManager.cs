@@ -60,7 +60,7 @@ public class DialogueManager : MonoBehaviour
         // Keith TODO: Add show dialogue audio
         if (currentDilogueList.Count > 0)
         { 
-            if(currentDilogueList[0].text == "HIRE")
+            if(currentDilogueList[0].text == "SUMMON")
             {
                 isInHiring = true;
             }
