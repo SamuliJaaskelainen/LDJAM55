@@ -2246,7 +2246,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1e108d2fc80472546b79f30d5e0e48d3, type: 3}
   - {fileID: 21300000, guid: b29d6f5e8751c694cae860093417b8f3, type: 3}
   bossIdleFrames:
-  - {fileID: 21300000, guid: b29d6f5e8751c694cae860093417b8f3, type: 3}
+  - {fileID: 21300000, guid: 6765a757ef69b0240b41ef1c6a27935d, type: 3}
+  - {fileID: 21300000, guid: cc62c041fff265244b0c0875d69d7a4a, type: 3}
   timer: {fileID: 3989368870153701472}
   features: {fileID: 1482037245651426820}
   bugs: {fileID: 1905112163190045478}
@@ -5364,8 +5365,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -532, y: 229}
-  m_SizeDelta: {x: 249.85, y: 319.71}
+  m_AnchoredPosition: {x: -532, y: 221.5}
+  m_SizeDelta: {x: 205.41, y: 262.85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1593069880417396715
 CanvasRenderer:
@@ -5388,14 +5389,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.84278667, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1e108d2fc80472546b79f30d5e0e48d3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6765a757ef69b0240b41ef1c6a27935d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5418,10 +5419,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frames:
-  - {fileID: 21300000, guid: 1e108d2fc80472546b79f30d5e0e48d3, type: 3}
-  - {fileID: 21300000, guid: b29d6f5e8751c694cae860093417b8f3, type: 3}
+  - {fileID: 21300000, guid: 6765a757ef69b0240b41ef1c6a27935d, type: 3}
+  - {fileID: 21300000, guid: cc62c041fff265244b0c0875d69d7a4a, type: 3}
   autoPlay: 1
-  rate: 0.1
+  rate: 0.3
   loop: 1
 --- !u!1 &8440698170916581953
 GameObject:
