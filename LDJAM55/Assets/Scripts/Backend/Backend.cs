@@ -42,15 +42,18 @@ public class Backend : MonoBehaviour
 
     public Developer[] ActiveDevelopers { get => activeDevelopers; }
     public ProductState ProductState { get => productState; }
+    public bool AllowAudioSpawn { get => allowAudioSpawn; set => allowAudioSpawn = value; }
+
+    bool allowAudioSpawn = false;
 
     public float FoundBugs()
     {
         float work = 0;
-        foreach(Task bug in foundBugs)
+        foreach (Task bug in foundBugs)
         {
             work += bug.Size;
         }
-        return work;
+        return work * ProductState.PowerScale;
     }
 
     public float Backlog()
@@ -60,7 +63,7 @@ public class Backend : MonoBehaviour
         {
             work += bug.Size;
         }
-        return work;
+        return work * ProductState.PowerScale;
     }
 
     // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
@@ -72,7 +75,7 @@ public class Backend : MonoBehaviour
     {
         Developer developer = new Developer();
 
-        int developerRoleAsIndex = UnityEngine.Random.Range(0, 7);
+        int developerRoleAsIndex = Developer.RandomDeveloperIndex(allowAudioSpawn);
 
         developer.Role = (Developer.RoleType)developerRoleAsIndex;
 
@@ -191,11 +194,11 @@ public class Backend : MonoBehaviour
                         // Progress a bug if any exist, or a feature otherwise
                         if (foundBugs.Count != 0)
                         {
-                            productState.PolishFeature += ProgressTasks(ref foundBugs, ref powerToSpend);
+                            productState.AddPolishFeature(ProgressTasks(ref foundBugs, ref powerToSpend));
                         }
                         else if (backlog.Count != 0)
                         {
-                            productState.MechanicsFeature += ProgressTasks(ref backlog, ref powerToSpend);
+                            productState.AddMechanicsFeature(ProgressTasks(ref backlog, ref powerToSpend));
                         }
                         else
                         {
@@ -221,12 +224,12 @@ public class Backend : MonoBehaviour
                 }
             case Developer.RoleType.Artist:
                 {
-                    productState.VisualsFeature += power + currentProducerBoost;
+                    productState.AddVisualsFeature(power + currentProducerBoost);
                     break;
                 }
             case Developer.RoleType.Audio:
                 {
-                    productState.AudioFeature += power + currentProducerBoost;
+                    productState.AddAudioFeature(power + currentProducerBoost);
                     break;
                 }
             case Developer.RoleType.Producer:
@@ -245,17 +248,18 @@ public class Backend : MonoBehaviour
                     Debug.LogError("Missing role type!");
                     break;
                 }
+
         }
 
         // Probability that a bug will be created if this role is applicable
-        const float bugCreationChance = 0.5f;
+        const float bugCreationChance = 0.4f;
         var bugCreatingRoles = Array.AsReadOnly(new Developer.RoleType[] { Developer.RoleType.Programmer, Developer.RoleType.Artist, Developer.RoleType.Audio });
         if (bugCreatingRoles.Contains(role) && UnityEngine.Random.Range(0f, 1f) < bugCreationChance)
         {
             // TODO: Just using developer power to determine bug severity for now. Not affected by producer boost.
             float bugCost = power;
             hiddenBugs.Add(new Task(bugCost));
-            productState.PolishFeature -= bugCost;
+            productState.AddPolishFeature(-bugCost);
         }
     }
 
@@ -294,25 +298,25 @@ public class Backend : MonoBehaviour
             switch (trait)
             {
                 case Developer.Trait.Fun:
-                    productState.FunScore += power;
+                    productState.AddFunScore(power);
                     break;
                 case Developer.Trait.Innovation:
-                    productState.InnovationScore += power;
+                    productState.AddInnovationScore(power);
                     break;
                 case Developer.Trait.Theme:
-                    productState.ThemeScore += power;
+                    productState.AddThemeScore(power);
                     break;
                 case Developer.Trait.Graphics:
-                    productState.GraphicsScore += power;
+                    productState.AddGraphicsScore(power);
                     break;
                 case Developer.Trait.Audio:
-                    productState.AudioScore += power;
+                    productState.AddAudioScore(power);
                     break;
                 case Developer.Trait.Humor:
-                    productState.HumorScore += power;
+                    productState.AddHumorScore(power);
                     break;
                 case Developer.Trait.Mood:
-                    productState.MoodScore += power;
+                    productState.AddMoodScore(power);
                     break;
                 default:
                     Debug.LogError("Missing trait type!");

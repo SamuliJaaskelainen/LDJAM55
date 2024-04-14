@@ -58,7 +58,49 @@ namespace DataTypes
         {
             return (Developer)MemberwiseClone();
         }
+        public static int RandomDeveloperIndex(bool allowAudioSpawn)
+        {
+            // Weights
+            int designerIndexes = 9;
+            int programmerIndexes = 15 + designerIndexes;
+            int qaIndexes = 9 + programmerIndexes;
+            int artistIndexes = 6 + qaIndexes;
+            int audioIndexes = (allowAudioSpawn ? 15 : 0) + artistIndexes;
+            int producerIndexes = 2 + audioIndexes;
+            int influencerIndexes = 2 + producerIndexes;
 
+            int rollDeveloper = UnityEngine.Random.Range(0, influencerIndexes);
+            if (rollDeveloper < designerIndexes)
+            {
+
+                return 0;
+            }
+            else if (rollDeveloper < programmerIndexes)
+            {
+
+                return 1;
+            }
+            else if (rollDeveloper < qaIndexes)
+            {
+
+                return 2;
+            }
+            else if (rollDeveloper < artistIndexes)
+            {
+
+                return 3;
+            }
+            else if (rollDeveloper < audioIndexes)
+            {
+
+                return 4;
+            }
+            else if (rollDeveloper < producerIndexes)
+            {
+                return 5;
+            }
+            return 6;
+        }
         public static float RandomPower(float lowerBound)
         {
             const double mean = 0.5;
