@@ -12,7 +12,9 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] GameObject portal;
     [SerializeField] Image portalEdge;
+    [SerializeField] RawImage portalMask;
     [SerializeField] Sprite[] portalFrames;
+    [SerializeField] Texture[] portalMaskFrames;
 
     [SerializeField] ImageAnimator bossAnim;
     [SerializeField] Sprite[] bossSummonFrames;
@@ -107,6 +109,7 @@ public class GameUI : MonoBehaviour
                 }
                 portalFrame = Mathf.Clamp(portalFrame, 0, portalFrames.Length - 1);
                 portalEdge.sprite = portalFrames[portalFrame];
+                portalMask.texture = portalMaskFrames[portalFrame];
             }
         }
         else
@@ -118,6 +121,7 @@ public class GameUI : MonoBehaviour
                 portalFrame--;
                 portalFrame = Mathf.Clamp(portalFrame, 0, portalFrames.Length);
                 portalEdge.sprite = portalFrames[portalFrame];
+                portalMask.texture = portalMaskFrames[portalFrame];
                 if(portalFrame == 0)
                 {
                     portal.SetActive(false);
