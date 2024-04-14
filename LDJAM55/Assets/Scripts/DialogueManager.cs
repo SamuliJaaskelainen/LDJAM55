@@ -26,6 +26,10 @@ public class DialogueManager : MonoBehaviour
     bool isPortraitVisible = false;
     bool isConversationActive = false;
     Color dimmerColor;
+    int wordsShown = 0;
+    string[] currentDialogueWords;
+    float textAnimRate = 0.04f;
+    float textAnimTimer;
 
     [System.Serializable]
     public struct Dialogue
@@ -102,8 +106,8 @@ public class DialogueManager : MonoBehaviour
 
     void ShowDialogue(Dialogue dialogue)
     {
-        // TODO: Animate dialigue words / letters
-        dialogueText.text = dialogue.text;
+        wordsShown = 1;
+        currentDialogueWords = dialogue.text.Split(" ");
         if(isPortraitVisible)
         {
             portraitImage.sprite = developerReference.GetComponent<DeveloperInHell>().developer.portrait;
@@ -177,6 +181,20 @@ public class DialogueManager : MonoBehaviour
         }
         else if(!isOpenedOnThisFrame)
         {
+            if(Time.time > textAnimTimer)
+            {
+                textAnimTimer = Time.time + textAnimRate;
+                wordsShown++;
+                wordsShown = Mathf.Clamp(wordsShown, 0, currentDialogueWords.Length);
+                dialogueText.text = "";
+                for (int i = 0; i < wordsShown; ++i)
+                {
+                    dialogueText.text += currentDialogueWords[i];
+                    dialogueText.text += " ";
+                }
+                
+            }
+
             if (StateManager.PressedUse()) ShowNextDialogue();
         }
         else
