@@ -45,12 +45,22 @@ public class Backend : MonoBehaviour
 
     public int FoundBugs()
     {
-        return foundBugs.Count;
+        float work = 0;
+        foreach(Task bug in foundBugs)
+        {
+            work += bug.Size;
+        }
+        return (int)work;
     }
 
     public int Backlog()
     {
-        return backlog.Count;
+        float work = 0;
+        foreach (Task bug in backlog)
+        {
+            work += bug.Size;
+        }
+        return (int)work;
     }
 
     // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick

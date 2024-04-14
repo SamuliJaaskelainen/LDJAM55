@@ -25,9 +25,10 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI features;
     [SerializeField] TextMeshProUGUI bugs;
 
-    [SerializeField] TextMeshProUGUI mechanics;
-    [SerializeField] TextMeshProUGUI visuals;
-    [SerializeField] TextMeshProUGUI polish;
+    [SerializeField] Image mechanics;
+    [SerializeField] Image visuals;
+    [SerializeField] Image polish;
+    [SerializeField] Gradient fillGradient;
 
     [SerializeField] ImageAnimator[] devAnims;
     [SerializeField] Sprite[] emptySprite;
@@ -47,17 +48,21 @@ public class GameUI : MonoBehaviour
         features.text = " Features " + backend.Backlog();
         bugs.text = " Found bugs " + backend.FoundBugs();
 
-        mechanics.text = " Mechanics " + (int)(backend.ProductState.MechanicsFeature * 100.0f);
+        mechanics.fillAmount = Mathf.Clamp01(backend.ProductState.MechanicsFeature);
+        mechanics.color = fillGradient.Evaluate(backend.ProductState.MechanicsFeature);
 
         if (backend.ProductState.TimeLeft < StateManager.AUDIO_STORY_TIME)
         {
-            visuals.text = " Audiovisuals " + (int)(backend.ProductState.AudioVisualsFeature * 100.0f);
+            visuals.fillAmount = Mathf.Clamp01(backend.ProductState.AudioVisualsFeature);
+            visuals.color = fillGradient.Evaluate(backend.ProductState.AudioVisualsFeature);
         }
         else
         {
-            visuals.text = " Visuals " + (int)(backend.ProductState.VisualsFeature * 100.0f);
+            visuals.fillAmount = Mathf.Clamp01(backend.ProductState.VisualsFeature);
+            visuals.color = fillGradient.Evaluate(backend.ProductState.VisualsFeature);
         }
-        polish.text = " Polish " + (int)(backend.ProductState.PolishFeature * 100.0f);
+        polish.fillAmount = Mathf.Clamp01(backend.ProductState.PolishFeature);
+        polish.color = fillGradient.Evaluate(backend.ProductState.PolishFeature);
 
         int developersAlive = 0;
         for(int i = 0; i < backend.ActiveDevelopers.Length; ++i)
