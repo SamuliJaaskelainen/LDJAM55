@@ -870,6 +870,7 @@ GameObject:
   - component: {fileID: 3263941153098543195}
   - component: {fileID: 2504424726768382063}
   - component: {fileID: 104647490578646747}
+  - component: {fileID: 931157429800857153}
   m_Layer: 5
   m_Name: Dev3
   m_TagString: Untagged
@@ -951,6 +952,68 @@ MonoBehaviour:
   autoPlay: 0
   rate: 0.2
   loop: 0
+--- !u!114 &931157429800857153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594755973628332902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a55664efc485bf4cb332399850a5a78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoStart: 0
+  duration: 0.3
+  loop: 0
+  reverse: 0
+  X:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Y:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1.0012349
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.00086432695
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Z:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveMultiplier: 1
 --- !u!1 &1609825968564306350
 GameObject:
   m_ObjectHideFlags: 0
@@ -6514,6 +6577,7 @@ GameObject:
   - component: {fileID: 2374245449423378652}
   - component: {fileID: 2705836362158168535}
   - component: {fileID: 2294010668615050421}
+  - component: {fileID: 7804521329413143304}
   m_Layer: 5
   m_Name: Dev4
   m_TagString: Untagged
@@ -6595,6 +6659,68 @@ MonoBehaviour:
   autoPlay: 0
   rate: 0.2
   loop: 0
+--- !u!114 &7804521329413143304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2971893019938635183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a55664efc485bf4cb332399850a5a78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoStart: 0
+  duration: 0.3
+  loop: 0
+  reverse: 0
+  X:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Y:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1.0012349
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.00086432695
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Z:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveMultiplier: 1
 --- !u!1 &2978168407803906234
 GameObject:
   m_ObjectHideFlags: 0
@@ -7033,6 +7159,7 @@ GameObject:
   - component: {fileID: 5612174879987949403}
   - component: {fileID: 3816601462446200742}
   - component: {fileID: 2532489504082356634}
+  - component: {fileID: 714188281313616585}
   m_Layer: 5
   m_Name: Dev1
   m_TagString: Untagged
@@ -7114,6 +7241,68 @@ MonoBehaviour:
   autoPlay: 0
   rate: 0.2
   loop: 0
+--- !u!114 &714188281313616585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3712095691705437354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a55664efc485bf4cb332399850a5a78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoStart: 0
+  duration: 0.3
+  loop: 0
+  reverse: 0
+  X:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Y:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1.0012349
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.00086432695
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Z:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveMultiplier: 1
 --- !u!1 &3827858512423035974
 GameObject:
   m_ObjectHideFlags: 0
@@ -7558,6 +7747,11 @@ MonoBehaviour:
   - {fileID: 1883188164855738252}
   - {fileID: 104647490578646747}
   - {fileID: 2294010668615050421}
+  devJumpAnims:
+  - {fileID: 714188281313616585}
+  - {fileID: 2404516815422441434}
+  - {fileID: 931157429800857153}
+  - {fileID: 7804521329413143304}
   emptySprite:
   - {fileID: 21300000, guid: 5ca7d98c0e10c144b8e2c3c29a57e178, type: 3}
   devDeathSprites:
@@ -8927,6 +9121,7 @@ GameObject:
   - component: {fileID: 7898363970371015617}
   - component: {fileID: 8397256129118936486}
   - component: {fileID: 1883188164855738252}
+  - component: {fileID: 2404516815422441434}
   m_Layer: 5
   m_Name: Dev2
   m_TagString: Untagged
@@ -9008,6 +9203,68 @@ MonoBehaviour:
   autoPlay: 0
   rate: 0.2
   loop: 0
+--- !u!114 &2404516815422441434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813751093340920447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a55664efc485bf4cb332399850a5a78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoStart: 0
+  duration: 0.3
+  loop: 0
+  reverse: 0
+  X:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Y:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1.0012349
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.00086432695
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Z:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveMultiplier: 1
 --- !u!1 &5823375505610526040
 GameObject:
   m_ObjectHideFlags: 0

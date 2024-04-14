@@ -30,6 +30,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] Gradient fillGradient;
 
     [SerializeField] ImageAnimator[] devAnims;
+    [SerializeField] AnimateLocaPosition[] devJumpAnims;
     [SerializeField] Sprite[] emptySprite;
     [SerializeField] Sprite[] devDeathSprites;
     [SerializeField] TextMeshProUGUI[] devDurabilities;
@@ -38,6 +39,9 @@ public class GameUI : MonoBehaviour
     float portalAnimSpeed = 0.16f;
     float portalAnimTimer;
     bool[] devAlive = new bool[Backend.ACTIVE_DEVELOPERS];
+
+    float jumpTimer;
+    float jumpRate = 0.1f;
 
     void Update()
     {
@@ -78,6 +82,8 @@ public class GameUI : MonoBehaviour
                 {
                     if (!devAlive[i])
                     {
+                        devJumpAnims[i].ResetToStart();
+                        devJumpAnims[i].Play();
                         devAlive[i] = true;
                         devAnims[i].SetNewFrames(new Sprite[] { backend.ActiveDevelopers[i].portrait });
                         if(backend.ActiveDevelopers[i].Role == DataTypes.Developer.RoleType.Producer)
@@ -109,6 +115,16 @@ public class GameUI : MonoBehaviour
                 devDurabilities[i].text = "";
                 devAnims[i].SetNewFrames(emptySprite);
             }
+        }
+
+        // Randomly jump devs
+        if (Time.time > jumpTimer)
+        {
+            jumpTimer = Time.time + jumpRate + UnityEngine.Random.value * 0.1f;
+            // Keith TODO: Developer developing audio (could use switch case to have unique audio for each role using backend.ActiveDevelopers[i].Role)
+            int r = UnityEngine.Random.Range(0, devJumpAnims.Length);
+            if(!devJumpAnims[r].enabled) devJumpAnims[r].ResetToStart();
+            devJumpAnims[r].Play();
         }
 
         bool isPortalOpen = developersAlive != backend.ActiveDevelopers.Length;
