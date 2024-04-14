@@ -34,17 +34,17 @@ public class ResultsUI : MonoBehaviour
         int contestantCount = finalResult.otherContestantCount + 1;
         int currentMaxRank = contestantCount - (int)(contestantCount * currentRelativeMaxRank);
 
-        overallText.text = "Overall " + rankToString(finalResult.overallRank, currentMaxRank);
-        funText.text = "Fun " + rankToString(finalResult.funRank, currentMaxRank);
-        innovationText.text = "Innovation " + rankToString(finalResult.innovationRank, currentMaxRank);
-        themeText.text = "Theme " + rankToString(finalResult.themeRank, currentMaxRank);
-        graphicsText.text = "Graphics " + rankToString(finalResult.graphicsRank, currentMaxRank);
-        audioText.text = "Audio " + rankToString(finalResult.audioRank, currentMaxRank);
-        humorText.text = "Humor " + rankToString(finalResult.humorRank, currentMaxRank);
-        moodText.text = "Mood " + rankToString(finalResult.moodRank, currentMaxRank);
+        overallText.text = "Overall " + RankToString(finalResult.overallRank, currentMaxRank);
+        funText.text = "Fun " + RankToString(finalResult.funRank, currentMaxRank);
+        innovationText.text = "Innovation " + RankToString(finalResult.innovationRank, currentMaxRank);
+        themeText.text = "Theme " + RankToString(finalResult.themeRank, currentMaxRank);
+        graphicsText.text = "Graphics " + RankToString(finalResult.graphicsRank, currentMaxRank);
+        audioText.text = "Audio " + RankToString(finalResult.audioRank, currentMaxRank);
+        humorText.text = "Humor " + RankToString(finalResult.humorRank, currentMaxRank);
+        moodText.text = "Mood " + RankToString(finalResult.moodRank, currentMaxRank);
     }
 
-    private string rankToString(int rank, int currentMaxRank)
+    private static string RankToString(int rank, int currentMaxRank)
     {
         int limitedRank = Math.Max(rank, currentMaxRank);
         if (limitedRank == 1)

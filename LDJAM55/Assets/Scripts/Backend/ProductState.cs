@@ -44,20 +44,84 @@ namespace DataTypes
         public float RelativeTimeLeft => timeLeft / gameLengthSeconds;
         public float TimeLeft { get => timeLeft; set => timeLeft = value; }
 
-        public float MechanicsFeature { get => mechanicsFeature; set => mechanicsFeature = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public float AudioFeature { get => audioFeature; set => audioFeature = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public float VisualsFeature { get => visualsFeature; set => visualsFeature = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public float PowerScale => 5f * (1f / gameLengthSeconds);
+
+        public void AddMechanicsFeature(float power)
+        {
+            power = featureDiminishingReturn(power, mechanicsFeature);
+            mechanicsFeature = Math.Clamp(mechanicsFeature + power * PowerScale, scoreLowerBound, scoreUpperBound);
+        }
+        public float MechanicsFeature { get => mechanicsFeature; }
+        public void AddAudioFeature(float power)
+        {
+            power = featureDiminishingReturn(power, audioFeature);
+            audioFeature = Math.Clamp(audioFeature + power * PowerScale, scoreLowerBound, scoreUpperBound);
+        }
+        public float AudioFeature { get => audioFeature; }
+        public void AddVisualsFeature(float power)
+        {
+            power = featureDiminishingReturn(power, visualsFeature);
+            visualsFeature = Math.Clamp(visualsFeature + power * PowerScale, scoreLowerBound, scoreUpperBound);
+        }
+        public float VisualsFeature { get => visualsFeature; }
         public float AudioVisualsFeature => (AudioFeature + VisualsFeature) / 2f;
         // Note: polish is not lower bounded to 0 currently
-        public float PolishFeature { get => polishFeature; set => polishFeature = Math.Clamp(value, float.MinValue, scoreUpperBound); }
+        public void AddPolishFeature(float power)
+        {
+            polishFeature = Math.Clamp(polishFeature + power * PowerScale, float.MinValue, scoreUpperBound);
+        }
+        public float PolishFeature { get => polishFeature; }
 
-        public float FunScore { get => funScore; set => funScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public float InnovationScore { get => innovationScore; set => innovationScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public float ThemeScore { get => themeScore; set => themeScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public float GraphicsScore { get => graphicsScore; set => graphicsScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public float AudioScore { get => audioScore; set => audioScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public float HumorScore { get => humorScore; set => humorScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
-        public float MoodScore { get => moodScore; set => moodScore = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }
+        public void AddFunScore(float power)
+        {
+            funScore = Math.Clamp(funScore + power * PowerScale, scoreLowerBound, scoreUpperBound);
+        }
+        public float FunScore { get => funScore; }
+        public void AddInnovationScore(float power)
+        {
+            innovationScore = Math.Clamp(innovationScore + power * PowerScale, scoreLowerBound, scoreUpperBound);
+        }
+        public float InnovationScore { get => innovationScore; }
+        public void AddThemeScore(float power)
+        {
+            themeScore = Math.Clamp(themeScore + power * PowerScale, scoreLowerBound, scoreUpperBound);
+        }
+        public float ThemeScore { get => themeScore; }
+        public void AddGraphicsScore(float power)
+        {
+            graphicsScore = Math.Clamp(graphicsScore + power * PowerScale, scoreLowerBound, scoreUpperBound);
+        }
+        public float GraphicsScore { get => graphicsScore; }
+        public void AddAudioScore(float power)
+        {
+            audioScore = Math.Clamp(audioScore + power * PowerScale, scoreLowerBound, scoreUpperBound);
+        }
+        public float AudioScore { get => audioScore; }
+        public void AddHumorScore(float power)
+        {
+            humorScore = Math.Clamp(humorScore + power * PowerScale, scoreLowerBound, scoreUpperBound);
+        }
+        public float HumorScore { get => humorScore; }
+        public void AddMoodScore(float power)
+        {
+            moodScore = Math.Clamp(moodScore + power * PowerScale, scoreLowerBound, scoreUpperBound);
+        }
+        public float MoodScore { get => moodScore; }
+
+        private float featureDiminishingReturn(float power, float featureProgress)
+        {
+            const float featureHalfwayDiminishingReturnPenalty = 0.75f;
+            const float featureLastQuarterDiminishingReturnPenalty = 0.5f;
+            if (featureProgress > 0.75f)
+            {
+                return power * featureLastQuarterDiminishingReturnPenalty;
+            }
+            else if (featureProgress > 0.5f)
+            {
+                return power * featureHalfwayDiminishingReturnPenalty;
+            }
+            return power;
+        }
 
         public FinalResult ComputeFinalResult()
         {

@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class StateManager : MonoBehaviour
 {
@@ -69,7 +68,7 @@ public class StateManager : MonoBehaviour
         ChangeState(State.MainMenu);
     }
 
-    int menuIndex = 0; 
+    int menuIndex = 0;
     int audioVolume = 10; // Keith TODO: Implement volume to audio systems
     bool isMusicMuted = false; // Keith TODO: Implement mute to music
     float menuStateChangedTime;
@@ -80,7 +79,7 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
-        switch(currentState)
+        switch (currentState)
         {
             case State.MainMenu:
                 UpdateMainMenu();
@@ -106,7 +105,7 @@ public class StateManager : MonoBehaviour
         menuStateChangedTime = Time.time;
 
         // Init new sate
-        switch(currentState)
+        switch (currentState)
         {
             case State.MainMenu:
                 developerSpawnRate = 0.1f;
@@ -151,7 +150,7 @@ public class StateManager : MonoBehaviour
         }
         menuIndex = Mathf.Clamp(menuIndex, 0, 3);
 
-        switch(menuIndex)
+        switch (menuIndex)
         {
             case 0: // Start game
                 if (PressedUse())
@@ -162,7 +161,7 @@ public class StateManager : MonoBehaviour
                 break;
 
             case 1: // Set mute
-                if(PressedUse() || PressedRight() || PressedLeft()) 
+                if (PressedUse() || PressedRight() || PressedLeft())
                 {
                     isMusicMuted = !isMusicMuted;
                     pointerAnim.Play();
@@ -171,7 +170,7 @@ public class StateManager : MonoBehaviour
                 break;
 
             case 2: // Set volume
-                if (PressedRight() || PressedUse()) 
+                if (PressedRight() || PressedUse())
                 {
                     audioVolume++;
                     pointerAnim.Play();
@@ -226,7 +225,7 @@ public class StateManager : MonoBehaviour
 
     void UpdateGameplay()
     {
-        if(backend.ProductState.TimeLeft <= 0.0f)
+        if (backend.ProductState.TimeLeft <= 0.0f)
         {
             ChangeState(State.Results);
         }
@@ -234,13 +233,14 @@ public class StateManager : MonoBehaviour
         {
             DialogueManager.Instance.ShowStoryConversation(storyAudio);
             audioStoryShown = true;
+            backend.AllowAudioSpawn = true;
         }
 
         if (Time.time > developerSpawnTimer)
         {
             spawnedDevelopers.RemoveAll(item => item == null);
 
-            if(spawnedDevelopers.Count < 5)
+            if (spawnedDevelopers.Count < 5)
             {
                 developerSpawnRate = 0.25f;
             }
@@ -259,11 +259,11 @@ public class StateManager : MonoBehaviour
 
             developerSpawnTimer = developerSpawnRate + Time.time;
             GameObject newDev = developerSpawner.TrySpawnDeveloper(backend.FetchDeveloperFromPool());
-            if(newDev != null)
+            if (newDev != null)
             {
                 spawnedDevelopers.Add(newDev);
             }
-        }    
+        }
 
         backend.ProgressTick();
 
@@ -294,7 +294,7 @@ public class StateManager : MonoBehaviour
     {
         if (menuStateChangedTime > (Time.time + 3.0f))
             return;
-        
+
         if (PressedQuit())
         {
             ChangeState(State.MainMenu);
