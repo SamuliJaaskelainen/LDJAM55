@@ -101,7 +101,7 @@ namespace DataTypes
             }
             return 6;
         }
-        public static float RandomPower(float lowerBound)
+        public static float RandomPower(float boost)
         {
             const double mean = 0.5;
             const double stdDev = 0.2;
@@ -109,7 +109,7 @@ namespace DataTypes
             double u2 = (double)(1.0f - UnityEngine.Random.Range(0.0f, 1.0f));
             double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
             double randNormal = mean + stdDev * randStdNormal;
-            return Math.Clamp((float)randNormal, Math.Max(lowerBound, 0.1f), 1f);
+            return Math.Clamp((float)randNormal + boost, 0.1f, 1f);
         }
 
         public static float RandomDurability()
@@ -126,7 +126,7 @@ namespace DataTypes
         public static List<Trait> RandomTraits()
         {
             List<Trait> traits = new();
-            while (traits.Count < 4 && UnityEngine.Random.Range(0, 2) > 0)
+            while (traits.Count < 4 && (traits.Count == 0 || UnityEngine.Random.Range(0, 2) > 0))
             {
                 Trait trait = (Trait)UnityEngine.Random.Range(0, 7);
                 if (!traits.Contains(trait))
