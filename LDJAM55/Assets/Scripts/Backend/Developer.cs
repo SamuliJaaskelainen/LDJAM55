@@ -44,6 +44,7 @@ namespace DataTypes
         [Range(0f, 300f)]
         // Seconds
         float durability = 5.0f;
+        float workDone = 0f;
         [SerializeField]
         public Sprite portrait;
 
@@ -54,6 +55,8 @@ namespace DataTypes
         public float Power { get => power; set => power = value; }
         public float Durability { get => durability; set => durability = value; }
         public bool IsAlive { get => durability > 0f; }
+        public float WorkDone { get => workDone; set => workDone = value; }
+
         public Developer Clone()
         {
             return (Developer)MemberwiseClone();
@@ -109,7 +112,7 @@ namespace DataTypes
             double u2 = (double)(1.0f - UnityEngine.Random.Range(0.0f, 1.0f));
             double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
             double randNormal = mean + stdDev * randStdNormal;
-            return Math.Clamp((float)randNormal + boost, 0.1f, 1f);
+            return Math.Clamp((float)randNormal * boost, 0.1f, 1f);
         }
 
         public static float RandomDurability()

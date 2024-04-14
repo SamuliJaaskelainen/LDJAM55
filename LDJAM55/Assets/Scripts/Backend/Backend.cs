@@ -44,8 +44,8 @@ public class Backend : MonoBehaviour
 
     // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
     // Producer boost currently affects the designer, programmer, artist and audio roles
-    float currentProducerBoost = 0f;
-    float currentInfluencerBoost = 0f;
+    float currentProducerBoost = 1f;
+    float currentInfluencerBoost = 1f;
 
     public void Reset()
     {
@@ -62,8 +62,8 @@ public class Backend : MonoBehaviour
         productState.Reset();
 
         allowAudioSpawn = false;
-        currentProducerBoost = 0f;
-        currentInfluencerBoost = 0f;
+        currentProducerBoost = 1f;
+        currentInfluencerBoost = 1f;
 
         // Start with some hidden bugs initially
         const int ticketCount = 10;
@@ -180,8 +180,8 @@ public class Backend : MonoBehaviour
         productState.TimeLeft -= deltaTime;
 
         // Reset influencer and producer boosts
-        currentInfluencerBoost = 0f;
-        currentProducerBoost = 0f;
+        currentInfluencerBoost = 1f;
+        currentProducerBoost = 1f;
 
         // Check for producers first so that their effects get applied correctly for this tick
         foreach (Developer developer in activeDevelopers)
@@ -189,7 +189,9 @@ public class Backend : MonoBehaviour
             if (developer == null || !developer.IsAlive) continue;
             if (developer.Role.Equals(Developer.RoleType.Producer))
             {
-                currentProducerBoost = Math.Max(currentProducerBoost, developer.Power * deltaTime);
+                // Influencer effect is constant, so we don't add here or multiply by deltatime
+                currentProducerBoost += developer.Power;
+                developer.WorkDone = developer.Power * productState.PowerScale;
             }
         }
 
@@ -198,30 +200,42 @@ public class Backend : MonoBehaviour
         {
             if (developer == null || !developer.IsAlive) continue;
 
-            HandleDeveloperRoleEffects(developer.Role, developer.Power * deltaTime);
+            if (developer.Role.Equals(Developer.RoleType.Influencer))
+            {
+                // Influencer effect is constant, so we don't add here or multiply by deltatime
+                developer.WorkDone = HandleDeveloperRoleEffects(developer.Role, developer.Power);
+            }
+            else
+            {
+                developer.WorkDone += HandleDeveloperRoleEffects(developer.Role, developer.Power * deltaTime);
+            }
+
             HandleDeveloperTraitEffects(developer.Traits, developer.Power * deltaTime);
 
             developer.Durability -= deltaTime;
         }
     }
 
-    // Handles actions taken by developer depending on role, producers are skipped
-    private void HandleDeveloperRoleEffects(Developer.RoleType role, float power)
+    // Handles actions taken by developer depending on role, producers are skipped. Returns work done.
+    private float HandleDeveloperRoleEffects(Developer.RoleType role, float power)
     {
+        float workDone = 0f;
         // Handle role-specific effect based on power
         switch (role)
         {
             case Developer.RoleType.Designer:
                 {
                     // Create feature for the backlog based on power
-                    backlog.Add(new Task(power + currentProducerBoost));
+                    float powerToSpend = power * currentProducerBoost;
+                    backlog.Add(new Task(powerToSpend));
+                    workDone = powerToSpend * productState.PowerScale;
                     break;
                 }
             case Developer.RoleType.Programmer:
                 {
 
                     // N increments on bugs or tasks depending on developer power
-                    float powerToSpend = power + currentProducerBoost;
+                    float powerToSpend = power * currentProducerBoost;
                     while (powerToSpend > 0f)
                     {
                         // Only work on mechanics if it's not full
@@ -231,17 +245,17 @@ public class Backend : MonoBehaviour
                             // 50/50 split between bug fixing and backlog progress if both are not empty
                             float powerToSpendOnMechanics = powerToSpend / 2f;
                             float powerToSpendOnBugfixes = powerToSpend / 2f;
-                            productState.AddMechanicsFeature(ProgressTasks(ref backlog, ref powerToSpendOnMechanics));
-                            productState.AddPolishFeature(ProgressTasks(ref foundBugs, ref powerToSpendOnBugfixes));
+                            workDone += productState.AddMechanicsFeature(ProgressTasks(ref backlog, ref powerToSpendOnMechanics));
+                            workDone += productState.AddPolishFeature(ProgressTasks(ref foundBugs, ref powerToSpendOnBugfixes));
                             powerToSpend = powerToSpendOnMechanics + powerToSpendOnBugfixes;
                         }
                         else if (foundBugs.Count != 0)
                         {
-                            productState.AddPolishFeature(ProgressTasks(ref foundBugs, ref powerToSpend));
+                            workDone += productState.AddPolishFeature(ProgressTasks(ref foundBugs, ref powerToSpend));
                         }
                         else if (mechanicsWorkToDo)
                         {
-                            productState.AddMechanicsFeature(ProgressTasks(ref backlog, ref powerToSpend));
+                            workDone += productState.AddMechanicsFeature(ProgressTasks(ref backlog, ref powerToSpend));
                         }
                         else
                         {
@@ -253,7 +267,7 @@ public class Backend : MonoBehaviour
                 }
             case Developer.RoleType.QA:
                 {
-                    float powerToSpend = power + currentProducerBoost;
+                    float powerToSpend = power * currentProducerBoost;
                     float foundBugPower = ProgressTasks(ref hiddenBugs, ref powerToSpend);
                     if (foundBugPower > 0f)
                     {
@@ -262,27 +276,28 @@ public class Backend : MonoBehaviour
                         // this so that individual unfound bugs become separate found bugs
                         foundBugs.Add(new Task(foundBugPower));
                     }
+                    workDone = foundBugPower * productState.PowerScale;
                     break;
                 }
             case Developer.RoleType.Artist:
                 {
-                    productState.AddVisualsFeature(power + currentProducerBoost);
+                    workDone = productState.AddVisualsFeature(power * currentProducerBoost);
                     break;
                 }
             case Developer.RoleType.Audio:
                 {
-                    productState.AddAudioFeature(power + currentProducerBoost);
+                    workDone = productState.AddAudioFeature(power * currentProducerBoost);
                     break;
                 }
             case Developer.RoleType.Producer:
                 {
                     // Nothing to do, producers handled separately
-                    return;
+                    break;
                 }
             case Developer.RoleType.Influencer:
                 {
-                    // Influencer currently not affected by producer boost
-                    currentInfluencerBoost = Math.Max(currentInfluencerBoost, power);
+                    currentInfluencerBoost += power;
+                    workDone = power * productState.PowerScale;
                     break;
                 }
             default:
@@ -303,6 +318,8 @@ public class Backend : MonoBehaviour
             hiddenBugs.Add(new Task(bugCost));
             productState.AddPolishFeature(-bugCost);
         }
+
+        return workDone;
     }
 
     // Progress the provided queue until it is empty or powerToSpend is 0. Return the sum of impacts of completed tasks.

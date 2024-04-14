@@ -62,29 +62,38 @@ namespace DataTypes
 
         public float PowerScale => 5f * (1f / gameLengthSeconds);
 
-        public void AddMechanicsFeature(float power)
+        public float AddMechanicsFeature(float power)
         {
             power = featureDiminishingReturn(power, mechanicsFeature);
+            float before = mechanicsFeature;
             mechanicsFeature = Math.Clamp(mechanicsFeature + power * PowerScale, scoreLowerBound, scoreUpperBound);
+            return Math.Max(0f, mechanicsFeature - before);
+
         }
         public float MechanicsFeature { get => mechanicsFeature; }
-        public void AddAudioFeature(float power)
+        public float AddAudioFeature(float power)
         {
             power = featureDiminishingReturn(power, audioFeature);
+            float before = audioFeature;
             audioFeature = Math.Clamp(audioFeature + power * PowerScale, scoreLowerBound, scoreUpperBound);
+            return Math.Max(0f, audioFeature - before);
         }
         public float AudioFeature { get => audioFeature; }
-        public void AddVisualsFeature(float power)
+        public float AddVisualsFeature(float power)
         {
             power = featureDiminishingReturn(power, visualsFeature);
+            float before = visualsFeature;
             visualsFeature = Math.Clamp(visualsFeature + power * PowerScale, scoreLowerBound, scoreUpperBound);
+            return Math.Max(0f, visualsFeature - before);
         }
         public float VisualsFeature { get => visualsFeature; }
         public float AudioVisualsFeature => (AudioFeature + VisualsFeature) / 2f;
         // Note: polish is not lower bounded to 0 currently
-        public void AddPolishFeature(float power)
+        public float AddPolishFeature(float power)
         {
+            float before = polishFeature;
             polishFeature = Math.Clamp(polishFeature + power * PowerScale, float.MinValue, scoreUpperBound);
+            return Math.Max(0f, polishFeature - before);
         }
         public float PolishFeature { get => polishFeature; }
 
