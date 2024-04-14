@@ -94,6 +94,7 @@ public class GameUI : MonoBehaviour
             }
             else
             {
+                devDurabilities[i].text = "";
                 devAnims[i].SetNewFrames(emptySprite);
             }
         }

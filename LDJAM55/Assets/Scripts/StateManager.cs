@@ -110,14 +110,6 @@ public class StateManager : MonoBehaviour
                 menuIndex = 0;
                 audioStoryShown = false;
                 UpdateMainMenuGraphics();
-                for(int i = 0; i < spawnedDevelopers.Count; ++i)
-                {
-                    if(spawnedDevelopers[i] != null)
-                    {
-                        Destroy(spawnedDevelopers[i]);
-                    }
-                }
-                spawnedDevelopers.Clear();
                 break;
 
             case State.Gameplay:
@@ -126,6 +118,15 @@ public class StateManager : MonoBehaviour
                 break;
 
             case State.Results:
+                // Delete developers from hell
+                for (int i = 0; i < spawnedDevelopers.Count; ++i)
+                {
+                    if (spawnedDevelopers[i] != null)
+                    {
+                        Destroy(spawnedDevelopers[i]);
+                    }
+                }
+                spawnedDevelopers.Clear();
                 // Keith TODO: Add results shown audio
                 break;
         }
