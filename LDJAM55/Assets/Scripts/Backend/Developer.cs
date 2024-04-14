@@ -120,7 +120,7 @@ namespace DataTypes
             double u2 = (double)(1.0f - UnityEngine.Random.Range(0.0f, 1.0f));
             double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
             double randNormal = mean + stdDev * randStdNormal;
-            return Math.Clamp((float)randNormal, 10f, 60f);
+            return Math.Clamp((float)randNormal, 20f, 70f);
         }
 
         public static List<Trait> RandomTraits()
