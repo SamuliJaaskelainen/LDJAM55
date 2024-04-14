@@ -115,7 +115,7 @@ public class Backend : MonoBehaviour
         developer.Traits = Developer.RandomTraits();
 
         // Power is lower-bounded by current influencer boost level
-        developer.Power = Developer.RandomPower(currentInfluencerBoost);
+        developer.Power = Developer.RandomPower();
 
         developer.Durability = Developer.RandomDurability();
 
@@ -157,6 +157,8 @@ public class Backend : MonoBehaviour
             {
                 // Keith TODO: Add summon developer audio
                 developerAdded = true;
+                // Apply current influencer boost
+                developer.Power = Math.Clamp(developer.Power * currentInfluencerBoost, 0.1f, 1f);
                 activeDevelopers[i] = developer;
                 Debug.Log("Added new active developer: " + developer.Role);
                 return;
