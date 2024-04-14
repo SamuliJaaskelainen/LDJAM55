@@ -89,6 +89,7 @@ public class GameUI : MonoBehaviour
                 {
                     if (devAlive[i])
                     {
+                        devDurabilities[i].text = "";
                         devAnims[i].SetNewFrames(devDeathSprites);
                         devAnims[i].Play();
                         devAlive[i] = false;
