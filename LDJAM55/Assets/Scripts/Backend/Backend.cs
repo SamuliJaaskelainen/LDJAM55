@@ -43,24 +43,24 @@ public class Backend : MonoBehaviour
     public Developer[] ActiveDevelopers { get => activeDevelopers; }
     public ProductState ProductState { get => productState; }
 
-    public int FoundBugs()
+    public float FoundBugs()
     {
         float work = 0;
         foreach(Task bug in foundBugs)
         {
             work += bug.Size;
         }
-        return (int)work;
+        return work;
     }
 
-    public int Backlog()
+    public float Backlog()
     {
         float work = 0;
         foreach (Task bug in backlog)
         {
             work += bug.Size;
         }
-        return (int)work;
+        return work;
     }
 
     // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick

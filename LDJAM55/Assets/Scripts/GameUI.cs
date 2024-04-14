@@ -21,8 +21,8 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI timer;
 
-    [SerializeField] TextMeshProUGUI features;
-    [SerializeField] TextMeshProUGUI bugs;
+    [SerializeField] Image features;
+    [SerializeField] Image bugs;
 
     [SerializeField] Image mechanics;
     [SerializeField] Image visuals;
@@ -46,8 +46,12 @@ public class GameUI : MonoBehaviour
         TimeSpan timeLeft = TimeSpan.FromSeconds(threeDaysInSeconds * backend.ProductState.RelativeTimeLeft);
         timer.text = string.Format("{0:D2}:{1:D2}:{2:D2}", (int)timeLeft.TotalHours, timeLeft.Minutes, timeLeft.Seconds);
 
-        features.text = " Features " + backend.Backlog();
-        bugs.text = " Found bugs " + backend.FoundBugs();
+        float backlog = backend.Backlog();
+        features.fillAmount = Mathf.Clamp01(backlog);
+        features.color = fillGradient.Evaluate(backlog);
+        float foundBugs = backend.FoundBugs();
+        bugs.fillAmount = Mathf.Clamp01(foundBugs);
+        bugs.color = fillGradient.Evaluate(foundBugs);
 
         mechanics.fillAmount = Mathf.Clamp01(backend.ProductState.MechanicsFeature);
         mechanics.color = fillGradient.Evaluate(backend.ProductState.MechanicsFeature);
