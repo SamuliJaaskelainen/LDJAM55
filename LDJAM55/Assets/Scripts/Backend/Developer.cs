@@ -49,8 +49,8 @@ namespace DataTypes
 
         public string Name { get => name; }
         public List<DialogueManager.Dialogue> Dialogue { get => dialogue; set => dialogue = value; }
-        public RoleType Role { get => role; }
-        public List<Trait> Traits { get => traits; }
+        public RoleType Role { get => role; set => role = value; }
+        public List<Trait> Traits { get => traits; set => traits = value; }
         public float Power { get => power; set => power = value; }
         public float Durability { get => durability; set => durability = value; }
         public bool IsAlive { get => durability > 0f; }
@@ -58,5 +58,41 @@ namespace DataTypes
         {
             return (Developer)MemberwiseClone();
         }
-    };
+
+        public static float RandomPower(float lowerBound)
+        {
+            const double mean = 0.5;
+            const double stdDev = 0.2;
+            double u1 = (double)(1.0f - UnityEngine.Random.Range(0.0f, 1.0f));
+            double u2 = (double)(1.0f - UnityEngine.Random.Range(0.0f, 1.0f));
+            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
+            double randNormal = mean + stdDev * randStdNormal;
+            return Math.Clamp((float)randNormal, Math.Max(lowerBound, 0.1f), 1f);
+        }
+
+        public static float RandomDurability()
+        {
+            const double mean = 30.0;
+            const double stdDev = 10.0;
+            double u1 = (double)(1.0f - UnityEngine.Random.Range(0.0f, 1.0f));
+            double u2 = (double)(1.0f - UnityEngine.Random.Range(0.0f, 1.0f));
+            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
+            double randNormal = mean + stdDev * randStdNormal;
+            return Math.Clamp((float)randNormal, 10f, 60f);
+        }
+
+        public static List<Trait> RandomTraits()
+        {
+            List<Trait> traits = new();
+            while (traits.Count < 4 && UnityEngine.Random.Range(0, 2) > 0)
+            {
+                Trait trait = (Trait)UnityEngine.Random.Range(0, 7);
+                if (!traits.Contains(trait))
+                {
+                    traits.Add(trait);
+                }
+            }
+            return traits;
+        }
+    }
 }

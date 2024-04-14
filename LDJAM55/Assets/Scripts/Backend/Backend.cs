@@ -5,8 +5,6 @@ using System.Linq;
 using UnityEngine;
 public class Backend : MonoBehaviour
 {
-    public List<Developer> developerPool = new();
-
     [System.Serializable]
     public struct DialogueAtLevel
     {
@@ -22,6 +20,9 @@ public class Backend : MonoBehaviour
         [SerializeField]
         public List<DialogueAtLevel> dialoguesPerPowerLevel;
     }
+
+    // Role indexes correspond to enum indexes in Developer.RoleType
+    public List<Sprite> rolePortraits = new();
 
     // Role indexes correspond to enum indexes in Developer.RoleType
     public List<DialoguesAtLevel> roleDialogues = new();
@@ -59,35 +60,46 @@ public class Backend : MonoBehaviour
 
     public Developer FetchDeveloperFromPool()
     {
-        if (developerPool.Count == 0)
-        {
-            Debug.LogError("Empty developer pool!");
-        }
+        Developer developer = new Developer();
 
-        Developer selectedDeveloper = developerPool.ElementAt(UnityEngine.Random.Range(0, developerPool.Count)).Clone();
+        int developerRoleAsIndex = UnityEngine.Random.Range(0, 7);
+
+        developer.Role = (Developer.RoleType)developerRoleAsIndex;
+
+        developer.Traits = Developer.RandomTraits();
 
         // Power is lower-bounded by current influencer boost level
-        selectedDeveloper.Power = Math.Max(selectedDeveloper.Power, currentInfluencerBoost);
+        developer.Power = Developer.RandomPower(currentInfluencerBoost);
 
-        int developerRoleAsIndex = (int)selectedDeveloper.Role;
-        const int dialogueLevelCount = 4;
+        developer.Durability = Developer.RandomDurability();
+
+        if (developerRoleAsIndex >= rolePortraits.Count)
+        {
+            Debug.LogWarning("Role " + developer.Role.ToString() + " id " + developerRoleAsIndex + " missing from backend dialogue list (size " + roleDialogues.Count + ")!");
+            return developer;
+        }
+
+        developer.portrait = rolePortraits[developerRoleAsIndex];
+
         if (developerRoleAsIndex >= roleDialogues.Count)
         {
-            Debug.LogWarning("Role " + selectedDeveloper.Role.ToString() + " id " + developerRoleAsIndex + " missing from backend dialogue list (size " + roleDialogues.Count + ")!");
-            return selectedDeveloper;
+            Debug.LogWarning("Role " + developer.Role.ToString() + " id " + developerRoleAsIndex + " missing from backend dialogue list (size " + roleDialogues.Count + ")!");
+            return developer;
         }
+
+        const int dialogueLevelCount = 4;
         if (roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel.Count < dialogueLevelCount)
         {
-            Debug.LogWarning("Role " + selectedDeveloper.Role.ToString() + " id " + developerRoleAsIndex + " missing dialogues from backend list, expected to find " + dialogueLevelCount + " levels but only found " + roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel.Count + "!");
-            return selectedDeveloper;
+            Debug.LogWarning("Role " + developer.Role.ToString() + " id " + developerRoleAsIndex + " missing dialogues from backend list, expected to find " + dialogueLevelCount + " levels but only found " + roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel.Count + "!");
+            return developer;
         }
 
-        int powerLevelAsDialogueIndex = Math.Clamp((int)(selectedDeveloper.Power * dialogueLevelCount), 0, dialogueLevelCount - 1);
+        int powerLevelAsDialogueIndex = Math.Clamp((int)(developer.Power * dialogueLevelCount), 0, dialogueLevelCount - 1);
 
-        selectedDeveloper.Dialogue = roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel[powerLevelAsDialogueIndex].dialogue;
+        developer.Dialogue = roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel[powerLevelAsDialogueIndex].dialogue;
         // TODO: add trait based dialog?
 
-        return selectedDeveloper;
+        return developer;
     }
 
     public void AddActiveDeveloper(Developer developer)
