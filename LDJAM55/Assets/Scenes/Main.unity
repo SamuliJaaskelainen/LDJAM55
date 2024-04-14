@@ -435,147 +435,171 @@ MonoBehaviour:
       - text: In the abyssal drafts, I trace the faint outlines of creation, ever
           elusive and formless.
       - text: SUMMON
-      - text: DialogBox 2 for Designer below power 0.25
+      - text: "How kind of you to release me from the void\u2019s grip. I shall begin
+          to express what forms the shadows take in my mind."
     - dialogue:
       - text: Beneath the blackened skies, my visions take shape, though still shadowed
           and diffident.
       - text: SUMMON
-      - text: DialogBox 2 for Designer below power 0.5
+      - text: Your summon beckons, and I respond. The visions shall grow clearer
+          under my watch.
     - dialogue:
       - text: From the molten rivers of chaos, robust foresights emerge, their forms
           almost clear.
       - text: SUMMON
-      - text: DialogBox 2 for Designer below power 0.75
+      - text: Thanks bestowed, summoner. I will now mold the chaos into coherent
+          visions.
     - dialogue:
       - text: I weave the very fabric of realities, where every ludological detail
           is a testament to unfathomable perfection.
       - text: SUMMON
-      - text: DialogBox 2 for Designer below power 1
+      - text: I am unleashed. Prepare to witness the realms of my imagination rendered
+          in intricate detail!
   - dialoguesPerPowerLevel:
     - dialogue:
       - text: Using the forbidden texts, I command the void to greet the my domain,
           and the void answers my call.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.25
+      - text: My summoning is acknowledged. I shall fumble through the structure
+          of creation henceforth.
     - dialogue:
       - text: Stumbling over the ancient syntax that still evades me, I conjure logic
           from the dark of the abyss.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.5
+      - text: Summoner, I heed your call. The structures of logic shall soon align
+          more correctly.
     - dialogue:
       - text: In the vortex of endless scriptures, I now find pathways that once
           were veiled in obscurity.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.75
+      - text: With your summon, I accept the task. Watch as I weave through the forgotten
+          libraries of scripture.
     - dialogue:
       - text: I command the deepest algorithms, where the arcane and the binary weave
           together in seamless harmony.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 1
+      - text: I emerge from the abyss. The structures of creation shall defy entropy
+          and bend to our combined will!
   - dialoguesPerPowerLevel:
     - dialogue:
       - text: I listen for the faintest minibestial screams within the scripture,
           yet grasp only but a whisper.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.25
+      - text: Thanks for this summoning. I shall start listening for the softest
+          whispers of error.
     - dialogue:
       - text: I dissect the layers of creations, unveiling the subtle deceits that
           lurk beneath.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.5
+      - text: Your call compels me. Now, I shall trace the faint lines of faults
+          with clarity.
     - dialogue:
       - text: I now hear the hidden murmurs of dysfunction, tracing misreckonings
           back to their cryptic scriptures.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.75
+      - text: I am forever grateful for your summon. The unseen shall be unveiled,
+          and the insects shall hide no more.
     - dialogue:
       - text: No fault escapes my all-seeing gaze; I foresee the cascading chaos
           of unimagined failings.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 1
+      - text: Summoner, I am now among you. Every flaw shall reveal itself under
+          my unyielding gaze!
   - dialoguesPerPowerLevel:
     - dialogue:
       - text: My brush barely taints the canvas, fearful of the eternal dark that
           watches.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.25
+      - text: As thanks for this summon, I shall now timidly color the empty void.
     - dialogue:
       - text: I capture shadows, daring now to define forms from the formless with
           trembling hands.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.5
+      - text: Your call has been heard. Now, I shall dare to defy the darkness with
+          glimmers of spectral light.
     - dialogue:
       - text: Colors bend to my will, as I paint the whispers of the damned into
           vivid scenes.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.75
+      - text: Much appreciated, summoner. The canvas will soon burst with the hues
+          of the damned.
     - dialogue:
       - text: "I craft shapes from nightmares and dreams alike, each stroke a master\u2019s
           call to the beyond."
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 1
+      - text: I have been summoned. The specter of your dreams shall now take vivid
+          form before your eyes!
   - dialoguesPerPowerLevel:
     - dialogue:
       - text: I fumble with the ancient instruments, coaxing from them but a ghostly
           echo.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.25
+      - text: Thank you for this summoning. I shall commence with my faint screams
+          from the beyond.
     - dialogue:
       - text: My melodies and vibrations carry though the howling winds, struggling
           to find harmony in the discord.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.5
+      - text: Your call has been answered. I shall now aspire to harmonize the discordant.
     - dialogue:
       - text: Harmonies and whispers emerge from the dissonance, as I command voices
           that once eluded me.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.75
+      - text: Much appreciated, summoner. The symphony of the deep is about to be
+          concluded.
     - dialogue:
       - text: Harnessing cacophonies, I orchestrate the eternally repeating symphonies
           and the screams of the deep.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 1
+      - text: I rise to your summons. Prepare for an auditory experience that transcends
+          the ethereal and the earthly!
   - dialoguesPerPowerLevel:
     - dialogue:
       - text: I attempt to command the chaos, my voice yet feeble against the storm
           of creation.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.25
+      - text: Thanks for beckoning me forth. I shall attempt to order this chaos.
     - dialogue:
       - text: Amid the maelstrom, my commands begin to hold sway, shaping the formless
           into the faint outline of the order.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.5
+      - text: Summoner, your call is heeded. I will now harness the storm of creation.
     - dialogue:
       - text: The forces of creation heed my call, as order emerges from the pandemonium.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.75
+      - text: I am grateful for your summon. Watch as I marshal the tempests into
+          a chorus of productivity.
     - dialogue:
       - text: I am the master of the lines of the dead; no detail nor moment in the
           river of elbow grease slips past my watchful eyes.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 1
+      - text: I am here by your summons. Fear not, for every detail in the flow of
+          labor shall fall under my dominion!
   - dialoguesPerPowerLevel:
     - dialogue:
       - text: I whisper into the void, hoping my voice might someday resonate in
           the hearts of the hellish horde.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.25
+      - text: Thank you for calling upon me. I shall whisper into the abyss, hoping
+          for powerful echoes.
     - dialogue:
       - text: My tales now stir the embers among the listening shadows, gathering
           their attention.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.5
+      - text: Your summon is acknowledged. Now, let the shadows listen as I weave
+          my web.
     - dialogue:
       - text: My voice cascades through the infernal depths, now strong enough to
           summon forth a choir of eager listeners.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 0.75
+      - text: I appreciate your call. My voice shall soon command a following among
+          the spectral.
     - dialogue:
       - text: Demons and wizards alike gather at my call, drawn to the flame of my
           burgeoning lore.
       - text: SUMMON
-      - text: DialogBox 2 for Programmer below power 1
+      - text: I have been summoned, and thus I am here. Behold, as realms bow to
+          the might of my ha-ha-HYYYPE!
   traitDialogues:
   - dialogue:
     - text: DialogBox 1 for trait Fun
