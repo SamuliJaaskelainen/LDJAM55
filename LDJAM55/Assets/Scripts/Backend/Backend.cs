@@ -191,8 +191,16 @@ public class Backend : MonoBehaviour
                     float powerToSpend = power + currentProducerBoost;
                     while (powerToSpend > 0f)
                     {
-                        // Progress a bug if any exist, or a feature otherwise
-                        if (foundBugs.Count != 0)
+                        if (foundBugs.Count != 0 && backlog.Count != 0)
+                        {
+                            // 50/50 split between bug fixing and backlog progress if both are not empty
+                            float powerToSpendOnMechanics = powerToSpend / 2f;
+                            float powerToSpendOnBugfixes = powerToSpend / 2f;
+                            productState.AddMechanicsFeature(ProgressTasks(ref backlog, ref powerToSpendOnMechanics));
+                            productState.AddPolishFeature(ProgressTasks(ref foundBugs, ref powerToSpendOnBugfixes));
+                            powerToSpend = powerToSpendOnMechanics + powerToSpendOnBugfixes;
+                        }
+                        else if (foundBugs.Count != 0)
                         {
                             productState.AddPolishFeature(ProgressTasks(ref foundBugs, ref powerToSpend));
                         }
