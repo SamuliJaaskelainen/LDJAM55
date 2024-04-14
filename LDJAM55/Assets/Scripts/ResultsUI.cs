@@ -26,7 +26,7 @@ public class ResultsUI : MonoBehaviour
         finalResultCaptureTimeSeconds = Time.time;
     }
 
-    private void Update()
+    void Update()
     {
         const float rankClimbDurationSeconds = 3f;
         float rankClimbProgress = (Time.time - finalResultCaptureTimeSeconds) / rankClimbDurationSeconds;
@@ -34,14 +34,31 @@ public class ResultsUI : MonoBehaviour
         int contestantCount = finalResult.otherContestantCount + 1;
         int currentMaxRank = contestantCount - (int)(contestantCount * currentRelativeMaxRank);
 
-        // TODO: Add special cases for 1st and 2nd and 3rd
-        overallText.text = "Overall " + Math.Max(finalResult.overallRank, currentMaxRank).ToString() + "th";
-        funText.text = "Fun " + Math.Max(finalResult.funRank, currentMaxRank).ToString() + "th";
-        innovationText.text = "Innovation " + Math.Max(finalResult.innovationRank, currentMaxRank).ToString() + "th";
-        themeText.text = "Theme " + Math.Max(finalResult.themeRank, currentMaxRank).ToString() + "th";
-        graphicsText.text = "Graphics " + Math.Max(finalResult.graphicsRank, currentMaxRank).ToString() + "th";
-        audioText.text = "Audio " + Math.Max(finalResult.audioRank, currentMaxRank).ToString() + "th";
-        humorText.text = "Humor " + Math.Max(finalResult.humorRank, currentMaxRank).ToString() + "th";
-        moodText.text = "Mood " + Math.Max(finalResult.moodRank, currentMaxRank).ToString() + "th";
+        overallText.text = "Overall " + rankToString(finalResult.overallRank, currentMaxRank);
+        funText.text = "Fun " + rankToString(finalResult.funRank, currentMaxRank);
+        innovationText.text = "Innovation " + rankToString(finalResult.innovationRank, currentMaxRank);
+        themeText.text = "Theme " + rankToString(finalResult.themeRank, currentMaxRank);
+        graphicsText.text = "Graphics " + rankToString(finalResult.graphicsRank, currentMaxRank);
+        audioText.text = "Audio " + rankToString(finalResult.audioRank, currentMaxRank);
+        humorText.text = "Humor " + rankToString(finalResult.humorRank, currentMaxRank);
+        moodText.text = "Mood " + rankToString(finalResult.moodRank, currentMaxRank);
+    }
+
+    private string rankToString(int rank, int currentMaxRank)
+    {
+        int limitedRank = Math.Max(rank, currentMaxRank);
+        if (limitedRank == 1)
+        {
+            return limitedRank.ToString() + "st";
+        }
+        else if (limitedRank == 2)
+        {
+            return limitedRank.ToString() + "nd";
+        }
+        else if (limitedRank == 3)
+        {
+            return limitedRank.ToString() + "rd";
+        }
+        return limitedRank.ToString() + "th";
     }
 }
