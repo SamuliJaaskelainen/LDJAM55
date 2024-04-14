@@ -21,8 +21,9 @@ namespace DataTypes
         const int otherContestantCount = 999;
         const float scoreLowerBound = 0f;
         const float scoreUpperBound = 1f;
+        const float gameLengthSeconds = 900.0f;
 
-        float timeLeft = 900.0f;
+        float timeLeft = gameLengthSeconds;
 
         // Primary scores (features). Affected by power of certain roles.
         float mechanicsFeature = 0f;
@@ -39,6 +40,7 @@ namespace DataTypes
         float humorScore = 0f;
         float moodScore = 0f;
 
+        public float RelativeTimeLeft => timeLeft / gameLengthSeconds;
         public float TimeLeft { get => timeLeft; set => timeLeft = value; }
 
         public float MechanicsFeature { get => mechanicsFeature; set => mechanicsFeature = Math.Clamp(value, scoreLowerBound, scoreUpperBound); }

@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class GameUI : MonoBehaviour
 {
@@ -42,8 +41,10 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
-        // TODO: Implement TimeSpan to show hours and minutes from 72h to 0h
-        timer.text = ((int)(backend.ProductState.TimeLeft)).ToString();
+        const float threeDaysInSeconds = 24f * 3f * 60f * 60f;
+
+        TimeSpan timeLeft = TimeSpan.FromSeconds(threeDaysInSeconds * backend.ProductState.RelativeTimeLeft);
+        timer.text = string.Format("{0:D2}:{1:D2}:{2:D2}", (int)timeLeft.TotalHours, timeLeft.Minutes, timeLeft.Seconds);
 
         features.text = " Features " + backend.Backlog();
         bugs.text = " Found bugs " + backend.FoundBugs();
@@ -65,16 +66,16 @@ public class GameUI : MonoBehaviour
         polish.color = fillGradient.Evaluate(backend.ProductState.PolishFeature);
 
         int developersAlive = 0;
-        for(int i = 0; i < backend.ActiveDevelopers.Length; ++i)
+        for (int i = 0; i < backend.ActiveDevelopers.Length; ++i)
         {
             if (backend.ActiveDevelopers[i] != null)
             {
                 devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
 
-                if(backend.ActiveDevelopers[i].IsAlive)
+                if (backend.ActiveDevelopers[i].IsAlive)
                 {
-                    if(!devAlive[i])
-                    { 
+                    if (!devAlive[i])
+                    {
                         devAlive[i] = true;
                         devAnims[i].SetNewFrames(new Sprite[] { backend.ActiveDevelopers[i].portrait });
                     }
@@ -82,8 +83,8 @@ public class GameUI : MonoBehaviour
                 }
                 else
                 {
-                    if(devAlive[i])
-                    { 
+                    if (devAlive[i])
+                    {
                         devAnims[i].SetNewFrames(devDeathSprites);
                         devAnims[i].Play();
                         devAlive[i] = false;
@@ -99,11 +100,11 @@ public class GameUI : MonoBehaviour
 
         bool isPortalOpen = developersAlive != backend.ActiveDevelopers.Length;
 
-        if(isPortalOpen)
+        if (isPortalOpen)
         {
             bossAnim.SetNewFrames(bossSummonFrames);
             portal.SetActive(true);
-            if(Time.time > portalAnimTimer)
+            if (Time.time > portalAnimTimer)
             {
                 portalAnimTimer = Time.time + portalAnimSpeed;
                 portalFrame++;
@@ -127,12 +128,12 @@ public class GameUI : MonoBehaviour
                 portalFrame = Mathf.Clamp(portalFrame, 0, portalFrames.Length);
                 portalEdge.sprite = portalFrames[portalFrame];
                 portalMask.texture = portalMaskFrames[portalFrame];
-                if(portalFrame == 0)
+                if (portalFrame == 0)
                 {
                     portal.SetActive(false);
                 }
             }
         }
-        
+
     }
 }
