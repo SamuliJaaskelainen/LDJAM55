@@ -18,6 +18,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] Sprite spiritPortrait1;
     [SerializeField] Sprite spiritPortrait2;
     [SerializeField] Sprite bossPortrait;
+    [SerializeField] Image trait1;
+    [SerializeField] Image trait2;
+    [SerializeField] Image trait3;
+    [SerializeField] Sprite[] traitSprites;
 
     List<Dialogue> currentDilogueList = new List<Dialogue>();
     GameObject developerReference;
@@ -78,9 +82,42 @@ public class DialogueManager : MonoBehaviour
         isOpenedOnThisFrame = true;
         isPortraitVisible = false;
         developerReference = developerInHell;
-        currentDilogueList = new List<Dialogue>(developerInHell.GetComponent<DeveloperInHell>().developer.Dialogue);
+        DataTypes.Developer developer = developerInHell.GetComponent<DeveloperInHell>().developer;
+
+        if(developer.Traits.Count >= 1)
+        {
+            trait1.sprite = GetTraitIcon(developer.Traits[0]);
+        }
+        else
+        {
+            trait1.sprite = emptyPortrait;
+        }
+
+        if (developer.Traits.Count >= 2)
+        {
+            trait2.sprite = GetTraitIcon(developer.Traits[1]);
+        }
+        else
+        {
+            trait2.sprite = emptyPortrait;
+        }
+
+        if (developer.Traits.Count >= 3)
+        {
+            trait3.sprite = GetTraitIcon(developer.Traits[2]);
+        }
+        else
+        {
+            trait3.sprite = emptyPortrait;
+        }
+        currentDilogueList = new List<Dialogue>(developer.Dialogue);
         Debug.Log("Dialogue loaded, size of " + currentDilogueList.Count);
         ShowNextDialogue();
+    }
+
+    Sprite GetTraitIcon(DataTypes.Developer.Trait trait)
+    {
+        return traitSprites[(int)trait];
     }
 
     public void ShowStoryConversation(List<Dialogue> storyDialogue)
@@ -99,6 +136,9 @@ public class DialogueManager : MonoBehaviour
         isPortraitVisible = false;
         developerReference = null;
         currentDilogueList = new List<Dialogue>(storyDialogue);
+        trait1.sprite = emptyPortrait;
+        trait2.sprite = emptyPortrait;
+        trait3.sprite = emptyPortrait;
         Time.timeScale = 0.0f;
         Debug.Log("Dialogue loaded, size of " + currentDilogueList.Count);
         ShowNextDialogue();

@@ -24,6 +24,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] Image features;
     [SerializeField] Image bugs;
 
+    [SerializeField] TextMeshProUGUI audioVisuals;
     [SerializeField] Image mechanics;
     [SerializeField] Image visuals;
     [SerializeField] Image polish;
@@ -62,11 +63,13 @@ public class GameUI : MonoBehaviour
 
         if (backend.ProductState.TimeLeft < StateManager.AUDIO_STORY_TIME)
         {
+            audioVisuals.text = " Audiovisuals";
             visuals.fillAmount = Mathf.Clamp01(backend.ProductState.AudioVisualsFeature);
             visuals.color = fillGradient.Evaluate(backend.ProductState.AudioVisualsFeature);
         }
         else
         {
+            audioVisuals.text = " Visuals";
             visuals.fillAmount = Mathf.Clamp01(backend.ProductState.VisualsFeature);
             visuals.color = fillGradient.Evaluate(backend.ProductState.VisualsFeature);
         }
