@@ -74,8 +74,6 @@ public class GameUI : MonoBehaviour
         {
             if (backend.ActiveDevelopers[i] != null)
             {
-                devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
-
                 if (backend.ActiveDevelopers[i].IsAlive)
                 {
                     if (!devAlive[i])
@@ -83,6 +81,7 @@ public class GameUI : MonoBehaviour
                         devAlive[i] = true;
                         devAnims[i].SetNewFrames(new Sprite[] { backend.ActiveDevelopers[i].portrait });
                     }
+                    devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
                     developersAlive++;
                 }
                 else

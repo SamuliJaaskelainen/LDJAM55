@@ -18,9 +18,9 @@ public class DeveloperSpawner : MonoBehaviour
 
         if (cols.Length <= 0)
         {
-            Debug.Log("Developer spawned!");
             GameObject dev = Instantiate(developerInHell, spawnPos, Quaternion.identity);
             dev.GetComponent<DeveloperInHell>().developer = developer;
+            Debug.Log("Developer spawned! " + developer.Role);
             return dev;
         }
         else

@@ -32,7 +32,7 @@ public class StateManager : MonoBehaviour
     public const float AUDIO_STORY_TIME = 60.0f;
     bool audioStoryShown = false;
 
-    Vector2 pointerOffset = new Vector2(-288.0f, 0.0f);
+    Vector2 pointerOffset = new Vector2(-313.25f, 0.0f);
 
     public static bool PressedUp()
     {
