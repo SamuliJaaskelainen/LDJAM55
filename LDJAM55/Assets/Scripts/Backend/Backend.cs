@@ -66,12 +66,18 @@ public class Backend : MonoBehaviour
         currentInfluencerBoost = 0f;
 
         // Start with some hidden bugs initially
-        float initialHiddenBugPower = 0.1f / productState.PowerScale;
-        hiddenBugs.Add(new Task(initialHiddenBugPower));
-        productState.AddPolishFeature(-initialHiddenBugPower);
+        const int ticketCount = 10;
+        const float initialHiddenBugPower = 0.05f;
+        const float initialBacklogPower = 0.1f;
+        for (int i = 0; i < ticketCount; ++i)
+        {
+            float bugPower = (initialHiddenBugPower / ticketCount) / productState.PowerScale;
+            hiddenBugs.Add(new Task(bugPower));
+            productState.AddPolishFeature(-bugPower);
 
-        float initialBacklogPower = 0.1f / productState.PowerScale;
-        backlog.Add(new Task(initialBacklogPower));
+            float backlogPower = (initialBacklogPower / ticketCount) / productState.PowerScale;
+            backlog.Add(new Task(backlogPower));
+        }
     }
 
     public Developer[] ActiveDevelopers { get => activeDevelopers; }
@@ -245,8 +251,7 @@ public class Backend : MonoBehaviour
                 }
             case Developer.RoleType.QA:
                 {
-                    // QA currently not affected by producer boost
-                    float powerToSpend = power;
+                    float powerToSpend = power + currentProducerBoost;
                     float foundBugPower = ProgressTasks(ref hiddenBugs, ref powerToSpend);
                     if (foundBugPower > 0f)
                     {
