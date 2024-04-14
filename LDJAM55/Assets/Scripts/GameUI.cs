@@ -14,6 +14,10 @@ public class GameUI : MonoBehaviour
     [SerializeField] Image portalEdge;
     [SerializeField] Sprite[] portalFrames;
 
+    [SerializeField] ImageAnimator bossAnim;
+    [SerializeField] Sprite[] bossSummonFrames;
+    [SerializeField] Sprite[] bossIdleFrames;
+
     [SerializeField] TextMeshProUGUI timer;
 
     [SerializeField] TextMeshProUGUI features;
@@ -23,12 +27,15 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI visuals;
     [SerializeField] TextMeshProUGUI polish;
 
-    [SerializeField] Image[] devImgs;
+    [SerializeField] ImageAnimator[] devAnims;
+    [SerializeField] Sprite[] emptySprite;
+    [SerializeField] Sprite[] devDeathSprites;
     [SerializeField] TextMeshProUGUI[] devDurabilities;
 
     int portalFrame;
     float portalAnimSpeed = 0.2f;
     float portalAnimTimer;
+    bool[] devAlive = new bool[Backend.ACTIVE_DEVELOPERS];
 
     void Update()
     {
@@ -53,20 +60,33 @@ public class GameUI : MonoBehaviour
         int developersAlive = 0;
         for(int i = 0; i < backend.ActiveDevelopers.Length; ++i)
         {
-            if(backend.ActiveDevelopers[i] != null)
-            {     
-                devImgs[i].gameObject.SetActive(backend.ActiveDevelopers[i].IsAlive);
-                devImgs[i].sprite = backend.ActiveDevelopers[i].portrait;
+            if (backend.ActiveDevelopers[i] != null)
+            {
                 devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
 
                 if(backend.ActiveDevelopers[i].IsAlive)
-                { 
+                {
+                    if(!devAlive[i])
+                    { 
+                        devAlive[i] = true;
+                        devAnims[i].SetNewFrames(new Sprite[] { backend.ActiveDevelopers[i].portrait });
+                    }
                     developersAlive++;
+                }
+                else
+                {
+                    if(devAlive[i])
+                    { 
+                        devAnims[i].SetNewFrames(devDeathSprites);
+                        devAnims[i].Play();
+                        devAlive[i] = false;
+                        // Keith TODO: Developer combustion audio
+                    }
                 }
             }
             else
             {
-                devImgs[i].gameObject.SetActive(false);
+                devAnims[i].SetNewFrames(emptySprite);
             }
         }
 
@@ -74,6 +94,7 @@ public class GameUI : MonoBehaviour
 
         if(isPortalOpen)
         {
+            bossAnim.SetNewFrames(bossSummonFrames);
             portal.SetActive(true);
             if(Time.time > portalAnimTimer)
             {
@@ -90,6 +111,7 @@ public class GameUI : MonoBehaviour
         }
         else
         {
+            bossAnim.SetNewFrames(bossIdleFrames);
             if (Time.time > portalAnimTimer)
             {
                 portalAnimTimer = Time.time + portalAnimSpeed;
@@ -98,7 +120,7 @@ public class GameUI : MonoBehaviour
                 portalEdge.sprite = portalFrames[portalFrame];
                 if(portalFrame == 0)
                 {
-                    portal.SetActive(true);
+                    portal.SetActive(false);
                 }
             }
         }

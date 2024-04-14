@@ -30,7 +30,8 @@ public class Backend : MonoBehaviour
     public List<DialogueAtLevel> traitDialogues = new();
 
     // "Desks"
-    Developer[] activeDevelopers = new Developer[4];
+    public const int ACTIVE_DEVELOPERS = 4;
+    Developer[] activeDevelopers = new Developer[ACTIVE_DEVELOPERS];
 
     List<Task> hiddenBugs = new();
     List<Task> foundBugs = new();
