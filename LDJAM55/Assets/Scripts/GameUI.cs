@@ -44,6 +44,14 @@ public class GameUI : MonoBehaviour
     float jumpTimer;
     float jumpRate = 0.1f;
 
+    private void OnDisable()
+    {
+        for(int i = 0; i < devAlive.Length; ++i)
+        {
+            devAlive[i] = false;
+        }
+    }
+
     void Update()
     {
         const float threeDaysInSeconds = 24f * 3f * 60f * 60f;
