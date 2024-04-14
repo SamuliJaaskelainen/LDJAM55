@@ -58,7 +58,6 @@ public class DialogueManager : MonoBehaviour
     void ShowNextDialogue()
     {
         // Keith TODO: Add show dialogue audio
-
         if (currentDilogueList.Count > 0)
         { 
             if(currentDilogueList[0].text == "HIRE")
@@ -80,6 +79,8 @@ public class DialogueManager : MonoBehaviour
 
     void ShowDialogue(Dialogue dialogue)
     {
+        // TODO: Animate dimmer and dialogue box
+        // TODO: Animate dialigue words / letters
         dimmer.SetActive(true);
         dialogueBox.SetActive(true);
         dialogueText.text = dialogue.text;

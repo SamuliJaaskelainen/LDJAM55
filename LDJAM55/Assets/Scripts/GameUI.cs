@@ -6,6 +6,8 @@ using TMPro;
 
 public class GameUI : MonoBehaviour
 {
+    // TODO: Implement bars for backend and game stats
+
     [SerializeField] Backend backend;
 
     [SerializeField] GameObject portal;
@@ -24,7 +26,7 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
-        // TODO: Implement TimeSpan
+        // TODO: Implement TimeSpan to show hours and minutes from 72h to 0h
         timer.text = ((int)(backend.ProductState.TimeLeft)).ToString();
 
         features.text = " Features " + backend.Backlog();

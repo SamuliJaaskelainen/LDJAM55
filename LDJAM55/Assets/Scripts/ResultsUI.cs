@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ResultsUI : MonoBehaviour
 {
+    // TODO: Implement animated rank revearl (grow from 1000 up to final rank)
+
     [SerializeField] Backend backend;
 
     [SerializeField] TextMeshProUGUI overallText;
