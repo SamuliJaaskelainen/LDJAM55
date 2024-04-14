@@ -9,10 +9,11 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
 
     [SerializeField] Backend backend;
-    [SerializeField] GameObject dimmer;
-    [SerializeField] GameObject dialogueBox;
+    [SerializeField] Image dimmer;
+    [SerializeField] AnimateLocaPosition dialogueBox;
     [SerializeField] TextMeshProUGUI dialogueText;
     [SerializeField] Image portraitImage;
+    [SerializeField] AnimateLocaPosition portraitAnim;
     [SerializeField] Sprite emptyPortrait;
     [SerializeField] Sprite spiritPortrait1;
     [SerializeField] Sprite spiritPortrait2;
@@ -23,6 +24,8 @@ public class DialogueManager : MonoBehaviour
     int hiringOption = 0;
     bool isOpenedOnThisFrame = false;
     bool isPortraitVisible = false;
+    bool isConversationActive = false;
+    Color dimmerColor;
 
     [System.Serializable]
     public struct Dialogue
@@ -34,17 +37,37 @@ public class DialogueManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        HideDialogue();
+    }
+
+    void Start()
+    {
+        dimmer.gameObject.SetActive(true);
+        dimmerColor = dimmer.color;
+        dimmer.color = Color.clear;
+        dialogueBox.gameObject.SetActive(true);
+        dialogueBox.reverse = false;
+        dialogueBox.ClamToEnd();
+        portraitImage.sprite = emptyPortrait;
+        portraitAnim.gameObject.SetActive(true);
+        portraitAnim.reverse = false;
+        portraitAnim.ClamToEnd();
     }
 
     public bool IsConversationActive()
     {
-        return dialogueBox.activeSelf;
+        return isConversationActive;
     }
 
     public void ShowConversation(GameObject developerInHell)
     {
         // TODO: Show trait icons
+        dialogueBox.reverse = true;
+        dialogueBox.ResetToStart();
+        dialogueBox.Play();
+        portraitAnim.reverse = true;
+        portraitAnim.ResetToStart();
+        portraitAnim.Play();
+        isConversationActive = true;
         isInHiring = false;
         hiringOption = 0;
         isOpenedOnThisFrame = true;
@@ -73,16 +96,13 @@ public class DialogueManager : MonoBehaviour
 
         else
         {
-            HideDialogue();
+            StopConversation();
         }
     }
 
     void ShowDialogue(Dialogue dialogue)
     {
-        // TODO: Animate dimmer and dialogue box
         // TODO: Animate dialigue words / letters
-        dimmer.SetActive(true);
-        dialogueBox.SetActive(true);
         dialogueText.text = dialogue.text;
         if(isPortraitVisible)
         {
@@ -94,22 +114,29 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void HideDialogue()
+    void StopConversation()
     {
         if(developerReference != null)
         { 
             DestroyImmediate(developerReference);
         }
-        dialogueBox.SetActive(false);
-        dimmer.SetActive(false);
-        portraitImage.sprite = emptyPortrait;
+        dialogueBox.reverse = false;
+        dialogueBox.ResetToStart();
+        dialogueBox.Play();
+        portraitAnim.reverse = false;
+        portraitAnim.ResetToStart();
+        portraitAnim.Play();
         currentDilogueList.Clear();
+        isConversationActive = false;
     }
 
     void Update()
     {
+        // Darken scene if conversation is active
+        dimmer.color = Color.Lerp(dimmer.color, IsConversationActive() ? dimmerColor : Color.clear, Time.deltaTime * 3.0f);
+
         // Only update when we have dialogue
-        if(!IsConversationActive())
+        if (!IsConversationActive())
             return;
 
         if(isInHiring)
@@ -133,7 +160,7 @@ public class DialogueManager : MonoBehaviour
                     }
                     else
                     {
-                        HideDialogue();
+                        StopConversation();
                     }
                 }
             }
@@ -144,7 +171,7 @@ public class DialogueManager : MonoBehaviour
                 if (StateManager.PressedUse())
                 {
                     // Keith TODO: Add menu confirm audio
-                    HideDialogue();
+                    StopConversation();
                 }
             }
         }

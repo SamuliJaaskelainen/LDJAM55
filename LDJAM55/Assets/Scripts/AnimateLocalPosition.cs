@@ -7,20 +7,22 @@ public class AnimateLocaPosition : MonoBehaviour
     public bool autoStart = false;
     public float duration = 1.0f;
     public bool loop = false;
+    public bool reverse = false;
     public AnimationCurve X = new AnimationCurve();
     public AnimationCurve Y = new AnimationCurve();
     public AnimationCurve Z = new AnimationCurve();
+    public float curveMultiplier = 1.0f;
 
     float timer = 0.0f;
     Vector3 startValue = new Vector3();
 
-    void Start()
+    void Awake()
     {
         startValue = transform.localPosition;
         if (X.length == 0) { X.AddKey(0, 0); }
         if (Y.length == 0) { Y.AddKey(0, 0); }
         if (Z.length == 0) { Z.AddKey(0, 0); }
-        ResetValues();
+        ResetToStart();
 
         if (autoStart)
         {
@@ -30,19 +32,40 @@ public class AnimateLocaPosition : MonoBehaviour
 
     void Update()
     {
-        timer += Time.deltaTime / duration;
-        if (timer < 1.0f)
+        if(reverse)
         {
-            transform.localPosition = new Vector3(startValue.x + X.Evaluate(timer), startValue.y + Y.Evaluate(timer), startValue.z + Z.Evaluate(timer));
+            timer -= Time.deltaTime / duration;
+            if (timer > 0.0f)
+            {
+                transform.localPosition = new Vector3(startValue.x + X.Evaluate(timer) * curveMultiplier, startValue.y + Y.Evaluate(timer) * curveMultiplier, startValue.z + Z.Evaluate(timer) * curveMultiplier);
+            }
+            else
+            {
+                ClamToEnd();
+                if (loop)
+                {
+                    ResetToStart();
+                    enabled = true;
+                }
+            }
         }
         else
         {
-            ResetValues();
-            if (loop)
+            timer += Time.deltaTime / duration;
+            if (timer < 1.0f)
             {
-                enabled = true;
+                transform.localPosition = new Vector3(startValue.x + X.Evaluate(timer) * curveMultiplier, startValue.y + Y.Evaluate(timer) * curveMultiplier, startValue.z + Z.Evaluate(timer) * curveMultiplier);
             }
-        }
+            else
+            {
+                ClamToEnd();
+                if (loop)
+                {
+                    ResetToStart();
+                    enabled = true;
+                }
+            }
+        }    
     }
 
     public void Play()
@@ -57,14 +80,44 @@ public class AnimateLocaPosition : MonoBehaviour
 
     public void Restart()
     {
-        timer = 0;
+        if (reverse)
+        {
+            timer = 1.0f;
+        }
+        else
+        {
+            timer = 0.0f;
+        }
         enabled = true;
     }
 
-    public void ResetValues()
+    public void ClamToEnd()
     {
-        timer = 0.0f;
-        transform.localPosition = startValue;
+        if (!reverse)
+        {
+            timer = 1.0f;
+            transform.localPosition = new Vector3(startValue.x + X.Evaluate(timer) * curveMultiplier, startValue.y + Y.Evaluate(timer) * curveMultiplier, startValue.z + Z.Evaluate(timer) * curveMultiplier);
+        }
+        else
+        {
+            timer = 0.0f;
+            transform.localPosition = startValue;
+        }
+        enabled = false;
+    }
+
+    public void ResetToStart()
+    {
+        if(reverse)
+        {
+            timer = 1.0f;
+            transform.localPosition = new Vector3(startValue.x + X.Evaluate(timer) * curveMultiplier, startValue.y + Y.Evaluate(timer) * curveMultiplier, startValue.z + Z.Evaluate(timer) * curveMultiplier);
+        }
+        else
+        {
+            timer = 0.0f;
+            transform.localPosition = startValue;
+        }
         enabled = false;
     }
 }
