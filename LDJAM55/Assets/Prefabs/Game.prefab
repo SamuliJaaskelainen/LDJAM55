@@ -6466,7 +6466,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 200, y: 33.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7778014333910061559
 CanvasRenderer:
@@ -9008,7 +9008,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 487.2, y: 159.5}
+  m_SizeDelta: {x: 487.2, y: 361.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4490573278704898838
 CanvasRenderer:
@@ -9038,9 +9038,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " Use arrow keys or wasd to move.\n Use space or enter to interact.\n\n
-    Summon developers from hell to make\n your game, but watch out! They burn\n out
-    really fast!"
+  m_text: "Arrow keys or WASD moves.\nSpace or Enter interacts.\n\nSummon game developers
+    from Hell to make your game, but watch out! They burn out really fast!\n\n\u2022
+    Designers create feature backlog.\n\u2022 Coders turn feaure backlog into mechanics
+    or\n  increase polish by fixing known bugs.\n\u2022 QA finds bugs.\n\u2022 Artists
+    create art and bugs.\n\u2022 Producers make everyone work harder.\n\u2022 Influencers
+    increase demon pool quality in hell."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e3fae3e7b9a0812468f734e90d39784a, type: 2}
   m_sharedMaterial: {fileID: -5558630947540407447, guid: e3fae3e7b9a0812468f734e90d39784a, type: 2}
@@ -9067,8 +9070,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 19
+  m_fontSizeBase: 19
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -9103,7 +9106,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 8.265213, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11653,8 +11656,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10.08, y: -340.32}
-  m_SizeDelta: {x: 487.2, y: 230.35}
+  m_AnchoredPosition: {x: -10.08, y: -316.43}
+  m_SizeDelta: {x: 487.2, y: 394.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7629070339253791372
 MonoBehaviour:
