@@ -623,11 +623,67 @@ MonoBehaviour:
           the might of my ha-ha-HYYYPE!
   traitDialogues:
   - dialogue:
-    - text: DialogBox 1 for trait Fun
-    - text: DialogBox 2 for trait Fun
+    - text: From the chaos of the abyss, I draw forth the engagement of ancient gods,
+        turning dread into delight.
+    - text: I extract mirth from the very fabric of chaos, turning the sinister into
+        sparks of pure joy.
+    - text: From the deepest pits of the pandemonium, I harvest the seeds of jubilation,
+        sprouting unforeseen delight.
+    - text: My enchantments coax laughter from the gloom, transforming terror into
+        exhilaration.
   - dialogue:
-    - text: DialogBox 1 for trait Innovation
-    - text: DialogBox 2 for trait Innovation
+    - text: I twist the fabrics of the known, birthing oddities that the mortal realm
+        has yet to witness.
+    - text: I refashion the mundane into marvels, twisting the expected into realms
+        of strange wonders.
+    - text: With a flick of my essence, the old rules dissolve, birthing metamorphoses
+        from the void.
+    - text: My thoughts warp the fabric of the commonplace, ushering in a tide of
+        unprecedented creations.
+  - dialogue:
+    - text: Echoes of the forgotten lore flow through me, aligning our creation with
+        the deepest of interpretations.
+    - text: The ancient texts flow through me, aligning our endeavor with the most
+        profound elucidations.
+    - text: I channel the deep currents of the arcane lore, ensuring our creation
+        resonates with its truest essence.
+    - text: Through me, the words of the ancients unfold, guiding our creation to
+        portray the most timeless explanations.
+  - dialogue:
+    - text: My vision transcends the veil of reality, shining light to experiences
+        unseen by the waking eye.
+    - text: My eyes cut through the veils of mundanity, revealing vistas that captivate
+        the soul.
+    - text: I render the invisible visible, crafting depictions that pierce the boundaries
+        of the seen and known.
+    - text: Through my gaze, the unseen becomes visible, illuminating wonders hidden
+        in plain sight.
+  - dialogue:
+    - text: Listening to the void, I can mold it into a chorus that speaks the unspeakable.
+    - text: The silent whispers of the abyss are my orchestra, from which I draw
+        my rigor from.
+    - text: I capture the echoes of silence, weaving them into a tapestry that speaks
+        volumes.
+    - text: From the murmurs of the void, I draw forth a harmony that resonates with
+        the unsaid and the unheard.
+  - dialogue:
+    - text: In the darkest depths, I find amusements; my cackles resonate where despair
+        dares not tread.
+    - text: Where shadows dwell, I kindle absurdity, sparking laughter in the heart
+        of darkness.
+    - text: My jests cut through despair, bringing light-hearted respite to the most
+        somber depths.
+    - text: I craft joy from the jaws of gloom, my convulsive laughter echoing as
+        a beacon of levity in the abyss.
+  - dialogue:
+    - text: I weave the essence of atmospheres, cloaking our creations in veils of
+        dread and wonder alike.
+    - text: I am the master of auras, stroking our canvas with emotion that stirs
+        the soul.
+    - text: My touch infuses our creation with a spectrum of sentiments, from terror
+        to tranquility.
+    - text: With each whisper, I sculpt the ambience, layering the realm with atmospheres
+        both sublime and sinister.
 --- !u!114 &519420035
 MonoBehaviour:
   m_ObjectHideFlags: 0
