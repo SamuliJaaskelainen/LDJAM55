@@ -108,6 +108,7 @@ public class StateManager : MonoBehaviour
         switch (currentState)
         {
             case State.MainMenu:
+                backend.Reset();
                 developerSpawnRate = 0.1f;
                 menuIndex = 0;
                 audioStoryShown = false;

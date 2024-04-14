@@ -41,6 +41,22 @@ namespace DataTypes
         float humorScore = 0f;
         float moodScore = 0f;
 
+        public void Reset()
+        {
+            timeLeft = gameLengthSeconds;
+            mechanicsFeature = 0f;
+            audioFeature = 0f;
+            visualsFeature = 0f;
+            polishFeature = 1.0f;
+            funScore = 0f;
+            innovationScore = 0f;
+            themeScore = 0f;
+            graphicsScore = 0f;
+            audioScore = 0f;
+            humorScore = 0f;
+            moodScore = 0f;
+        }
+
         public float RelativeTimeLeft => timeLeft / gameLengthSeconds;
         public float TimeLeft { get => timeLeft; set => timeLeft = value; }
 

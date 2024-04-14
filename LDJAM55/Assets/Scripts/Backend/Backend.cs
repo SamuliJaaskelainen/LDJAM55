@@ -40,11 +40,43 @@ public class Backend : MonoBehaviour
 
     ProductState productState = new();
 
+    bool allowAudioSpawn = false;
+
+    // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
+    // Producer boost currently affects the designer, programmer, artist and audio roles
+    float currentProducerBoost = 0f;
+    float currentInfluencerBoost = 0f;
+
+    public void Reset()
+    {
+        Debug.Log("reset called");
+        for (int i = 0; i < activeDevelopers.Length; ++i)
+        {
+            activeDevelopers[i] = null;
+        }
+
+        hiddenBugs = new();
+        foundBugs = new();
+        backlog = new();
+
+        productState.Reset();
+
+        allowAudioSpawn = false;
+        currentProducerBoost = 0f;
+        currentInfluencerBoost = 0f;
+
+        // Start with some hidden bugs initially
+        float initialHiddenBugPower = 0.1f / productState.PowerScale;
+        hiddenBugs.Add(new Task(initialHiddenBugPower));
+        productState.AddPolishFeature(-initialHiddenBugPower);
+
+        float initialBacklogPower = 0.1f / productState.PowerScale;
+        backlog.Add(new Task(initialBacklogPower));
+    }
+
     public Developer[] ActiveDevelopers { get => activeDevelopers; }
     public ProductState ProductState { get => productState; }
     public bool AllowAudioSpawn { get => allowAudioSpawn; set => allowAudioSpawn = value; }
-
-    bool allowAudioSpawn = false;
 
     public float FoundBugs()
     {
@@ -65,11 +97,6 @@ public class Backend : MonoBehaviour
         }
         return work * ProductState.PowerScale;
     }
-
-    // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
-    // Producer boost currently affects the designer, programmer, artist and audio roles
-    float currentProducerBoost = 0f;
-    float currentInfluencerBoost = 0f;
 
     public Developer FetchDeveloperFromPool()
     {
