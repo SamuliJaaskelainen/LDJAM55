@@ -69,13 +69,6 @@ public class DialogueManager : MonoBehaviour
 
     public void ShowConversation(GameObject developerInHell)
     {
-        // TODO: Show trait icons
-        dialogueBox.reverse = true;
-        dialogueBox.ResetToStart();
-        dialogueBox.Play();
-        portraitAnim.reverse = true;
-        portraitAnim.ResetToStart();
-        portraitAnim.Play();
         isConversationActive = true;
         isInHiring = false;
         hiringOption = 0;
@@ -122,13 +115,6 @@ public class DialogueManager : MonoBehaviour
 
     public void ShowStoryConversation(List<Dialogue> storyDialogue)
     {
-        // TODO: Show trait icons
-        dialogueBox.reverse = true;
-        dialogueBox.ResetToStart();
-        dialogueBox.Play();
-        portraitAnim.reverse = true;
-        portraitAnim.ResetToStart();
-        portraitAnim.Play();
         isConversationActive = true;
         isInHiring = false;
         hiringOption = 0;
@@ -270,6 +256,13 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            dialogueBox.reverse = true;
+            dialogueBox.ResetToStart();
+            dialogueBox.Play();
+            portraitAnim.reverse = true;
+            portraitAnim.ResetToStart();
+            portraitAnim.Play();
+
             isOpenedOnThisFrame = false;
         }
     }
