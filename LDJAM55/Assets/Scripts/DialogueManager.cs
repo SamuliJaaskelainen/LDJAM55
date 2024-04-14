@@ -98,7 +98,7 @@ public class DialogueManager : MonoBehaviour
         isOpenedOnThisFrame = true;
         isPortraitVisible = false;
         developerReference = null;
-        currentDilogueList = storyDialogue;
+        currentDilogueList = new List<Dialogue>(storyDialogue);
         Time.timeScale = 0.0f;
         Debug.Log("Dialogue loaded, size of " + currentDilogueList.Count);
         ShowNextDialogue();

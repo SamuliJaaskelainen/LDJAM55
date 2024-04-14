@@ -80,6 +80,14 @@ public class GameUI : MonoBehaviour
                     {
                         devAlive[i] = true;
                         devAnims[i].SetNewFrames(new Sprite[] { backend.ActiveDevelopers[i].portrait });
+                        if(backend.ActiveDevelopers[i].Role == DataTypes.Developer.RoleType.Producer)
+                        {
+                            devAnims[i].transform.localScale = Vector3.one * 1.2f;
+                        }
+                        else
+                        {
+                            devAnims[i].transform.localScale = Vector3.one;
+                        }
                     }
                     devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
                     developersAlive++;
