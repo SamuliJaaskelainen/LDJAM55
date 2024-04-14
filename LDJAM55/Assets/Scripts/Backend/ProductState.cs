@@ -22,7 +22,7 @@ namespace DataTypes
         const int otherContestantCount = 999;
         const float scoreLowerBound = 0f;
         const float scoreUpperBound = 1f;
-        const float gameLengthSeconds = 900.0f;
+        const float gameLengthSeconds = 300.0f;
 
         float timeLeft = gameLengthSeconds;
 

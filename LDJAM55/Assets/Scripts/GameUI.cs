@@ -61,7 +61,7 @@ public class GameUI : MonoBehaviour
         mechanics.fillAmount = Mathf.Clamp01(backend.ProductState.MechanicsFeature);
         mechanics.color = fillGradient.Evaluate(backend.ProductState.MechanicsFeature);
 
-        if (backend.ProductState.TimeLeft < StateManager.AUDIO_STORY_TIME)
+        if (backend.ProductState.RelativeTimeLeft < StateManager.AUDIO_STORY_TIME)
         {
             audioVisuals.text = " Audiovisuals";
             visuals.fillAmount = Mathf.Clamp01(backend.ProductState.AudioVisualsFeature);
@@ -89,7 +89,7 @@ public class GameUI : MonoBehaviour
                         devJumpAnims[i].Play();
                         devAlive[i] = true;
                         devAnims[i].SetNewFrames(new Sprite[] { backend.ActiveDevelopers[i].portrait });
-                        if(backend.ActiveDevelopers[i].Role == DataTypes.Developer.RoleType.Producer)
+                        if (backend.ActiveDevelopers[i].Role == DataTypes.Developer.RoleType.Producer)
                         {
                             devAnims[i].transform.localScale = Vector3.one * 1.2f;
                         }
@@ -126,7 +126,7 @@ public class GameUI : MonoBehaviour
             jumpTimer = Time.time + jumpRate + UnityEngine.Random.value * 0.1f;
             // Keith TODO: Developer developing audio (could use switch case to have unique audio for each role using backend.ActiveDevelopers[i].Role)
             int r = UnityEngine.Random.Range(0, devJumpAnims.Length);
-            if(!devJumpAnims[r].enabled) devJumpAnims[r].ResetToStart();
+            if (!devJumpAnims[r].enabled) devJumpAnims[r].ResetToStart();
             devJumpAnims[r].Play();
         }
 

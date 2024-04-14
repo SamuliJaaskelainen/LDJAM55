@@ -61,7 +61,7 @@ namespace DataTypes
         public static int RandomDeveloperIndex(bool allowAudioSpawn)
         {
             // Weights
-            int designerIndexes = 9;
+            int designerIndexes = 6;
             int programmerIndexes = 15 + designerIndexes;
             int qaIndexes = 9 + programmerIndexes;
             int artistIndexes = 6 + qaIndexes;

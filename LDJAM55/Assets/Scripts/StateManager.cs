@@ -28,7 +28,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] List<DialogueManager.Dialogue> storyStart = new List<DialogueManager.Dialogue>();
     [SerializeField] List<DialogueManager.Dialogue> storyAudio = new List<DialogueManager.Dialogue>();
 
-    public const float AUDIO_STORY_TIME = 60.0f;
+    public const float AUDIO_STORY_TIME = 0.4f;
     bool audioStoryShown = false;
 
     Vector2 pointerOffset = new Vector2(-313.25f, 0.0f);
@@ -230,7 +230,7 @@ public class StateManager : MonoBehaviour
         {
             ChangeState(State.Results);
         }
-        else if (!audioStoryShown && backend.ProductState.TimeLeft < AUDIO_STORY_TIME)
+        else if (!audioStoryShown && backend.ProductState.RelativeTimeLeft < AUDIO_STORY_TIME)
         {
             DialogueManager.Instance.ShowStoryConversation(storyAudio);
             audioStoryShown = true;
