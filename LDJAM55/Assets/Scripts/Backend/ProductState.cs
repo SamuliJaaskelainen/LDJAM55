@@ -6,6 +6,7 @@ namespace DataTypes
     // Final results for game end screen
     public struct FinalResult
     {
+        public int otherContestantCount;
         public int funRank;
         public int innovationRank;
         public int themeRank;
@@ -73,6 +74,7 @@ namespace DataTypes
             float finalMoodScore = ((moodScore * 2f + mechanicsFeature * 0.5f + audioFeature + visualsFeature * 0.5f) / 4f) * polishPenalty;
             float overallScore = (finalFunScore + finalInnovationScore + finalThemeScore + finalGraphicsScore + finalAudioScore + finalHumorScore + finalMoodScore) / 7f;
 
+            result.otherContestantCount = otherContestantCount;
             result.funRank = scoreToRank(finalFunScore);
             result.innovationRank = scoreToRank(finalInnovationScore);
             result.themeRank = scoreToRank(finalThemeScore);
