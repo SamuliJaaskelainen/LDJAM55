@@ -20,6 +20,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] GameObject resultsParent;
 
     [SerializeField] RectTransform pointer;
+    [SerializeField] AnimateLocalRotation pointerAnim;
     [SerializeField] TextMeshProUGUI startText;
     [SerializeField] TextMeshProUGUI muteText;
     [SerializeField] TextMeshProUGUI volumeText;
@@ -30,6 +31,8 @@ public class StateManager : MonoBehaviour
 
     public const float AUDIO_STORY_TIME = 60.0f;
     bool audioStoryShown = false;
+
+    Vector2 pointerOffset = new Vector2(-288.0f, 0.0f);
 
     public static bool PressedUp()
     {
@@ -137,11 +140,13 @@ public class StateManager : MonoBehaviour
         if (PressedUp())
         {
             menuIndex--;
+            pointerAnim.Play();
             // Keith TODO: Add menu change audio
         }
         if (PressedDown())
         {
             menuIndex++;
+            pointerAnim.Play();
             // Keith TODO: Add menu change audio
         }
         menuIndex = Mathf.Clamp(menuIndex, 0, 3);
@@ -160,6 +165,7 @@ public class StateManager : MonoBehaviour
                 if(PressedUse() || PressedRight() || PressedLeft()) 
                 {
                     isMusicMuted = !isMusicMuted;
+                    pointerAnim.Play();
                     // Keith TODO: Add menu confirm
                 }
                 break;
@@ -168,11 +174,13 @@ public class StateManager : MonoBehaviour
                 if (PressedRight() || PressedUse()) 
                 {
                     audioVolume++;
+                    pointerAnim.Play();
                     // Keith TODO: Add menu change audio
                 }
                 if (PressedLeft())
                 {
                     audioVolume--;
+                    pointerAnim.Play();
                     // Keith TODO: Add menu change audio
                 }
                 audioVolume = Mathf.Clamp(audioVolume, 0, 10);
@@ -188,10 +196,7 @@ public class StateManager : MonoBehaviour
             Application.Quit();
         }
 
-        if (Input.anyKeyDown)
-        {
-            UpdateMainMenuGraphics();
-        }
+        UpdateMainMenuGraphics();
     }
 
     void UpdateMainMenuGraphics()
@@ -216,7 +221,7 @@ public class StateManager : MonoBehaviour
                 pointer.transform.position = quitText.transform.position;
                 break;
         }
-        pointer.anchoredPosition += new Vector2(-288.0f, 0.0f);
+        pointer.anchoredPosition += pointerOffset;
     }
 
     void UpdateGameplay()

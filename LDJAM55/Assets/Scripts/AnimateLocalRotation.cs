@@ -10,6 +10,7 @@ public class AnimateLocalRotation : MonoBehaviour
     public AnimationCurve X = new AnimationCurve();
     public AnimationCurve Y = new AnimationCurve();
     public AnimationCurve Z = new AnimationCurve();
+    public float curveMultiplier = 1.0f;
 
     float timer = 0.0f;
     Vector3 startValue = new Vector3();
@@ -33,7 +34,7 @@ public class AnimateLocalRotation : MonoBehaviour
         timer += Time.deltaTime / duration;
         if (timer < 1.0f)
         {
-            transform.localEulerAngles = new Vector3(startValue.x + X.Evaluate(timer), startValue.y + Y.Evaluate(timer), startValue.z + Z.Evaluate(timer));
+            transform.localEulerAngles = new Vector3(startValue.x + X.Evaluate(timer) * curveMultiplier, startValue.y + Y.Evaluate(timer) * curveMultiplier, startValue.z + Z.Evaluate(timer) * curveMultiplier);
         }
         else
         {
