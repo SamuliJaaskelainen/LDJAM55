@@ -52,10 +52,10 @@ public class GameUI : MonoBehaviour
 
         float backlog = backend.Backlog();
         features.fillAmount = Mathf.Clamp01(backlog);
-        features.color = fillGradient.Evaluate(backlog);
+        features.color = fillGradient.Evaluate(1.0f - backlog);
         float foundBugs = backend.FoundBugs();
         bugs.fillAmount = Mathf.Clamp01(foundBugs);
-        bugs.color = fillGradient.Evaluate(foundBugs);
+        bugs.color = fillGradient.Evaluate(1.0f - foundBugs);
 
         mechanics.fillAmount = Mathf.Clamp01(backend.ProductState.MechanicsFeature);
         mechanics.color = fillGradient.Evaluate(backend.ProductState.MechanicsFeature);
