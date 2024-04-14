@@ -35,7 +35,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] devDurabilities;
 
     int portalFrame;
-    float portalAnimSpeed = 0.2f;
+    float portalAnimSpeed = 0.16f;
     float portalAnimTimer;
     bool[] devAlive = new bool[Backend.ACTIVE_DEVELOPERS];
 

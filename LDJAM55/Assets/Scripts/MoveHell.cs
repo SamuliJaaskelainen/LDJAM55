@@ -40,6 +40,7 @@ public class MoveHell : MonoBehaviour
         {
             headAnim.Pause();
         }
+        movement += Vector3.down;
         characterController.Move(movement * speed * Time.deltaTime);
 
         if (HoldRight())
