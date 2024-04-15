@@ -23,10 +23,14 @@ public class StateManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI startText;
     [SerializeField] TextMeshProUGUI muteText;
     [SerializeField] TextMeshProUGUI volumeText;
+    [SerializeField] TextMeshProUGUI slowModeText;
+    [SerializeField] GameObject slowModeInfo;
     [SerializeField] TextMeshProUGUI quitText;
 
     [SerializeField] List<DialogueManager.Dialogue> storyStart = new List<DialogueManager.Dialogue>();
     [SerializeField] List<DialogueManager.Dialogue> storyAudio = new List<DialogueManager.Dialogue>();
+
+    public static bool SLOW_MODE_ON = false;
 
     public const float AUDIO_STORY_TIME = 0.4f;
     bool audioStoryShown = false;
@@ -153,7 +157,7 @@ public class StateManager : MonoBehaviour
             pointerAnim.Play();
             // Keith TODO: Add menu change audio
         }
-        menuIndex = Mathf.Clamp(menuIndex, 0, 3);
+        menuIndex = Mathf.Clamp(menuIndex, 0, 4);
 
         switch (menuIndex)
         {
@@ -190,7 +194,16 @@ public class StateManager : MonoBehaviour
                 audioVolume = Mathf.Clamp(audioVolume, 0, 10);
                 break;
 
-            case 3: // Quit game
+            case 3: // Set slow mode
+                if (PressedUse() || PressedRight() || PressedLeft())
+                {
+                    SLOW_MODE_ON = !SLOW_MODE_ON;
+                    pointerAnim.Play();
+                    // Keith TODO: Add menu confirm
+                }
+                break;
+
+            case 4: // Quit game
                 if (PressedUse()) Application.Quit();
                 break;
         }
@@ -207,6 +220,8 @@ public class StateManager : MonoBehaviour
     {
         muteText.text = isMusicMuted ? "Music muted [X]" : "Music muted [  ]";
         volumeText.text = "Audio volume " + audioVolume.ToString();
+        slowModeText.text = SLOW_MODE_ON ? "Slow reader mode [X]" : "Slow reader mode [  ]";
+        slowModeInfo.SetActive(menuIndex == 3);
         switch (menuIndex)
         {
             case 0: // Start game
@@ -221,7 +236,11 @@ public class StateManager : MonoBehaviour
                 pointer.transform.position = volumeText.transform.position;
                 break;
 
-            case 3: // Quit game
+            case 3: // Slow mode
+                pointer.transform.position = slowModeText.transform.position;
+                break;
+
+            case 4: // Quit game
                 pointer.transform.position = quitText.transform.position;
                 break;
         }

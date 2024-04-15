@@ -69,6 +69,7 @@ public class DialogueManager : MonoBehaviour
 
     public void ShowConversation(GameObject developerInHell)
     {
+        if(StateManager.SLOW_MODE_ON) Time.timeScale = 0.0f;
         isConversationActive = true;
         isInHiring = false;
         hiringOption = 0;
