@@ -77,7 +77,7 @@ public class StateManager : MonoBehaviour
 
     int menuIndex = 0;
     public int audioVolume = 10;
-    bool isMusicMuted = false; // Keith TODO: Implement mute to music
+    public bool isMusicMuted = false; // Keith TODO: Implement mute to music
     float menuStateChangedTime;
 
     List<GameObject> spawnedDevelopers = new List<GameObject>();

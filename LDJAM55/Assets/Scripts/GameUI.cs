@@ -320,6 +320,8 @@ public class GameUI : MonoBehaviour
         // play audio for portal opening/closing, index 38 open, 37 close
         if(isportalOpen) AudioManager.Instance.PlaySound(38, transform.position);
         else AudioManager.Instance.PlaySound(37, transform.position);
+        
+        MusicManager.Instance.SwitchMusicTracks();
     }
     
     void PlayDeathAudio(){

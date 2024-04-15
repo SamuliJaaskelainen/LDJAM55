@@ -460,6 +460,7 @@ MonoBehaviour:
   - text: Let not this creation languish in the mute despair that befalls many a
       lesser jam..
   audioVolume: 10
+  isMusicMuted: 0
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,37 +732,6 @@ MonoBehaviour:
     m_Bits: 1
   spawnPointsParent: {fileID: 1078805917}
   developerInHell: {fileID: 1236324769198156186, guid: 53ed522b571387c4aa9c99c90981a9fe, type: 3}
---- !u!1 &557831902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 557831903}
-  m_Layer: 0
-  m_Name: MusicManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &557831903
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 557831902}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &774930039 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1924839946059110610, guid: 246e02c61e478e44987ac3cb5f2aa506, type: 3}
@@ -2338,4 +2308,3 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 418694288682649516}
-  - {fileID: 557831903}
