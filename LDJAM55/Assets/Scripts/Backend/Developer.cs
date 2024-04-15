@@ -68,7 +68,7 @@ namespace DataTypes
             int programmerIndexes = 15 + designerIndexes;
             int qaIndexes = 9 + programmerIndexes;
             int artistIndexes = 6 + qaIndexes;
-            int audioIndexes = (allowAudioSpawn ? 15 : 0) + artistIndexes;
+            int audioIndexes = (allowAudioSpawn ? 12 : 0) + artistIndexes;
             int producerIndexes = 2 + audioIndexes;
             int influencerIndexes = 2 + producerIndexes;
 
