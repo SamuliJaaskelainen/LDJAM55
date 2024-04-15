@@ -186,6 +186,11 @@ public class StateManager : MonoBehaviour
                     isMusicMuted = !isMusicMuted;
                     pointerAnim.Play();
                     PlayMusicToggle();
+                    if (isMusicMuted) {
+                        MusicManager.Instance.MuteAllMusic();
+                    } else {
+                        MusicManager.Instance.UnmuteAllMusic();
+                    }
                 }
 
                 break;
