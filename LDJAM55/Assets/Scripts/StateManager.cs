@@ -186,7 +186,7 @@ public class StateManager : MonoBehaviour {
                 if (PressedUse() || PressedRight() || PressedLeft()) {
                     SLOW_MODE_ON = !SLOW_MODE_ON;
                     pointerAnim.Play();
-                    // Keith TODO: Add menu confirm
+                    PlaySlowModeToggle();
                 }
 
                 break;
@@ -319,6 +319,11 @@ public class StateManager : MonoBehaviour {
     void PlayMenuNavigate() {
         // play menu navigate audio, random index from 23-27
         AudioManager.Instance.PlaySound(Random.RandomRange(23, 27), transform.position);
+    }
+    
+    void PlaySlowModeToggle() {
+        // play slow mode toggle audio, index 37
+        AudioManager.Instance.PlaySound(Random.RandomRange(27,29), transform.position);
     }
 }
 
