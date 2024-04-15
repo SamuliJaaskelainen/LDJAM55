@@ -52,6 +52,15 @@ public class GameUI : MonoBehaviour
     float jumpTimer;
     float jumpRate = 0.1f;
 
+    void OnEnable()
+    {
+        portal.SetActive(false);
+        wasPortalOpen = false;
+        portalFrame = 0;
+        portalEdge.sprite = portalFrames[portalFrame];
+        portalMask.texture = portalMaskFrames[portalFrame];
+    }
+
     void Start()
     {
         for(int i = 0; i < workPosAnims.Length; ++i)
@@ -204,46 +213,49 @@ public class GameUI : MonoBehaviour
             devJumpAnims[r].Play();
         }
 
-        bool isPortalOpen = developersAlive != backend.ActiveDevelopers.Length;
-
-        if(isPortalOpen != wasPortalOpen)
+        if(!DialogueManager.Instance.IsConversationActive())
         {
-            if(isPortalOpen) Debug.LogWarning("OPEN PORTAL"); // Keith TODO: Play portal open (remove warning)
-            else Debug.LogWarning("CLOSE PORTAL"); // Keith TODO: Play portal close (remove warning)
-            wasPortalOpen = isPortalOpen;
-        }
+            bool isPortalOpen = developersAlive != backend.ActiveDevelopers.Length;
 
-        if (isPortalOpen)
-        {
-            bossAnim.SetNewFrames(bossSummonFrames);
-            portal.SetActive(true);
-            if (Time.time > portalAnimTimer)
+            if (isPortalOpen != wasPortalOpen)
             {
-                portalAnimTimer = Time.time + portalAnimSpeed;
-                portalFrame++;
-                if (portalFrame >= portalFrames.Length)
-                {
-                    // Keep looping last two frames
-                    portalFrame -= 2;
-                }
-                portalFrame = Mathf.Clamp(portalFrame, 0, portalFrames.Length - 1);
-                portalEdge.sprite = portalFrames[portalFrame];
-                portalMask.texture = portalMaskFrames[portalFrame];
+                if (isPortalOpen) Debug.LogWarning("OPEN PORTAL"); // Keith TODO: Play portal open (remove warning)
+                else Debug.LogWarning("CLOSE PORTAL"); // Keith TODO: Play portal close (remove warning)
+                wasPortalOpen = isPortalOpen;
             }
-        }
-        else
-        {
-            bossAnim.SetNewFrames(bossIdleFrames);
-            if (Time.time > portalAnimTimer)
+
+            if (isPortalOpen)
             {
-                portalAnimTimer = Time.time + portalAnimSpeed;
-                portalFrame--;
-                portalFrame = Mathf.Clamp(portalFrame, 0, portalFrames.Length);
-                portalEdge.sprite = portalFrames[portalFrame];
-                portalMask.texture = portalMaskFrames[portalFrame];
-                if (portalFrame == 0)
+                bossAnim.SetNewFrames(bossSummonFrames);
+                portal.SetActive(true);
+                if (Time.time > portalAnimTimer)
                 {
-                    portal.SetActive(false);
+                    portalAnimTimer = Time.time + portalAnimSpeed;
+                    portalFrame++;
+                    if (portalFrame >= portalFrames.Length)
+                    {
+                        // Keep looping last two frames
+                        portalFrame -= 2;
+                    }
+                    portalFrame = Mathf.Clamp(portalFrame, 0, portalFrames.Length - 1);
+                    portalEdge.sprite = portalFrames[portalFrame];
+                    portalMask.texture = portalMaskFrames[portalFrame];
+                }
+            }
+            else
+            {
+                bossAnim.SetNewFrames(bossIdleFrames);
+                if (Time.time > portalAnimTimer)
+                {
+                    portalAnimTimer = Time.time + portalAnimSpeed;
+                    portalFrame--;
+                    portalFrame = Mathf.Clamp(portalFrame, 0, portalFrames.Length);
+                    portalEdge.sprite = portalFrames[portalFrame];
+                    portalMask.texture = portalMaskFrames[portalFrame];
+                    if (portalFrame == 0)
+                    {
+                        portal.SetActive(false);
+                    }
                 }
             }
         }
