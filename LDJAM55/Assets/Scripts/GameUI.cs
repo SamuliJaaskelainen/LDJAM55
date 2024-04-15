@@ -52,7 +52,7 @@ public class GameUI : MonoBehaviour
     float[] workAnimTimers = new float[Backend.ACTIVE_DEVELOPERS];
 
     float jumpTimer;
-    float jumpRate = 1f;
+    float jumpRate = 1.3f;
 
     void OnEnable()
     {
