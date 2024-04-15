@@ -211,6 +211,8 @@ public class StateManager : MonoBehaviour
                 }
 
                 audioVolume = Mathf.Clamp(audioVolume, 0, 10);
+                MusicManager.Instance.backgroundMusic.volume = MusicManager.MUSIC_VOLUME_MAX * ((float)audioVolume / 10.0f);
+                MusicManager.Instance.hellLoop.volume = MusicManager.HELL_VOLUME_MAX * ((float)audioVolume / 10.0f);
                 break;
 
             case 3: // Set slow mode
@@ -373,7 +375,6 @@ public class StateManager : MonoBehaviour
     {
         // play volume change audio, index from 33 to 37
         AudioManager.Instance.PlaySound(Random.Range(33, 37), transform.position);
-
     }
 
     void PlayMusicToggle()
