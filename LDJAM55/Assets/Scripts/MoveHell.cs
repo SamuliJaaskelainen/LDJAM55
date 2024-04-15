@@ -36,32 +36,16 @@ public class MoveHell : MonoBehaviour
 
             movement += transform.forward;
             headAnim.Play();
-            if (movement != Vector3.zero && !audioSource.isPlaying)
-            {
-                PlayNextWalkSound();
-            }
-            else if (movement == Vector3.zero && audioSource.isPlaying)
-            {
-                audioSource.Stop();
-            }
-            
-            
-            
+
+
+
         }
         else if (HoldDown())
         {
             
             movement += -transform.forward;
             headAnim.Play();
-            if (movement != Vector3.zero && !audioSource.isPlaying)
-            {
-                PlayNextWalkSound();
-            }
-            else if (movement == Vector3.zero && audioSource.isPlaying)
-            {
-                audioSource.Stop();
-            }
-            
+
         }
         else
         {
@@ -97,6 +81,8 @@ public class MoveHell : MonoBehaviour
     }
     
     
+    
+    /*
     void PlayNextWalkSound()
     {
         // play a random walk sound from the array that is not the same as the current sound
@@ -111,6 +97,7 @@ public class MoveHell : MonoBehaviour
         Debug.Log("Playing sound: " + walkSounds[currentSoundIndex].name);
 
     }
+    */
 
     bool HoldUp()
     {

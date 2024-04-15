@@ -75,7 +75,7 @@ public class StateManager : MonoBehaviour
     }
 
     int menuIndex = 0;
-    int audioVolume = 10; // Keith TODO: Implement volume to audio systems
+    public int audioVolume = 10; // Keith TODO: Implement volume to audio systems
     bool isMusicMuted = false; // Keith TODO: Implement mute to music
     float menuStateChangedTime;
 
@@ -168,7 +168,8 @@ public class StateManager : MonoBehaviour
                 if (PressedUse())
                 {
                     ChangeState(State.Gameplay);
-                    // Keith TODO: Add menu confirm / game starts audio
+
+                    PlayGameStart();
                 }
                 break;
 
@@ -329,5 +330,12 @@ public class StateManager : MonoBehaviour
             ChangeState(State.MainMenu);
             // Keith TODO: Add menu confirm audio
         }
+    }
+    
+    private void PlayGameStart()
+    {
+        
+        // Play the 29th sound effect
+            AudioManager.Instance.PlaySound(29, transform.position);
     }
 }
