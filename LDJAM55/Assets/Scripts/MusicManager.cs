@@ -45,21 +45,25 @@ public class MusicManager : MonoBehaviour
     public void PlayHellMusic() {
         hellLoop.mute = false;
         backgroundMusic.mute = true;
+        Debug.Log("Playing hell music");
     }
     
     public void PlayBackgroundMusic() {
         hellLoop.mute = true;
         backgroundMusic.mute = false;
+        Debug.Log("Playing background music");
     }
 
     public void MuteAllMusic() {
         hellLoop.volume = 0f;
         backgroundMusic.volume = 0f;
+        Debug.Log("Muting all music");
     }
     
     public void UnmuteAllMusic() {
         hellLoop.volume = hellVolume;
         backgroundMusic.volume = musicVolume;
+        Debug.Log("Unmuting all music");
     }
 
     
@@ -116,6 +120,7 @@ public class MusicManager : MonoBehaviour
         hellLoop.mute = true;
         backgroundMusic.mute = false;
         backgroundMusic.clip = musicTracks[5];
+        Debug.Log("Playing result music");
         
     }
 
@@ -125,6 +130,7 @@ public class MusicManager : MonoBehaviour
         backgroundMusic.clip = musicTracks[8];
         //hellLoop.Play();
         //backgroundMusic.Play();
+        
     }
     
     public void UpdateBackgroundMusicIndex()
