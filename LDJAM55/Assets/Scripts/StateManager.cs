@@ -26,8 +26,11 @@ public class StateManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI volumeText;
     [SerializeField] TextMeshProUGUI slowModeText;
     [SerializeField] GameObject slowModeInfo;
+    [SerializeField] TextMeshProUGUI hardModeText;
+    [SerializeField] GameObject hardModeInfo;
     [SerializeField] TextMeshProUGUI quitText;
     [SerializeField] GameObject quitInfo;
+
 
     [SerializeField] List<DialogueManager.Dialogue> storyStart = new List<DialogueManager.Dialogue>();
     [SerializeField] List<DialogueManager.Dialogue> storyAudio = new List<DialogueManager.Dialogue>();
@@ -164,7 +167,7 @@ public class StateManager : MonoBehaviour
             PlayMenuNavigate();
         }
 
-        menuIndex = Mathf.Clamp(menuIndex, 0, 4);
+        menuIndex = Mathf.Clamp(menuIndex, 0, 5);
 
         switch (menuIndex)
         {
@@ -212,10 +215,18 @@ public class StateManager : MonoBehaviour
                     pointerAnim.Play();
                     PlaySlowModeToggle();
                 }
-
                 break;
 
-            case 4: // Quit game
+            case 4: // Set hard mode
+                if (PressedUse() || PressedRight() || PressedLeft())
+                {
+                    backend.hardMode = !backend.hardMode;
+                    pointerAnim.Play();
+                    PlaySlowModeToggle();
+                }
+                break;
+
+            case 5: // Quit game
                 if (PressedUse()) Application.Quit();
                 break;
         }
@@ -234,7 +245,9 @@ public class StateManager : MonoBehaviour
         volumeText.text = "Audio volume " + audioVolume.ToString();
         slowModeText.text = SLOW_MODE_ON ? "Slow reader mode [X]" : "Slow reader mode [  ]";
         slowModeInfo.SetActive(menuIndex == 3);
-        quitInfo.SetActive(menuIndex == 4);
+        hardModeText.text = backend.hardMode ? "Hard mode [X]" : "Hard mode [  ]";
+        hardModeInfo.SetActive(menuIndex == 4);
+        quitInfo.SetActive(menuIndex == 5);
         switch (menuIndex)
         {
             case 0: // Start game
@@ -253,7 +266,11 @@ public class StateManager : MonoBehaviour
                 pointer.transform.position = slowModeText.transform.position;
                 break;
 
-            case 4: // Quit game
+            case 4: // Hard mode
+                pointer.transform.position = hardModeText.transform.position;
+                break;
+
+            case 5: // Quit game
                 pointer.transform.position = quitText.transform.position;
                 break;
         }

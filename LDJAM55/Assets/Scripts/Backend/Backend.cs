@@ -48,7 +48,7 @@ public class Backend : MonoBehaviour
     ProductState productState = new();
 
     bool allowAudioSpawn = false;
-    bool hardMode = false;
+    public bool hardMode = false;
 
     // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
     // Producer boost currently affects the designer, programmer, artist and audio roles
