@@ -113,6 +113,7 @@ public class StateManager : MonoBehaviour
         switch (currentState)
         {
             case State.MainMenu:
+                ClearHell();
                 backend.Reset();
                 developerSpawnRate = 0.1f;
                 menuIndex = 0;
