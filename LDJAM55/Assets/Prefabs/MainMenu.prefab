@@ -470,7 +470,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Samuli J\xE4\xE4skel\xE4inen, Spira, Sofi Kurtti\nKeith Davis, Pyry Takkunen"
+  m_text: "Samuli J\xE4\xE4skel\xE4inen, Jan-Kristian Herring\nSofi Kurtti, Keith
+    Davis, Pyry Takkunen"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e3fae3e7b9a0812468f734e90d39784a, type: 2}
   m_sharedMaterial: {fileID: -5558630947540407447, guid: e3fae3e7b9a0812468f734e90d39784a, type: 2}

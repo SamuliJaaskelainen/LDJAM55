@@ -142,9 +142,22 @@ public class Backend : MonoBehaviour
 
         int powerLevelAsDialogueIndex = Math.Clamp((int)(developer.Power * dialogueLevelCount), 0, dialogueLevelCount - 1);
 
-        developer.Dialogue = roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel[powerLevelAsDialogueIndex].dialogue;
-        // TODO: add trait based dialog?
-
+        developer.Dialogue = new List<DialogueManager.Dialogue>(roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel[powerLevelAsDialogueIndex].dialogue);
+        
+        for(int i = 0; i < developer.Dialogue.Count; ++i)
+        {
+            if(developer.Dialogue[i].text == "SUMMON")
+            {
+                if(developer.Traits.Count > 0)
+                { 
+                    int traitAsIndex = (int)developer.Traits[UnityEngine.Random.Range(0, developer.Traits.Count)];
+                    DialogueManager.Dialogue randomTraitDialogue = traitDialogues[traitAsIndex].dialogue[UnityEngine.Random.Range(0, traitDialogues[traitAsIndex].dialogue.Count)];
+                    developer.Dialogue.Insert(0, randomTraitDialogue);
+                    break;
+                }
+            }
+        }
+       
         return developer;
     }
 
