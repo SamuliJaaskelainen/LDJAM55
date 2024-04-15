@@ -169,7 +169,6 @@ public class StateManager : MonoBehaviour {
                 if (PressedRight() || PressedUse()) {
                     audioVolume++;
                     pointerAnim.Play();
-                    // Keith TODO: Add menu change audio
                     PlayVolumeChange();
                 }
 
