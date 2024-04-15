@@ -73,23 +73,22 @@ public class MusicManager : MonoBehaviour
         }
         else if (backend.ProductState.RelativeTimeLeft < 0.3f)
         {
-            return 2;
+            return 1;
         }
         else if (backend.ProductState.RelativeTimeLeft < 0.4f)
         {
-            return 2;
+            return 1;
         }
         else if (backend.ProductState.RelativeTimeLeft < 0.5f)
         {
-            return 3;
+            return 2;
         }
         else if (backend.ProductState.RelativeTimeLeft < 0.6f)
         {
-            return 4;
+            return 3;
         }
-        else if (backend.ProductState.RelativeTimeLeft < 0.7f)
-        {
-            return 4;
+        else if (backend.ProductState.RelativeTimeLeft < 0.7f) {
+            return 3;
         }
         else if (backend.ProductState.RelativeTimeLeft < 0.8f)
         {
@@ -105,7 +104,7 @@ public class MusicManager : MonoBehaviour
         }
         else
         {
-            return 0;
+            return 4;
         }
     }
 
