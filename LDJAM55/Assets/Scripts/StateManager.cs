@@ -337,20 +337,20 @@ public class StateManager : MonoBehaviour
         }
 
         // Debug key to show results
-        if (Input.GetKeyDown(KeyCode.End))
-        {
-            ChangeState(State.Results);
-        }
-
-        // Debug key to fast forward time
-        if (Input.GetKeyDown(KeyCode.PageUp))
-        {
-            Time.timeScale += 10.0f;
-        }
-        else if (Input.GetKeyDown(KeyCode.PageDown))
-        {
-            Time.timeScale = 1.0f;
-        }
+        //if (Input.GetKeyDown(KeyCode.End))
+        //{
+        //    ChangeState(State.Results);
+        //}
+        //
+        //// Debug key to fast forward time
+        //if (Input.GetKeyDown(KeyCode.PageUp))
+        //{
+        //    Time.timeScale += 10.0f;
+        //}
+        //else if (Input.GetKeyDown(KeyCode.PageDown))
+        //{
+        //    Time.timeScale = 1.0f;
+        //}
     }
 
     void UpdateResults()

@@ -14,8 +14,8 @@ public class MusicManager : MonoBehaviour
     public StateManager stateManager; // Reference to StateManager
     public static MusicManager Instance;
 
-    public const float MUSIC_VOLUME_MAX = 0.25f;
-    public const float HELL_VOLUME_MAX = 0.18f;
+    public const float MUSIC_VOLUME_MAX = 0.15f;
+    public const float HELL_VOLUME_MAX = 0.1f;
 
     private void Awake()
     {
