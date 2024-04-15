@@ -5,20 +5,17 @@ using UnityEngine;
 public class MusicManager : MonoBehaviour
 {
     public AudioClip[] musicTracks;
-    [SerializeField] private AudioSource backgroundMusic;
-    [SerializeField] private AudioSource hellLoop;
+    public AudioSource backgroundMusic;
+    public AudioSource hellLoop;
     private int currentTrackIndex = 0;
     private bool isTrack1Active = true;
     [SerializeField] private Backend backend;
     
-    [Range(0f, 1f)]
-    [SerializeField] private float musicVolume = 0.25f; 
-    
-    [Range(0f, 1f)]
-    [SerializeField] private float hellVolume = 0.25f; 
-    
     public StateManager stateManager; // Reference to StateManager
     public static MusicManager Instance;
+
+    public const float MUSIC_VOLUME_MAX = 0.25f;
+    public const float HELL_VOLUME_MAX = 0.18f;
 
     private void Awake()
     {
@@ -31,12 +28,9 @@ public class MusicManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    void Start()
-    {
-        backgroundMusic.volume = musicVolume;
-        hellLoop.volume = hellVolume;
+        backgroundMusic.volume = MUSIC_VOLUME_MAX;
+        hellLoop.volume = HELL_VOLUME_MAX;
     }
 
     public void PlayHellMusic() {
@@ -50,13 +44,13 @@ public class MusicManager : MonoBehaviour
     }
 
     public void MuteAllMusic() {
-        hellLoop.volume = 0f;
-        backgroundMusic.volume = 0f;
+        hellLoop.enabled = false;
+        backgroundMusic.enabled = false;
     }
     
     public void UnmuteAllMusic() {
-        hellLoop.volume = hellVolume;
-        backgroundMusic.volume = musicVolume;
+        hellLoop.enabled = true;
+        backgroundMusic.enabled = true;
     }
 
     
