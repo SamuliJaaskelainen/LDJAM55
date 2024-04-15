@@ -239,16 +239,25 @@ public class Backend : MonoBehaviour
     // Handles actions taken by developer depending on role, producers are skipped. Returns work done.
     private float HandleDeveloperRoleEffects(Developer.RoleType role, float power)
     {
+        const float nonQaDebugPenalty = 0.5f;
         float workDone = 0f;
         // Handle role-specific effect based on power
         switch (role)
         {
             case Developer.RoleType.Designer:
                 {
-                    // Create feature for the backlog based on power
-                    float powerToSpend = power * currentProducerBoost;
-                    backlog.Add(new Task(powerToSpend));
-                    workDone = powerToSpend * productState.PowerScale;
+                    // If no more backlog tasks are needed, designers work on debugging
+                    if (Backlog() + productState.MechanicsFeature >= 1f)
+                    {
+                        workDone = DoQaWork(power * currentProducerBoost * nonQaDebugPenalty);
+                    }
+                    else
+                    {
+                        // Create feature for the backlog based on power
+                        float powerToSpend = power * currentProducerBoost;
+                        backlog.Add(new Task(powerToSpend));
+                        workDone = powerToSpend * productState.PowerScale;
+                    }
                     break;
                 }
             case Developer.RoleType.Programmer:
@@ -287,26 +296,33 @@ public class Backend : MonoBehaviour
                 }
             case Developer.RoleType.QA:
                 {
-                    float powerToSpend = power * currentProducerBoost;
-                    float foundBugPower = ProgressTasks(ref hiddenBugs, ref powerToSpend);
-                    if (foundBugPower > 0f)
-                    {
-                        // Currently the found bugs get lumped together into one big "found" bug,
-                        // once we decide how how the found bug size is calculated we might also want to refactor
-                        // this so that individual unfound bugs become separate found bugs
-                        foundBugs.Add(new Task(foundBugPower));
-                    }
-                    workDone = foundBugPower * productState.PowerScale;
+                    workDone = DoQaWork(power * currentProducerBoost);
                     break;
                 }
             case Developer.RoleType.Artist:
                 {
-                    workDone = productState.AddVisualsFeature(power * currentProducerBoost);
+                    // If no more backlog tasks are needed, artists work on debugging
+                    if (productState.VisualsFeature >= 1f)
+                    {
+                        workDone = DoQaWork(power * currentProducerBoost * nonQaDebugPenalty);
+                    }
+                    else
+                    {
+                        workDone = productState.AddVisualsFeature(power * currentProducerBoost);
+                    }
                     break;
                 }
             case Developer.RoleType.Audio:
                 {
-                    workDone = productState.AddAudioFeature(power * currentProducerBoost);
+                    // If no more backlog tasks are needed, artists work on debugging
+                    if (productState.AudioFeature >= 1f)
+                    {
+                        workDone = DoQaWork(power * currentProducerBoost * nonQaDebugPenalty);
+                    }
+                    else
+                    {
+                        workDone = productState.AddAudioFeature(power * currentProducerBoost);
+                    }
                     break;
                 }
             case Developer.RoleType.Producer:
@@ -340,6 +356,17 @@ public class Backend : MonoBehaviour
         }
 
         return workDone;
+    }
+
+    // Progress QA work with provided power. Returns power-scaled work done.
+    private float DoQaWork(float power)
+    {
+        float foundBugPower = ProgressTasks(ref hiddenBugs, ref power);
+        if (foundBugPower > 0f)
+        {
+            foundBugs.Add(new Task(foundBugPower));
+        }
+        return foundBugPower * productState.PowerScale;
     }
 
     // Progress the provided queue until it is empty or powerToSpend is 0. Return the sum of impacts of completed tasks.
