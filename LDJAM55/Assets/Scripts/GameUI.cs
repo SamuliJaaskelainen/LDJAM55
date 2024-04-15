@@ -42,6 +42,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] AnimateLocalScale[] workScaleAnims;
     [SerializeField] float workAnimRate = 0.1f;
 
+    bool wasPortalOpen = false;
     int portalFrame;
     float portalAnimSpeed = 0.16f;
     float portalAnimTimer;
@@ -204,6 +205,13 @@ public class GameUI : MonoBehaviour
         }
 
         bool isPortalOpen = developersAlive != backend.ActiveDevelopers.Length;
+
+        if(isPortalOpen != wasPortalOpen)
+        {
+            if(isPortalOpen) Debug.LogWarning("OPEN PORTAL"); // Keith TODO: Play portal open (remove warning)
+            else Debug.LogWarning("CLOSE PORTAL"); // Keith TODO: Play portal close (remove warning)
+            wasPortalOpen = isPortalOpen;
+        }
 
         if (isPortalOpen)
         {
