@@ -38,19 +38,7 @@ public class MusicManager : MonoBehaviour
         backgroundMusic.volume = musicVolume;
         hellLoop.volume = hellVolume;
         
-        PlayMusic(); // Start playing music on scene load
-
-    }
-    
-    private void PlayMusic()
-    {
-        AudioClip currentTrack = musicTracks[GetTrackIndex()];
-        backgroundMusic.clip = currentTrack;
-        backgroundMusic.Play();
-        hellLoop.clip = musicTracks[7];
-        hellLoop.Play();
-        hellLoop.mute = true;
-
+        //PlayMusic(); // Start playing music on scene load
 
     }
 
@@ -123,4 +111,26 @@ public class MusicManager : MonoBehaviour
             return 0;
         }
     }
-}
+
+    public void PlayResultMusic() {
+        hellLoop.mute = true;
+        backgroundMusic.mute = false;
+        backgroundMusic.clip = musicTracks[5];
+        
+    }
+
+    public void PlayMainMenuMusic() {
+        hellLoop.mute = true;
+        backgroundMusic.mute = false;
+        backgroundMusic.clip = musicTracks[8];
+        //hellLoop.Play();
+        //backgroundMusic.Play();
+    }
+    
+    public void UpdateBackgroundMusicIndex()
+    {
+        AudioClip currentTrack = musicTracks[GetTrackIndex()];
+        backgroundMusic.clip = currentTrack;
+
+    }
+} 

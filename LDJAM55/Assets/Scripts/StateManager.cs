@@ -114,7 +114,7 @@ public class StateManager : MonoBehaviour
         resultsParent.SetActive(currentState == State.Results);
         menuStateChangedTime = Time.time;
 
-        // Init new sate
+        // Init new state
         switch (currentState)
         {
             case State.MainMenu:
@@ -124,16 +124,16 @@ public class StateManager : MonoBehaviour
                 menuIndex = 0;
                 audioStoryShown = false;
                 UpdateMainMenuGraphics();
+                MusicManager.Instance.PlayMainMenuMusic();
                 break;
 
             case State.Gameplay:
                 DialogueManager.Instance.ShowStoryConversation(storyStart);
-                // Keith TODO: Add game start audio (check with Start game menu audio)
                 break;
 
             case State.Results:
                 ClearHell();
-                // Keith TODO: Add results shown audio
+                MusicManager.Instance.PlayResultMusic();
                 break;
         }
     }
@@ -283,8 +283,8 @@ public class StateManager : MonoBehaviour
         pointer.anchoredPosition += pointerOffset;
     }
 
-    void UpdateGameplay()
-    {
+    void UpdateGameplay() {
+        MusicManager.Instance.UpdateBackgroundMusicIndex();
         if (backend.ProductState.TimeLeft <= 0.0f)
         {
             ChangeState(State.Results);
