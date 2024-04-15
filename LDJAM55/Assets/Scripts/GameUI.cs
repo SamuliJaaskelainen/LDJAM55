@@ -151,7 +151,7 @@ public class GameUI : MonoBehaviour
                             devRarities[i].color = devRarityColors[4];
                         }
                     }
-                    devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
+                    devDurabilities[i].text = Mathf.CeilToInt(backend.ActiveDevelopers[i].Durability).ToString();
 
                     if(backend.ActiveDevelopers[i].WorkDone > 0f)
                     {
@@ -162,6 +162,7 @@ public class GameUI : MonoBehaviour
                     if(workAnimTimers[i] > workAnimRate)
                     {
                         workPosAnims[i].ResetToStart();
+                        workScaleAnims[i].ResetValues();
                         workPosAnims[i].Play();
                         workScaleAnims[i].Play();
                         workAnimTimers[i] = 0.0f;

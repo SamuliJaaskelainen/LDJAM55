@@ -63,14 +63,14 @@ public class AnimateLocalScale : MonoBehaviour
 
     public void Play()
     {
-        transform.localScale = originalScale;
-        startValue = transform.localScale;
-        originalScale = startValue;
-
-        if (enabled)
-        {
-            Restart();
-        }
+        //transform.localScale = originalScale;
+        //startValue = transform.localScale;
+        //originalScale = startValue;
+        //
+        //if (enabled)
+        //{
+        //    Restart();
+        //}
 
         enabled = true;
 
