@@ -48,6 +48,7 @@ public class Backend : MonoBehaviour
     ProductState productState = new();
 
     bool allowAudioSpawn = false;
+    bool hardMode = false;
 
     // The last tick's boosts are moved here at the beginning of the next tick, these will then affect that tick
     // Producer boost currently affects the designer, programmer, artist and audio roles
@@ -355,16 +356,19 @@ public class Backend : MonoBehaviour
 
         }
 
-        // Probability that a bug will be created if this role is applicable
-        const float bugCreationChance = 0.33f;
-        const float bugPower = 0.5f;
-        var bugCreatingRoles = Array.AsReadOnly(new Developer.RoleType[] { Developer.RoleType.Programmer, Developer.RoleType.Artist, Developer.RoleType.Audio });
-        if (bugCreatingRoles.Contains(role) && UnityEngine.Random.Range(0f, 1f) < bugCreationChance)
+        if (hardMode || workDone > 0f)
         {
-            float bugCost = bugPower * Time.deltaTime;
-            hiddenBugs.Add(new Task(bugCost));
-            hiddenBugMass += bugCost;
-            productState.AddPolishFeature(-bugCost);
+            // Probability that a bug will be created if this role is applicable
+            const float bugCreationChance = 0.33f;
+            const float bugPower = 0.5f;
+            var bugCreatingRoles = Array.AsReadOnly(new Developer.RoleType[] { Developer.RoleType.Programmer, Developer.RoleType.Artist, Developer.RoleType.Audio });
+            if (bugCreatingRoles.Contains(role) && UnityEngine.Random.Range(0f, 1f) < bugCreationChance)
+            {
+                float bugCost = bugPower * Time.deltaTime;
+                hiddenBugs.Add(new Task(bugCost));
+                hiddenBugMass += bugCost;
+                productState.AddPolishFeature(-bugCost);
+            }
         }
 
         return workDone;
@@ -445,24 +449,25 @@ public class Backend : MonoBehaviour
         }
 
     }
-    
+
     #region Audio
 
-    void PlayDeveloperSummonAudio(DataTypes.Developer developer) {
+    void PlayDeveloperSummonAudio(DataTypes.Developer developer)
+    {
         // Add Summon Audio Based on Developer Role
         switch (developer.Role)
         {
             case Developer.RoleType.Designer:
-                AudioManager.Instance.PlaySound(Random.Range(43,45), transform.position);
+                AudioManager.Instance.PlaySound(Random.Range(43, 45), transform.position);
                 break;
             case Developer.RoleType.Programmer:
-                AudioManager.Instance.PlaySound(Random.Range(43,45), transform.position);
+                AudioManager.Instance.PlaySound(Random.Range(43, 45), transform.position);
                 break;
             case Developer.RoleType.QA:
-                AudioManager.Instance.PlaySound(Random.Range(43,45), transform.position);
+                AudioManager.Instance.PlaySound(Random.Range(43, 45), transform.position);
                 break;
             case Developer.RoleType.Artist:
-                AudioManager.Instance.PlaySound(Random.Range(43,45), transform.position);
+                AudioManager.Instance.PlaySound(Random.Range(43, 45), transform.position);
                 break;
             case Developer.RoleType.Audio:
                 AudioManager.Instance.PlaySound(43, transform.position);
