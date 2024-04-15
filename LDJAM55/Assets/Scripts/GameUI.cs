@@ -209,7 +209,10 @@ public class GameUI : MonoBehaviour
         {
             jumpTimer = Time.time + jumpRate + UnityEngine.Random.value * 0.1f;
             int r = UnityEngine.Random.Range(0, devJumpAnims.Length);
-            PlayDeveloperAudio(backend.ActiveDevelopers[r]);
+            if(backend.ActiveDevelopers[r] != null && backend.ActiveDevelopers[r].IsAlive)
+            {
+                PlayDeveloperAudio(backend.ActiveDevelopers[r]);
+            }
             if (!devJumpAnims[r].enabled) devJumpAnims[r].ResetToStart();
             devJumpAnims[r].Play();
         }
