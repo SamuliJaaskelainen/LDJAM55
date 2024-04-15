@@ -152,15 +152,20 @@ namespace DataTypes
         {
             FinalResult result = new();
 
+            float importantStuffBrokenPenaltyoOfDoom = 1f;
+            if (mechanicsFeature < 0.25f || audioFeature < 0.25f || visualsFeature < 0.25f || polishFeature < 0.25f)
+            {
+                importantStuffBrokenPenaltyoOfDoom = 0.5f;
+            }
             float polishPenalty = 0.25f + 0.75f * polishFeature;
 
-            float finalFunScore = ((funScore * 4f + mechanicsFeature * 2f + audioFeature + visualsFeature) / 8f) * polishPenalty;
-            float finalInnovationScore = (innovationScore * 3f + mechanicsFeature + audioFeature * 0.5f + visualsFeature * 0.5f) / 5f;
-            float finalThemeScore = (themeScore * 3f + mechanicsFeature * 0.5f + audioFeature * 0.75f + visualsFeature * 0.75f) / 5f;
-            float finalGraphicsScore = ((graphicsScore + visualsFeature) / 2f) * polishPenalty;
-            float finalAudioScore = ((audioScore + audioFeature) / 2f) * polishPenalty;
-            float finalHumorScore = (humorScore * 2f + mechanicsFeature * 0.5f + audioFeature * 0.5f + visualsFeature) / 4f;
-            float finalMoodScore = ((moodScore * 2f + mechanicsFeature * 0.5f + audioFeature + visualsFeature * 0.5f) / 4f) * polishPenalty;
+            float finalFunScore = ((funScore * 4f + mechanicsFeature * 2f + audioFeature + visualsFeature) / 8f) * polishPenalty * importantStuffBrokenPenaltyoOfDoom;
+            float finalInnovationScore = ((innovationScore * 3f + mechanicsFeature + audioFeature * 0.5f + visualsFeature * 0.5f) / 5f) * importantStuffBrokenPenaltyoOfDoom;
+            float finalThemeScore = ((themeScore * 3f + mechanicsFeature * 0.5f + audioFeature * 0.75f + visualsFeature * 0.75f) / 5f) * importantStuffBrokenPenaltyoOfDoom;
+            float finalGraphicsScore = ((graphicsScore + visualsFeature) / 2f) * polishPenalty * importantStuffBrokenPenaltyoOfDoom;
+            float finalAudioScore = ((audioScore + audioFeature) / 2f) * polishPenalty * importantStuffBrokenPenaltyoOfDoom;
+            float finalHumorScore = ((humorScore * 2f + mechanicsFeature * 0.5f + audioFeature * 0.5f + visualsFeature) / 4f) * importantStuffBrokenPenaltyoOfDoom;
+            float finalMoodScore = ((moodScore * 2f + mechanicsFeature * 0.5f + audioFeature + visualsFeature * 0.5f) / 4f) * polishPenalty * importantStuffBrokenPenaltyoOfDoom;
             float overallScore = (finalFunScore + finalInnovationScore + finalThemeScore + finalGraphicsScore + finalAudioScore + finalHumorScore + finalMoodScore) / 7f;
 
             result.otherContestantCount = otherContestantCount;
