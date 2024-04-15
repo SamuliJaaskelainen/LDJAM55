@@ -70,6 +70,7 @@ public class StateManager : MonoBehaviour
     void Start()
     {
         ChangeState(State.MainMenu);
+        backend.clearHell = ClearHell;
     }
 
     int menuIndex = 0;

@@ -30,6 +30,9 @@ public class Backend : MonoBehaviour
     // Trait indexes correspond to enum indexes in Developer.Trait
     public List<DialogueAtLevel> traitDialogues = new();
 
+    // Callback used to clear hell when an influencer is spawned
+    public Action clearHell;
+
     // "Desks"
     public const int ACTIVE_DEVELOPERS = 4;
     Developer[] activeDevelopers = new Developer[ACTIVE_DEVELOPERS];
@@ -49,7 +52,6 @@ public class Backend : MonoBehaviour
 
     public void Reset()
     {
-        Debug.Log("reset called");
         for (int i = 0; i < activeDevelopers.Length; ++i)
         {
             activeDevelopers[i] = null;
@@ -114,8 +116,8 @@ public class Backend : MonoBehaviour
 
         developer.Traits = Developer.RandomTraits();
 
-        // Power is lower-bounded by current influencer boost level
-        developer.Power = Developer.RandomPower();
+        // Apply current influencer boost
+        developer.Power = Math.Clamp(Developer.RandomPower() * currentInfluencerBoost, 0.1f, 1f);
 
         developer.Durability = Developer.RandomDurability();
 
@@ -143,13 +145,13 @@ public class Backend : MonoBehaviour
         int powerLevelAsDialogueIndex = Math.Clamp((int)(developer.Power * dialogueLevelCount), 0, dialogueLevelCount - 1);
 
         developer.Dialogue = new List<DialogueManager.Dialogue>(roleDialogues[developerRoleAsIndex].dialoguesPerPowerLevel[powerLevelAsDialogueIndex].dialogue);
-        
-        for(int i = 0; i < developer.Dialogue.Count; ++i)
+
+        for (int i = 0; i < developer.Dialogue.Count; ++i)
         {
-            if(developer.Dialogue[i].text == "SUMMON")
+            if (developer.Dialogue[i].text == "SUMMON")
             {
-                if(developer.Traits.Count > 0)
-                { 
+                if (developer.Traits.Count > 0)
+                {
                     int traitAsIndex = (int)developer.Traits[UnityEngine.Random.Range(0, developer.Traits.Count)];
                     DialogueManager.Dialogue randomTraitDialogue = traitDialogues[traitAsIndex].dialogue[UnityEngine.Random.Range(0, traitDialogues[traitAsIndex].dialogue.Count)];
                     developer.Dialogue.Insert(0, randomTraitDialogue);
@@ -157,7 +159,7 @@ public class Backend : MonoBehaviour
                 }
             }
         }
-       
+
         return developer;
     }
 
@@ -170,10 +172,13 @@ public class Backend : MonoBehaviour
             {
                 // Keith TODO: Add summon developer audio
                 developerAdded = true;
-                // Apply current influencer boost
-                developer.Power = Math.Clamp(developer.Power * currentInfluencerBoost, 0.1f, 1f);
                 activeDevelopers[i] = developer;
                 Debug.Log("Added new active developer: " + developer.Role);
+                if (developer.Role == Developer.RoleType.Influencer && clearHell != null)
+                {
+                    Debug.Log("Cleared hell");
+                    clearHell();
+                }
                 return;
             }
         }
