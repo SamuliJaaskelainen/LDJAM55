@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 public class Backend : MonoBehaviour
 {
     [System.Serializable]
@@ -170,10 +171,10 @@ public class Backend : MonoBehaviour
         {
             if (activeDevelopers[i] == null || !activeDevelopers[i].IsAlive)
             {
-                // Keith TODO: Add summon developer audio
                 developerAdded = true;
                 activeDevelopers[i] = developer;
                 Debug.Log("Added new active developer: " + developer.Role);
+                PlayDeveloperSummonAudio(developer);
                 if (developer.Role == Developer.RoleType.Influencer && clearHell != null)
                 {
                     Debug.Log("Cleared hell");
@@ -431,4 +432,39 @@ public class Backend : MonoBehaviour
         }
 
     }
+    
+    #region Audio
+
+    void PlayDeveloperSummonAudio(DataTypes.Developer developer) {
+        // Add Summon Audio Based on Developer Role
+        switch (developer.Role)
+        {
+            case Developer.RoleType.Designer:
+                AudioManager.Instance.PlaySound(Random.Range(43,45), transform.position);
+                break;
+            case Developer.RoleType.Programmer:
+                AudioManager.Instance.PlaySound(Random.Range(43,45), transform.position);
+                break;
+            case Developer.RoleType.QA:
+                AudioManager.Instance.PlaySound(Random.Range(43,45), transform.position);
+                break;
+            case Developer.RoleType.Artist:
+                AudioManager.Instance.PlaySound(Random.Range(43,45), transform.position);
+                break;
+            case Developer.RoleType.Audio:
+                AudioManager.Instance.PlaySound(43, transform.position);
+                break;
+            case Developer.RoleType.Producer:
+                AudioManager.Instance.PlaySound(45, transform.position);
+                break;
+            case Developer.RoleType.Influencer:
+                AudioManager.Instance.PlaySound(44, transform.position);
+                break;
+            default:
+                Debug.LogError("Missing role type!");
+                break;
+        }
+    }
+
+    #endregion
 }

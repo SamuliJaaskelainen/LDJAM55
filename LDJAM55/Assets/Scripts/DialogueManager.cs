@@ -131,9 +131,8 @@ public class DialogueManager : MonoBehaviour
         ShowNextDialogue();
     }
 
-    void ShowNextDialogue()
-    {
-        // Keith TODO: Add show dialogue audio
+    void ShowNextDialogue() {
+        PlayNextDialogueAudio();
         if (currentDilogueList.Count > 0)
         { 
             if(currentDilogueList[0].text == "SUMMON")
@@ -233,6 +232,7 @@ public class DialogueManager : MonoBehaviour
                 if (StateManager.PressedUse())
                 {
                     // Keith TODO: Add menu confirm audio
+                    PlaySummonSelectionAudio();
                     StopConversation();
                 }
             }
@@ -243,12 +243,15 @@ public class DialogueManager : MonoBehaviour
             {
                 textAnimTimer = Time.unscaledTime + textAnimRate;
                 wordsShown++;
+                if(wordsShown%5==0 && (wordsShown<currentDialogueWords.Length)) PlaySpiritDialogue();
+                
                 wordsShown = Mathf.Clamp(wordsShown, 0, currentDialogueWords.Length);
                 dialogueText.text = "";
                 for (int i = 0; i < wordsShown; ++i)
                 {
                     dialogueText.text += currentDialogueWords[i];
                     dialogueText.text += " ";
+                    
                 }
                 
             }
@@ -266,5 +269,20 @@ public class DialogueManager : MonoBehaviour
 
             isOpenedOnThisFrame = false;
         }
+    }
+    
+    void PlaySpiritDialogue()
+    {
+        if(developerReference is null) AudioManager.Instance.PlaySound(Random.Range(3,14), transform.position);
+        else AudioManager.Instance.PlaySound(Random.Range(14,22), transform.position);
+    }
+    
+    void PlayNextDialogueAudio()
+    {
+        AudioManager.Instance.PlaySound(Random.Range(23,27), transform.position);
+    }
+
+    void PlaySummonSelectionAudio() {
+        AudioManager.Instance.PlaySound(27, transform.position);
     }
 }

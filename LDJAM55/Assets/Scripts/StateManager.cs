@@ -67,7 +67,7 @@ public class StateManager : MonoBehaviour {
     }
 
     int menuIndex = 0;
-    public int audioVolume = 10; // Keith TODO: Implement volume to audio systems
+    public int audioVolume = 10;
     bool isMusicMuted = false; // Keith TODO: Implement mute to music
     float menuStateChangedTime;
 
@@ -300,12 +300,12 @@ public class StateManager : MonoBehaviour {
 
     void PlayGameStart() {
         // play game start audio, index from 29 to 33
-        AudioManager.Instance.PlaySound(Random.RandomRange(29, 33), transform.position);
+        AudioManager.Instance.PlaySound(Random.Range(29, 33), transform.position);
     }
 
     void PlayVolumeChange() {
         // play volume change audio, index from 33 to 37
-        AudioManager.Instance.PlaySound(Random.RandomRange(33, 37), transform.position);
+        AudioManager.Instance.PlaySound(Random.Range(33, 37), transform.position);
 
     }
     
@@ -317,12 +317,12 @@ public class StateManager : MonoBehaviour {
 
     void PlayMenuNavigate() {
         // play menu navigate audio, random index from 23-27
-        AudioManager.Instance.PlaySound(Random.RandomRange(23, 27), transform.position);
+        AudioManager.Instance.PlaySound(Random.Range(23, 27), transform.position);
     }
     
     void PlaySlowModeToggle() {
         // play slow mode toggle audio, index 37
-        AudioManager.Instance.PlaySound(Random.RandomRange(27,29), transform.position);
+        AudioManager.Instance.PlaySound(Random.Range(27,29), transform.position);
     }
 }
 

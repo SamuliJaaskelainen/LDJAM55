@@ -10,10 +10,15 @@ public class MoveHell : MonoBehaviour
     [SerializeField] float turnSpeed = 100.0f;
 
     CharacterController characterController;
+    [SerializeField] AudioClip[] walkSounds;
+    private AudioSource audioSource;
+    
+    private int currentSoundIndex = 0; 
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -29,8 +34,10 @@ public class MoveHell : MonoBehaviour
 
             movement += transform.forward;
             headAnim.Play();
-
-
+            if (audioSource.isPlaying == false) 
+            {
+                PlayNextWalkSound();
+            }
 
         }
         else if (HoldDown())
@@ -38,7 +45,11 @@ public class MoveHell : MonoBehaviour
             
             movement += -transform.forward;
             headAnim.Play();
-
+            if (audioSource.isPlaying == false) 
+            {
+                PlayNextWalkSound();
+            }
+            
         }
         else
         {
@@ -52,11 +63,20 @@ public class MoveHell : MonoBehaviour
         {
             // Keith TODO: Add turn audio
             transform.Rotate(Vector3.up * turnSpeed * Time.deltaTime);
+            // don't play audio if audio is already playing
+            if (audioSource.isPlaying == false) 
+            {
+                PlayNextWalkSound();
+            }
         }
         else if (HoldLeft())
         {
             // Keith TODO: Add turn audio
             transform.Rotate(Vector3.up * -turnSpeed * Time.deltaTime);
+            if (audioSource.isPlaying == false) 
+            {
+                PlayNextWalkSound();
+            }
         }
 
         if(StateManager.PressedUse())
@@ -92,5 +112,19 @@ public class MoveHell : MonoBehaviour
     bool HoldLeft()
     {
         return Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
+    }
+
+    void PlayNextWalkSound()
+    {
+        // play a random walk sound from the array that is not the same as the current sound
+        int nextSoundIndex = Random.Range(0, walkSounds.Length);
+        while (nextSoundIndex == currentSoundIndex)
+        {
+            nextSoundIndex = Random.Range(0, walkSounds.Length);
+        }
+        currentSoundIndex = nextSoundIndex;
+        audioSource.clip = walkSounds[currentSoundIndex];
+        audioSource.Play();
+
     }
 }
