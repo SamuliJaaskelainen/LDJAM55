@@ -80,7 +80,7 @@ public class AudioManager : MonoBehaviour
             audioPoolObject.RemoveAt(0);
             audioSource.transform.position = position;
             audioSource.clip = soundEffects[clipIndex];
-            audioSource.volume = volume;
+            audioSource.volume = volume * (stateManager.audioVolume / 100.0f); 
             audioSource.pitch = pitch;
             audioSource.loop = loop;
             audioSource.Play();

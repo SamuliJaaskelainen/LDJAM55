@@ -1031,7 +1031,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8fe1df608536ebe43bef02326ccf607a, type: 3}
   masterVolume: 0
   audioPrefab: {fileID: 683287978}
-  stateManager: {fileID: 0}
+  stateManager: {fileID: 519420033}
 --- !u!4 &1580608740
 Transform:
   m_ObjectHideFlags: 0
