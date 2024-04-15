@@ -26,6 +26,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI slowModeText;
     [SerializeField] GameObject slowModeInfo;
     [SerializeField] TextMeshProUGUI quitText;
+    [SerializeField] GameObject quitInfo;
 
     [SerializeField] List<DialogueManager.Dialogue> storyStart = new List<DialogueManager.Dialogue>();
     [SerializeField] List<DialogueManager.Dialogue> storyAudio = new List<DialogueManager.Dialogue>();
@@ -224,6 +225,7 @@ public class StateManager : MonoBehaviour
         volumeText.text = "Audio volume " + audioVolume.ToString();
         slowModeText.text = SLOW_MODE_ON ? "Slow reader mode [X]" : "Slow reader mode [  ]";
         slowModeInfo.SetActive(menuIndex == 3);
+        quitInfo.SetActive(menuIndex == 4);
         switch (menuIndex)
         {
             case 0: // Start game
