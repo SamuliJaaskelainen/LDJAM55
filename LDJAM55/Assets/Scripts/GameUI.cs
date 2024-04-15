@@ -36,6 +36,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] Sprite[] devDeathSprites;
     [SerializeField] TextMeshProUGUI[] devDurabilities;
     [SerializeField] TextMeshProUGUI[] devTitles;
+    [SerializeField] Image[] devRarities;
+    [SerializeField] Color[] devRarityColors;
 
     int portalFrame;
     float portalAnimSpeed = 0.16f;
@@ -110,18 +112,30 @@ public class GameUI : MonoBehaviour
                         if(backend.ActiveDevelopers[i].Power < 0.25f)
                         {
                             devTitles[i].text = "Intern";
+                            devTitles[i].color = devRarityColors[1];
+                            devTitles[i].alpha = 1.0f;
+                            devRarities[i].color = devRarityColors[1];
                         }
                         else if (backend.ActiveDevelopers[i].Power < 0.5f)
                         {
                             devTitles[i].text = "Junior";
+                            devTitles[i].color = devRarityColors[2];
+                            devTitles[i].alpha = 1.0f;
+                            devRarities[i].color = devRarityColors[2];
                         }
                         else if (backend.ActiveDevelopers[i].Power < 0.74f)
                         {
                             devTitles[i].text = "Senior";
+                            devTitles[i].color = devRarityColors[3];
+                            devTitles[i].alpha = 1.0f;
+                            devRarities[i].color = devRarityColors[3];
                         }
                         else
                         {
                             devTitles[i].text = "Lead";
+                            devTitles[i].color = devRarityColors[4];
+                            devTitles[i].alpha = 1.0f;
+                            devRarities[i].color = devRarityColors[4];
                         }
                     }
                     devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
@@ -133,6 +147,7 @@ public class GameUI : MonoBehaviour
                     {
                         devDurabilities[i].text = "";
                         devTitles[i].text = "";
+                        devRarities[i].color = devRarityColors[0];
                         devAnims[i].SetNewFrames(devDeathSprites);
                         devAnims[i].Play();
                         devAlive[i] = false;
@@ -144,6 +159,7 @@ public class GameUI : MonoBehaviour
             {
                 devDurabilities[i].text = "";
                 devTitles[i].text = "";
+                devRarities[i].color = devRarityColors[0];
                 devAnims[i].SetNewFrames(emptySprite);
             }
         }
