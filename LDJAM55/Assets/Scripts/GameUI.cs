@@ -3,6 +3,7 @@ using DataTypes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameUI : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class GameUI : MonoBehaviour
     float[] workAnimTimers = new float[Backend.ACTIVE_DEVELOPERS];
 
     float jumpTimer;
-    float jumpRate = 0.1f;
+    float jumpRate = 1f;
 
     void OnEnable()
     {
@@ -223,8 +224,8 @@ public class GameUI : MonoBehaviour
 
             if (isPortalOpen != wasPortalOpen)
             {
-                if (isPortalOpen) PlayPortalAudio(isPortalOpen); // Keith TODO: Play portal open (remove warning)
-                else PlayPortalAudio(isPortalOpen); // Keith TODO: Play portal close (remove warning)
+                if (isPortalOpen) PlayPortalAudio(isPortalOpen); 
+                else PlayPortalAudio(isPortalOpen);
                 wasPortalOpen = isPortalOpen;
             }
 
@@ -269,28 +270,52 @@ public class GameUI : MonoBehaviour
     void PlayDeveloperAudio(DataTypes.Developer developer){
         // play audio based on role using switches
         switch (developer.Role) {
+            case DataTypes.Developer.RoleType.QA:
+                // play audio for Coder
+                AudioManager.Instance.PlaySound(Random.Range(57,69), transform.position);
+                break;
+            
             case DataTypes.Developer.RoleType.Producer:
-                // play audio for Producer
+                AudioManager.Instance.PlaySound(Random.Range(69,75), transform.position);
+                
                 break;
             case DataTypes.Developer.RoleType.Programmer:
                 // play audio for Programmer
+                AudioManager.Instance.PlaySound(Random.Range(57,69), transform.position);
                 break;
             case DataTypes.Developer.RoleType.Artist:
-                // play audio for Artist
+                AudioManager.Instance.PlaySound(Random.Range(46,51), transform.position);
                 break;
             case DataTypes.Developer.RoleType.Designer:
                 // play audio for Designer
+                if(Random.Range(0,2) == 0){
+                    // play audio for Coder
+                    AudioManager.Instance.PlaySound(Random.Range(57,69), transform.position);
+                }
+                else{
+                    // play audio for Artist
+                    AudioManager.Instance.PlaySound(Random.Range(46,51), transform.position);
+                }
+
                 break;
             case DataTypes.Developer.RoleType.Influencer:
                 // play audio for Influencer
+                // if influencer power is below 0.5
+                if(developer.Power < 0.5f){
+                    // play audio for low power influencer
+                    AudioManager.Instance.PlaySound(Random.Range(75,90), transform.position);
+                }
+                else{
+                    // play audio for high power influencer
+                    AudioManager.Instance.PlaySound(Random.Range(90,117), transform.position);
+                }
                 break;
             case DataTypes.Developer.RoleType.Audio:
                 // play audio for Audio
+                AudioManager.Instance.PlaySound(Random.Range(51,57), transform.position);
                 break;
         }
-
     }
-    
     void PlayPortalAudio(bool isportalOpen){
         // play audio for portal opening/closing, index 38 open, 37 close
         if(isportalOpen) AudioManager.Instance.PlaySound(38, transform.position);
