@@ -38,8 +38,11 @@ public class Backend : MonoBehaviour
     public const int ACTIVE_DEVELOPERS = 4;
     Developer[] activeDevelopers = new Developer[ACTIVE_DEVELOPERS];
 
+    float hiddenBugMass = 0f;
     List<Task> hiddenBugs = new();
+    float foundBugMass = 0f;
     List<Task> foundBugs = new();
+    float backlogMass = 0f;
     List<Task> backlog = new();
 
     ProductState productState = new();
@@ -58,8 +61,11 @@ public class Backend : MonoBehaviour
             activeDevelopers[i] = null;
         }
 
+        hiddenBugMass = 0f;
         hiddenBugs = new();
+        foundBugMass = 0f;
         foundBugs = new();
+        backlogMass = 0f;
         backlog = new();
 
         productState.Reset();
@@ -76,10 +82,12 @@ public class Backend : MonoBehaviour
         {
             float bugPower = (initialHiddenBugPower / ticketCount) / productState.PowerScale;
             hiddenBugs.Add(new Task(bugPower));
+            hiddenBugMass += bugPower;
             productState.AddPolishFeature(-bugPower);
 
             float backlogPower = (initialBacklogPower / ticketCount) / productState.PowerScale;
             backlog.Add(new Task(backlogPower));
+            backlogMass += backlogPower;
         }
     }
 
@@ -89,22 +97,12 @@ public class Backend : MonoBehaviour
 
     public float FoundBugs()
     {
-        float work = 0;
-        foreach (Task bug in foundBugs)
-        {
-            work += bug.Size;
-        }
-        return work * ProductState.PowerScale;
+        return foundBugMass * ProductState.PowerScale;
     }
 
     public float Backlog()
     {
-        float work = 0;
-        foreach (Task bug in backlog)
-        {
-            work += bug.Size;
-        }
-        return work * ProductState.PowerScale;
+        return backlogMass * ProductState.PowerScale;
     }
 
     public Developer FetchDeveloperFromPool()
@@ -257,6 +255,7 @@ public class Backend : MonoBehaviour
                         // Create feature for the backlog based on power
                         float powerToSpend = power * currentProducerBoost;
                         backlog.Add(new Task(powerToSpend));
+                        backlogMass += powerToSpend;
                         workDone = powerToSpend * productState.PowerScale;
                     }
                     break;
@@ -275,17 +274,28 @@ public class Backend : MonoBehaviour
                             // 50/50 split between bug fixing and backlog progress if both are not empty
                             float powerToSpendOnMechanics = powerToSpend / 2f;
                             float powerToSpendOnBugfixes = powerToSpend / 2f;
-                            workDone += productState.AddMechanicsFeature(ProgressTasks(ref backlog, ref powerToSpendOnMechanics));
-                            workDone += productState.AddPolishFeature(ProgressTasks(ref foundBugs, ref powerToSpendOnBugfixes));
+
+                            float backlogProgress = ProgressTasks(ref backlog, ref powerToSpendOnMechanics);
+                            backlogMass -= backlogProgress;
+                            workDone += productState.AddMechanicsFeature(backlogProgress);
+
+                            float foundBugProgress = ProgressTasks(ref foundBugs, ref powerToSpendOnBugfixes);
+                            foundBugMass -= foundBugProgress;
+                            workDone += productState.AddPolishFeature(foundBugProgress);
+
                             powerToSpend = powerToSpendOnMechanics + powerToSpendOnBugfixes;
                         }
                         else if (foundBugs.Count != 0)
                         {
-                            workDone += productState.AddPolishFeature(ProgressTasks(ref foundBugs, ref powerToSpend));
+                            float foundBugProgress = ProgressTasks(ref foundBugs, ref powerToSpend);
+                            foundBugMass -= foundBugProgress;
+                            workDone += productState.AddPolishFeature(foundBugProgress);
                         }
                         else if (mechanicsWorkToDo)
                         {
-                            workDone += productState.AddMechanicsFeature(ProgressTasks(ref backlog, ref powerToSpend));
+                            float backlogProgress = ProgressTasks(ref backlog, ref powerToSpend);
+                            backlogMass -= backlogProgress;
+                            workDone += productState.AddMechanicsFeature(backlogProgress);
                         }
                         else
                         {
@@ -353,6 +363,7 @@ public class Backend : MonoBehaviour
         {
             float bugCost = bugPower * Time.deltaTime;
             hiddenBugs.Add(new Task(bugCost));
+            hiddenBugMass += bugCost;
             productState.AddPolishFeature(-bugCost);
         }
 
@@ -366,6 +377,8 @@ public class Backend : MonoBehaviour
         if (foundBugPower > 0f)
         {
             foundBugs.Add(new Task(foundBugPower));
+            hiddenBugMass -= foundBugPower;
+            foundBugMass += foundBugPower;
         }
         return foundBugPower * productState.PowerScale;
     }
