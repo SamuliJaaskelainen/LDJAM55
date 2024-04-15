@@ -346,11 +346,11 @@ public class Backend : MonoBehaviour
 
         // Probability that a bug will be created if this role is applicable
         const float bugCreationChance = 0.33f;
+        const float bugPower = 0.5f;
         var bugCreatingRoles = Array.AsReadOnly(new Developer.RoleType[] { Developer.RoleType.Programmer, Developer.RoleType.Artist, Developer.RoleType.Audio });
         if (bugCreatingRoles.Contains(role) && UnityEngine.Random.Range(0f, 1f) < bugCreationChance)
         {
-            // TODO: Just using developer power to determine bug severity for now. Not affected by producer boost.
-            float bugCost = power;
+            float bugCost = bugPower * Time.deltaTime;
             hiddenBugs.Add(new Task(bugCost));
             productState.AddPolishFeature(-bugCost);
         }
