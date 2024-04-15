@@ -331,7 +331,7 @@ MonoBehaviour:
   slowModeText: {fileID: 6430046625447340605}
   slowModeInfo: {fileID: 6430046625447340606}
   quitText: {fileID: 1491105859}
-  quitInfo: {fileID: 0}
+  quitInfo: {fileID: 1955624893}
   storyStart:
   - text: 'In the monotonous expanse of my daily lethargy, where ennui creeps upon
       my soul like the mist on a grave, a sinister inspiration strikes: Ludum Dare!'
@@ -358,6 +358,7 @@ MonoBehaviour:
       harmonies!
   - text: Let not this creation languish in the mute despair that befalls many a
       lesser jam..
+  audioVolume: 10
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,7 +1029,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4d0e6a3f8144c354ba7c92487c5ef1dc, type: 3}
   - {fileID: 8300000, guid: afd55139538ef354baad587042c0f8f0, type: 3}
   - {fileID: 8300000, guid: 8fe1df608536ebe43bef02326ccf607a, type: 3}
+  masterVolume: 0
   audioPrefab: {fileID: 683287978}
+  stateManager: {fileID: 0}
 --- !u!4 &1580608740
 Transform:
   m_ObjectHideFlags: 0
@@ -1149,6 +1152,11 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1955624893 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5253307202728336850, guid: 246e02c61e478e44987ac3cb5f2aa506, type: 3}
+  m_PrefabInstance: {fileID: 6430046625447340604}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2144043284 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1804009081381601803, guid: 246e02c61e478e44987ac3cb5f2aa506, type: 3}

@@ -168,8 +168,7 @@ public class StateManager : MonoBehaviour
                 if (PressedUse())
                 {
                     ChangeState(State.Gameplay);
-
-                    PlayGameStart();
+                    // Keith TODO: Add menu confirm / game starts audio
                 }
                 break;
 
@@ -330,12 +329,5 @@ public class StateManager : MonoBehaviour
             ChangeState(State.MainMenu);
             // Keith TODO: Add menu confirm audio
         }
-    }
-    
-    private void PlayGameStart()
-    {
-        
-        // Play the 29th sound effect
-            AudioManager.Instance.PlaySound(29, transform.position);
     }
 }

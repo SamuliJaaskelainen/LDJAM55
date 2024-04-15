@@ -8,19 +8,12 @@ public class MoveHell : MonoBehaviour
     [SerializeField] AnimateLocaPosition headAnim;
     [SerializeField] float speed = 10.0f;
     [SerializeField] float turnSpeed = 100.0f;
-    
-    // Add serialize field for the walk audio files
-    [SerializeField] AudioClip[] walkSounds;
-    private AudioSource audioSource;
-    private int currentSoundIndex = 0; 
-
 
     CharacterController characterController;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -81,24 +74,6 @@ public class MoveHell : MonoBehaviour
     }
     
     
-    
-    /*
-    void PlayNextWalkSound()
-    {
-        // play a random walk sound from the array that is not the same as the current sound
-        int nextSoundIndex = Random.Range(0, walkSounds.Length);
-        while (nextSoundIndex == currentSoundIndex)
-        {
-            nextSoundIndex = Random.Range(0, walkSounds.Length);
-        }
-        currentSoundIndex = nextSoundIndex;
-        audioSource.clip = walkSounds[currentSoundIndex];
-        audioSource.Play();
-        Debug.Log("Playing sound: " + walkSounds[currentSoundIndex].name);
-
-    }
-    */
-
     bool HoldUp()
     {
         return Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
