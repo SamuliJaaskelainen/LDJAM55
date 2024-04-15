@@ -38,16 +38,29 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] devTitles;
     [SerializeField] Image[] devRarities;
     [SerializeField] Color[] devRarityColors;
+    [SerializeField] AnimateLocaPosition[] workPosAnims;
+    [SerializeField] AnimateLocalScale[] workScaleAnims;
+    [SerializeField] float workAnimRate = 0.1f;
 
     int portalFrame;
     float portalAnimSpeed = 0.16f;
     float portalAnimTimer;
     bool[] devAlive = new bool[Backend.ACTIVE_DEVELOPERS];
+    float[] workAnimTimers = new float[Backend.ACTIVE_DEVELOPERS];
 
     float jumpTimer;
     float jumpRate = 0.1f;
 
-    private void OnDisable()
+    void Start()
+    {
+        for(int i = 0; i < workPosAnims.Length; ++i)
+        {
+            workPosAnims[i].ResetToStart();
+            workScaleAnims[i].ResetValues();
+        }
+    }
+
+    void OnDisable()
     {
         for(int i = 0; i < devAlive.Length; ++i)
         {
@@ -139,6 +152,21 @@ public class GameUI : MonoBehaviour
                         }
                     }
                     devDurabilities[i].text = ((int)(backend.ActiveDevelopers[i].Durability)).ToString();
+
+                    if(backend.ActiveDevelopers[i].WorkDone > 0f)
+                    {
+                        workAnimTimers[i] += backend.ActiveDevelopers[i].Power * Time.deltaTime;
+                        backend.ActiveDevelopers[i].WorkDone = 0f;
+                    }
+                    
+                    if(workAnimTimers[i] > workAnimRate)
+                    {
+                        workPosAnims[i].ResetToStart();
+                        workPosAnims[i].Play();
+                        workScaleAnims[i].Play();
+                        workAnimTimers[i] = 0.0f;
+                    }
+
                     developersAlive++;
                 }
                 else

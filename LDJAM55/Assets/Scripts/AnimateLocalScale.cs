@@ -90,7 +90,7 @@ public class AnimateLocalScale : MonoBehaviour
     public void ResetValues()
     {
         timer = 0.0f;
-        transform.localScale = startValue;
+        transform.localScale = new Vector3(startValue.x * X.Evaluate(timer), startValue.y * Y.Evaluate(timer), startValue.z * Z.Evaluate(timer));
         enabled = false;
     }
 }
